@@ -1,0 +1,8 @@
+{
+    "friendly_name": "Project Forge",
+    "github_user": "callowayproject",
+    "project_name": "project-forge",
+    "project_short_description": "a tool that combines one or more templates and the user's answers to questions to generate a code project",
+    "project_slug": "project_forge",
+    "version": "0.1.0"
+}
