@@ -1,0 +1,47 @@
+template_location = "{{ repo_name }}"
+copy_only = [
+    "overrides/**/*", "overrides/**/.*"
+]
+
+[[questions]]
+name = "project_name"
+prompt = "What is the human-friendly name of the project?"
+type = "str"
+default = "My Project"
+
+[[questions]]
+name = "package_name"
+prompt = "What is the name of the Python package?"
+type = "str"
+default = "{{ project_name|lower|replace(' ', '_') }}"
+
+[[questions]]
+name = "repo_name"
+prompt = "What is the name of the project repository?"
+type = "str"
+default = "{{ package_name|replace('_', '-') }}"
+
+[[questions]]
+name = "project_description"
+help = "A sentence or two about what this project does."
+type = "str"
+default = ""
+
+[extra_context.requirements]
+docs = [
+    "black",
+    "markdown-customblocks",
+    "mdx-truly-sane-lists",
+    "mkdocs",
+    "mkdocs-click",
+    "mkdocs-gen-files",
+    "mkdocs-git-authors-plugin",
+    "mkdocs-git-committers-plugin",
+    "mkdocs-git-revision-date-localized-plugin",
+    "mkdocs-include-markdown-plugin",
+    "mkdocs-literate-nav",
+    "mkdocs-material",
+    "mkdocs-section-index",
+    "mkdocstrings[python]",
+    "python-frontmatter"
+]

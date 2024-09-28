@@ -1,0 +1,102 @@
+"""Tests for project_forge.core.io."""
+
+import json
+import yaml
+from pathlib import Path
+from unittest import mock
+
+import pytest
+from project_forge.core import io
+
+
+class TestParseYaml:
+    """Tests for project_forge.core.io.parse_yaml."""
+
+    def test_parses_yaml_string(self):
+        """A proper YAML string should be parsed."""
+        data = {"name": "John", "age": 30, "city": "New York"}
+        yaml_str = yaml.dump(data)
+
+        result = io.parse_yaml(yaml_str)
+        assert result == data
+
+    def test_invalid_yaml_string_raises_error(self):
+        """An invalid YAML string should raise an error."""
+        with pytest.raises(yaml.YAMLError):
+            io.parse_yaml("unbalanced brackets: ][")
+
+    def test_non_string_input_raises_error(self):
+        """A non-string input should raise an error."""
+        with pytest.raises(AttributeError):
+            io.parse_yaml(None)
+
+
+class TestParseJson:
+    """Tests for project_forge.core.io.parse_json."""
+
+    def test_parses_json_string(self):
+        """A proper JSON string should be parsed."""
+        data = {"name": "John", "age": 30, "city": "New York"}
+        json_str = json.dumps(data)
+
+        result = io.parse_json(json_str)
+        assert result == data
+
+    def test_empty_string_raises_error(self):
+        """An empty string should raise an error."""
+        with pytest.raises(json.JSONDecodeError):
+            io.parse_json("")
+
+    def test_invalid_json_string_raises_error(self):
+        """An invalid JSON string should raise an error."""
+        with pytest.raises(json.JSONDecodeError):
+            io.parse_json("{Some string}")
+
+    def test_non_string_input_raises_error(self):
+        """A non-string input should raise an error."""
+        with pytest.raises(TypeError):
+            io.parse_json(None)
+
+
+class TestParseFile:
+    """Test the parse_file function."""
+
+    def test_parse_yaml_file(self, tmp_path: Path):
+        with mock.patch("project_forge.core.io.parse_yaml") as mock_parse_yaml:
+            mock_parse_yaml.return_value = {"key": "value"}
+
+            test_file_path = tmp_path / "test.yaml"
+            test_file_path.write_text("key: value")
+
+            result = io.parse_file(test_file_path)
+            assert result == {"key": "value"}
+            assert mock_parse_yaml.call_count == 1
+
+    def test_parse_toml_file(self, tmp_path: Path):
+        with mock.patch("project_forge.core.io.parse_toml") as mock_parse_toml:
+            mock_parse_toml.return_value = {"key": "value"}
+
+            test_file_path = tmp_path / "test.toml"
+            test_file_path.write_text('key = "value"')
+
+            result = io.parse_file(test_file_path)
+            assert result == {"key": "value"}
+            assert mock_parse_toml.call_count == 1
+
+    def test_parse_json_file(self, tmp_path: Path):
+        with mock.patch("project_forge.core.io.parse_json") as mock_parse_json:
+            mock_parse_json.return_value = {"key": "value"}
+
+            test_file_path = tmp_path / "test.json"
+            test_file_path.write_text('{"key": "value"}')
+
+            result = io.parse_file(test_file_path)
+            assert result == {"key": "value"}
+            assert mock_parse_json.call_count == 1
+
+    def test_unsupported_file_returns_content(self, tmp_path: Path):
+        """Parsing an unknown file just returns the file's contents."""
+        test_file_path = tmp_path / "test.unsupported"
+        test_file_path.write_text("unsupport type file content")
+        result = io.parse_file(test_file_path)
+        assert result == "unsupport type file content"
