@@ -100,3 +100,68 @@ class TestParseFile:
         test_file_path.write_text("unsupport type file content")
         result = io.parse_file(test_file_path)
         assert result == "unsupport type file content"
+
+
+class TestMakeSurePathExists:
+    """Tests for project_forge.core.io.make_sure_path_exists."""
+
+    def test_creates_missing_directory(self, tmp_path: Path):
+        """It creates the path if it does not exist."""
+        path_to_create = tmp_path / "test_directory"
+
+        io.make_sure_path_exists(path_to_create)
+
+        assert path_to_create.exists()
+
+    def test_does_nothing_if_directory_exists(self, tmp_path: Path):
+        """If the path already exists, nothing is changed."""
+        path_to_create = tmp_path / "test_directory"
+        Path(path_to_create).mkdir(parents=True, exist_ok=True)
+        assert path_to_create.exists()
+
+        io.make_sure_path_exists(path_to_create)
+        assert path_to_create.exists()
+
+
+class TestRemoveSinglePath:
+    """Tests for project_forge.core.io.remove_single_path."""
+
+    def test_removes_file(self, tmp_path: Path):
+        """It should remove a single file path."""
+        path = tmp_path / "file.txt"
+        path.touch()
+        io.remove_single_path(path)
+        assert not path.exists()
+
+    def test_removes_directory(self, tmp_path: Path):
+        """It should remove an empty directory path."""
+        path = tmp_path / "dir"
+        path.mkdir()
+        io.remove_single_path(path)
+        assert not path.exists()
+
+    def test_removes_directory_with_files(self, tmp_path: Path):
+        """It should remove a directory with files in it."""
+        dir_path = tmp_path / "dir"
+        dir_path.mkdir()
+        file_path = dir_path / "file.txt"
+        file_path.touch()
+        io.remove_single_path(dir_path)
+        assert not dir_path.exists()
+
+
+def test_remove_paths_removes_multiple_paths(tmp_path: Path):
+    """It should remove multiple paths."""
+    root_dir = tmp_path
+    file1 = root_dir / "file1.txt"
+    file1.touch()
+    file2 = root_dir / "file2.txt"
+    file2.touch()
+    file3 = root_dir / "file3.txt"
+    file3.touch()
+
+    io.remove_paths(root_dir, [Path("file1.txt"), Path("file2.txt"), Path("file3.txt")])
+
+    assert not file1.exists()
+    assert not file2.exists()
+    assert not file3.exists()
