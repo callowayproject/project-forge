@@ -1,19 +1,31 @@
 """Core exceptions."""
 
 
-class RepoNotFoundError(Exception):
+class ProjectForgeError(Exception):
+    """Base exception for all Project Forge errors."""
+
+    pass
+
+
+class RepoNotFoundError(ProjectForgeError):
     """The URL to a repo location was not found."""
 
     pass
 
 
-class RepoAuthError(Exception):
+class RepoAuthError(ProjectForgeError):
     """The URL to a repo location gave an authentication error."""
 
     pass
 
 
-class PathNotFoundError(Exception):
+class PathNotFoundError(ProjectForgeError):
     """The location path was not found."""
+
+    pass
+
+
+class GitError(ProjectForgeError):
+    """There was a problem doing git operations."""
 
     pass
