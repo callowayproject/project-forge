@@ -1,0 +1,51 @@
+copy_only:
+- .github/**/*.jinja
+- .github/workflows/*
+- .github/actions/*
+extra_context:
+  requirements:
+  - dev:
+    - bump-my-version
+    - generate-changelog
+    - uv
+    prod:
+    - environs
+    test:
+    - coverage
+    - pre-commit
+    - pytest-cov
+    - pytest
+questions:
+- default: My Project
+  name: project_name
+  prompt: What is the human-friendly name of the project?
+  type: str
+- default: '{{ project_name|lower|replace('' '', ''_'') }}'
+  name: package_name
+  promp: What is the name of the Python package?
+  type: str
+- default: '{{ package_name|replace(''_'', ''-'') }}'
+  name: repo_name
+  prompt: What is the name of the project repository?
+  type: str
+- default: ''
+  help: A sentence or two about what this project does.
+  name: project_description
+  type: str
+- default: 0.1.0
+  name: initial_version
+  prompt: What should the initial version be?
+  type: str
+- default: Who am I?
+  name: author
+  prompt: What is the author's name?
+  type: str
+- default: whoami@existential-crisis.doom
+  name: email
+  prompt: What is the author's email address?
+  type: str
+- default: whoami
+  name: github_user
+  prompt: What is the GitHub user name or organization?
+  type: str
+template_location: '{{ repo_name }}'
