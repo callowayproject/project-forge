@@ -7,6 +7,7 @@ from pydantic import BaseModel, Field, model_validator
 
 from project_forge import caching
 from project_forge.core.exceptions import PathNotFoundError, RepoNotFoundError
+from project_forge.core.urls import ParsedURL, parse_git_url
 
 
 class Location(BaseModel):
@@ -28,6 +29,7 @@ class Location(BaseModel):
     path: Optional[str] = Field(default=None, description="The relative or absolute path to the location.")
     url: Optional[str] = Field(default=None, description="The Git URL to the location.")
     _resolved_path: Optional[Path] = None
+    _parsed_url: Optional[ParsedURL] = None
 
     @classmethod
     def from_string(cls, location: str) -> "Location":
@@ -37,12 +39,34 @@ class Location(BaseModel):
         else:
             return cls(path=location)
 
+    @model_validator(mode="before")
+    @classmethod
+    def _process_url(cls, values: dict) -> dict:
+        """Parse the URL, and modify the `path` if the URL is a local path."""
+        if not values.get("url", None):
+            return values
+
+        parsed_url = parse_git_url(values["url"])
+        if parsed_url.protocol == "file":
+            path = Path(parsed_url.full_path, values.get("path", ""))
+            values["path"] = str(path)
+            values["url"] = None
+
+        return values
+
     @model_validator(mode="after")
     def _ensure_path_or_url(self) -> "Location":
         """Make sure that at least one of `path` or `url` is specified."""
         if not any([self.path is not None, self.url is not None]):
             raise ValueError("At least one of `path` or `url` must be specified.")
         return self
+
+    @property
+    def parsed_url(self) -> Optional[ParsedURL]:
+        """Parse the URL and cache it."""
+        if self.url and not self._parsed_url:
+            self._parsed_url = parse_git_url(self.url)
+        return self._parsed_url
 
     def resolve(self, root_path: Optional[Path] = None) -> Path:
         """
@@ -67,7 +91,7 @@ class Location(BaseModel):
         if self._resolved_path:
             return self._resolved_path
 
-        if self.url:
+        if self.parsed_url:
             self._resolved_path = resolve_url_location(self)
             return self._resolved_path
 
@@ -123,7 +147,7 @@ def resolve_url_location(location: Location) -> Path:
     This downloads the repo into a cache and returns the full path to the template dir.
 
     Args:
-        location: The URL-formatted string
+        location: The location object with a parsed URL
 
     Raises:
         RepoNotFound: If the URL provided returns a 404 error
@@ -133,10 +157,10 @@ def resolve_url_location(location: Location) -> Path:
     Returns:
         Path to the template dir
     """
-    if not location.url:
+    if not location.parsed_url:
         raise RepoNotFoundError("A URL must be provided.")
 
-    cached_repo_path = caching.clone_repo(location.url)
+    cached_repo_path = caching.clone_repo(location.parsed_url)
     path = location.path.lstrip("/") if location.path else ""
     full_template_path = cached_repo_path.joinpath(path)
 
