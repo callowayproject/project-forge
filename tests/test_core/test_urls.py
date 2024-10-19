@@ -194,5 +194,4 @@ class TestParseGitUrl:
 def test_reformed_url_does_not_mutate_url(initial_url: str, expected: str):
     """The URL.url function should produce the correct url."""
     url = parse_git_url(initial_url)
-    print(url)
     assert url.url == expected

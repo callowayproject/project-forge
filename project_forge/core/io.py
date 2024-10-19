@@ -123,5 +123,4 @@ def remove_single_path(path: Path) -> None:
         path.chmod(stat.S_IWRITE)
         path.unlink()
     except Exception as exc:  # pragma: no-coverage
-        print(exc)
         raise IOError("Failed to remove file.") from exc

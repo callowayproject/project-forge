@@ -1,4 +1,4 @@
-"""Tests for cookie_composer.git_commands."""
+"""Tests for project_forge.git_commands."""
 
 from pathlib import Path
 from typing import Optional

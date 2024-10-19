@@ -102,11 +102,13 @@ def parse_git_path(path: str) -> PathInfo:
         return default
     if not match.group("raw_internal_path"):
         match_dict = remove_none_values(match.groupdict())
-        print(match_dict)
         return {**default, **match_dict}  # type: ignore[typeddict-item]
     match_dict = remove_none_values(match.groupdict())
     internal_path = remove_none_values(parse_internal_path(match.group("raw_internal_path")))
     return {**default, **match_dict, **internal_path}  # type: ignore[typeddict-item]
+
+
+# TODO: Add abbreviation support such as `gh:` and `gl:`
 
 
 def parse_git_url(git_url: str) -> ParsedURL:
@@ -139,6 +141,7 @@ def parse_git_url(git_url: str) -> ParsedURL:
     else:
         url = ParsedURL(protocol="file", full_path=bits.path.rstrip("/"))
 
+    # TODO: parse_git_path won't work against a file:// scheme. The owner/repo_name will be in different places
     parsed_path = parse_git_path(url.full_path)
     url.owner = parsed_path.get("owner")
     url.repo_name = parsed_path.get("repo_name")

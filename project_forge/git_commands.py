@@ -42,7 +42,7 @@ def get_repo(
         return repo
     except (InvalidGitRepositoryError, NoSuchPathError) as e:
         raise GitError(
-            "Some cookie composer commands only work on git repositories. "
+            "Some project forge commands only work on git repositories. "
             "Please make the destination directory a git repo."
         ) from e
 
@@ -115,7 +115,7 @@ def checkout_branch(repo: Repo, branch_name: str, remote_name: str = "origin") -
     """Checkout a local or remote branch."""
     if repo.is_dirty():
         raise GitError(
-            "Cookie composer cannot apply updates on an unclean git project."
+            "Project forge cannot apply updates on an unclean git project."
             " Please make sure your git working tree is clean before proceeding."
         )
     if len(repo.remotes) > 0:
