@@ -22,6 +22,8 @@ dependencies = [
     "pyyaml>=6.0.2",
     "tomlkit>=0.13.2",
     "click>=8.1.7",
+    "pydantic-settings>=2.4.0",
+    "platformdirs>=4.2.2",
 ]
 authors = [
     { name = "Calloway Project",  email = "coreyoordt@gmail.com" },
