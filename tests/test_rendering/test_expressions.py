@@ -2,7 +2,7 @@ from typing import Optional, Union
 
 import pytest
 from pytest import param
-from project_forge.rendering import render_bool_expression
+from project_forge.rendering.expressions import render_bool_expression
 
 
 class TestRenderBoolExpression:

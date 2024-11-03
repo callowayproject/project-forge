@@ -1,10 +1,8 @@
-"""Tools for rendering templates and template strings."""
+"""Render template expressions."""
 
 from typing import MutableMapping, Optional, Union
 
-from minijinja import Environment
-
-ENV = Environment()
+from project_forge.rendering.environment import load_environment
 
 
 def render_bool_expression(expression: Union[str, bool], context: Optional[MutableMapping] = None) -> bool:
@@ -32,4 +30,6 @@ def render_bool_expression(expression: Union[str, bool], context: Optional[Mutab
 def render_expression(expression: str, context: Optional[MutableMapping] = None) -> str:
     """Render a template expression."""
     context = context or {}
-    return ENV.render_str(expression, **context).strip()
+    env = load_environment()
+    template = env.from_string(expression)
+    return template.render(**context).strip()

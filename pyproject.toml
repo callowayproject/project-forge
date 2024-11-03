@@ -14,11 +14,11 @@ classifiers = [
 keywords = ["project_forge"]
 dynamic = ["version"]
 license = { file = "LICENSE" }
-requires-python = ">=3.9"
+requires-python = ">=3.12"
 dependencies = [
     "environs>=9.3.5",
     "pydantic>=2.8.2",
-    "minijinja>=2.2.0",
+    "jinja2>=3.1.0",
     "pyyaml>=6.0.2",
     "tomlkit>=0.13.2",
     "click>=8.1.7",
@@ -43,6 +43,7 @@ Changelog = "https://github.com/callowayproject/project-forge/CHANGELOG.md"
 dev = [
     "bump-my-version",
     "generate-changelog>=0.7.6",
+    "icecream",
     "uv",
 ]
 test = [
