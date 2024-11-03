@@ -2,7 +2,7 @@
 
 from typing import Any, TypeVar
 
-from project_forge.rendering import render_expression
+from project_forge.rendering.expressions import render_expression
 
 T = TypeVar("T")
 

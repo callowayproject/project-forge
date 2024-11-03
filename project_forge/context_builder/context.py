@@ -5,7 +5,7 @@ from typing import Callable
 
 from project_forge.configurations.composition import Composition
 from project_forge.context_builder.overlays import process_overlay
-from project_forge.rendering import render_expression
+from project_forge.rendering.expressions import render_expression
 
 
 def get_starting_context() -> dict:

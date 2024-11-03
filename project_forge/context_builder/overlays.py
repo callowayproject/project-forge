@@ -5,7 +5,7 @@ from typing import Callable, MutableMapping
 
 from project_forge.configurations.composition import Overlay
 from project_forge.context_builder.questions import answer_question
-from project_forge.rendering import render_expression
+from project_forge.rendering.expressions import render_expression
 
 
 def process_overlay(overlay: Overlay, running_context: dict, question_ui: Callable) -> dict:

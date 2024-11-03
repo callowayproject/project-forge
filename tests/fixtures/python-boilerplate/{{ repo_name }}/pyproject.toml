@@ -1,0 +1,39 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "{{ repo_name }}"
+description = "{{ short_description }}"
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "Natural Language :: English",
+    "Programming Language :: Python :: 3.12",
+]
+keywords = ["{{ repo_name }}"]
+dynamic = ["version"]
+license = { file = "LICENSE" }
+requires-python = ">=3.9"
+dependencies = [{% block dependencies %}{% for pkg, version in dependencies.items() %}
+    "{{ pkg }}{{ version }}",
+{%- endfor %}{% endblock dependencies %}
+]
+
+[project.optional-dependencies]
+{% block optional_dependencies %}
+dev = [{% block dev_dependencies %}{% for pkg, version in dev_requirements.items() %}
+    "{{ pkg }}{{ version }}",
+{%- endfor %}{% endblock dev_dependencies %}
+]
+test = [{% block test_dependencies %}{% for pkg, version in test_requirements.items() %}
+    "{{ pkg }}{{ version }}",
+{%- endfor %}{% endblock test_dependencies %}
+]
+docs = [{% block docs_dependencies %}{% for pkg, version in docs_requirements.items() %}
+    "{{ pkg }}{{ version }}",
+{%- endfor %}{% endblock docs_dependencies %}
+]
+
+[tool.hatch.version]
+path = "{{ repo_name }}/__init__.py"
