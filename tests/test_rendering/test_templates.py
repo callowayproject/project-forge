@@ -34,7 +34,14 @@ class TestCatalogTemplates:
         # Assemble
         generate_fake_templates(tmp_path)
         template1 = tmp_path / "template1"
-        expected_keys = {"subdir", "empty", "inherit.txt", "subdir/subdir.txt", "template1.txt"}
+        expected_keys = {
+            "template1/subdir",
+            "template1/empty",
+            "template1/inherit.txt",
+            "template1/subdir/subdir.txt",
+            "template1",
+            "template1/template1.txt",
+        }
 
         # Act
         result = catalog_templates(template1)
@@ -43,14 +50,13 @@ class TestCatalogTemplates:
         assert set(result.keys()) == expected_keys
 
         for key in expected_keys:
-            assert (template1 / key).exists()
+            assert (tmp_path / key).exists()
 
     def test_result_values_are_full_paths(self, tmp_path: Path):
         """The returned values are full filepaths as `Path`s."""
         # Assemble
         generate_fake_templates(tmp_path)
         template1 = tmp_path / "template1"
-        expected_keys = {"subdir", "empty", "inherit.txt", "subdir/subdir.txt", "template1.txt"}
 
         # Act
         result = catalog_templates(template1)
@@ -88,14 +94,16 @@ class TestCatalogInheritance:
             len(result.maps) == len(template_paths) + 1
         ), "Number of children should match number of template paths plus 1"
         assert result.maps[0] == {
-            "inherit.txt": tmp_path / "template2/inherit.txt",
-            "template2.txt": tmp_path / "template2/template2.txt",
+            "template2/inherit.txt": tmp_path / "template2/inherit.txt",
+            "template2/template2.txt": tmp_path / "template2/template2.txt",
+            "template2": tmp_path / "template2",
         }
         assert result.maps[1] == {
-            "inherit.txt": tmp_path / "template1/inherit.txt",
-            "template1.txt": tmp_path / "template1/template1.txt",
-            "subdir/subdir.txt": tmp_path / "template1/subdir/subdir.txt",
-            "empty": tmp_path / "template1/empty",
-            "subdir": tmp_path / "template1/subdir",
+            "template1/inherit.txt": tmp_path / "template1/inherit.txt",
+            "template1/template1.txt": tmp_path / "template1/template1.txt",
+            "template1/subdir/subdir.txt": tmp_path / "template1/subdir/subdir.txt",
+            "template1/empty": tmp_path / "template1/empty",
+            "template1/subdir": tmp_path / "template1/subdir",
+            "template1": tmp_path / "template1",
         }
         assert result.maps[2] == {}

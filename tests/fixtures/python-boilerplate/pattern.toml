@@ -53,7 +53,7 @@ prompt = "What is the GitHub user name or organization?"
 default = "whoami"
 type = "str"
 
-[[extra_context.requirements]]
+[extra_context.requirements]
 prod = [
     "environs",
 ]

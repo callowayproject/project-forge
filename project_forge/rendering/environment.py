@@ -1,11 +1,14 @@
 """Tools and classes for managing the Jinja2 rendering environment."""
 
+import logging
 import re
 from collections import ChainMap
 from pathlib import Path
 from typing import Any, Callable, List, Optional
 
 from jinja2 import BaseLoader, Environment, TemplateNotFound, Undefined
+
+logger = logging.getLogger(__name__)
 
 
 class InheritanceMap(ChainMap[str, Path]):
@@ -57,7 +60,7 @@ class InheritanceLoader(BaseLoader):
     def get_source(self, environment: Environment, template: str) -> tuple[str, str | None, Callable[[], bool] | None]:
         """Load the template."""
         # Parse the name of the template
-        bits = template.split("/")
+        bits = template.split("/", maxsplit=1)
         index = 0
         if len(bits) == 2 and bits[0].isdigit():
             index = int(bits[0])
@@ -77,6 +80,7 @@ class InheritanceLoader(BaseLoader):
             raise TemplateNotFound(template)  # Maybe this wasn't one of our customized extended paths
 
         path = inheritance[index]
+        logger.debug(f"Loading template {template_name} from: {path}")
         source = path.read_text()
 
         # look for an `extends` tag

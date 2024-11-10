@@ -1,5 +1,1 @@
-{% extends "pyproject.toml" %}
-
-{% block test_dependencies %}{{ super() }}{% for pkg, version in test_requirements.items() %}
-    "{{ pkg }}{{ version }}",
-{%- endfor %}{% endblock test_dependencies %}
+{% extends "{{ repo_name }}/pyproject.toml" %}

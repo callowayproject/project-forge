@@ -14,14 +14,13 @@ def catalog_templates(template_dir: Path) -> Dict[str, Path]:
 
     For a file structure like:
 
-        /path-to-templates/
-            {{ repo_name }}/
-                file1.txt
-                subdir/
-                    file2.txt
-                empty-subdir/
+        {{ repo_name }}/
+            file1.txt
+            subdir/
+                file2.txt
+            empty-subdir/
 
-    A call to `catalog_templates(Path("/path-to-templates"))` would return:
+    A call to `catalog_templates(Path("/path-to-templates/{{ repo_name }}/"))` would return:
 
         {
             "{{ repo_name }}": Path("/path-to-templates/{{ repo_name }}"),
@@ -37,14 +36,15 @@ def catalog_templates(template_dir: Path) -> Dict[str, Path]:
     Returns:
         A mapping of the relative path as a string to the full path
     """
-    templates = {}
+    root_dir = template_dir.parent
+    templates = {template_dir.name: template_dir}
     for root, dirs, files in template_dir.walk():
         for file in files:
             template_path = root / file
-            templates[str(template_path.relative_to(template_dir))] = template_path
+            templates[str(template_path.relative_to(root_dir))] = template_path
         for dir_ in dirs:
             template_path = root / dir_
-            templates[str(template_path.relative_to(template_dir))] = template_path
+            templates[str(template_path.relative_to(root_dir))] = template_path
     return {key: templates[key] for key in sorted(templates)}
 
 

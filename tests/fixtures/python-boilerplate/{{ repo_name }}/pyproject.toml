@@ -1,3 +1,4 @@
+{% extends "{{ repo_name }}/pyproject.toml" %}
 [build-system]
 requires = ["hatchling"]
 build-backend = "hatchling.build"
@@ -15,25 +16,26 @@ keywords = ["{{ repo_name }}"]
 dynamic = ["version"]
 license = { file = "LICENSE" }
 requires-python = ">=3.9"
-dependencies = [{% block dependencies %}{% for pkg, version in dependencies.items() %}
-    "{{ pkg }}{{ version }}",
+dependencies = [{% block dependencies %}{% for pkg in requirements.prod %}
+    "{{ pkg }}",
 {%- endfor %}{% endblock dependencies %}
 ]
 
 [project.optional-dependencies]
 {% block optional_dependencies %}
-dev = [{% block dev_dependencies %}{% for pkg, version in dev_requirements.items() %}
-    "{{ pkg }}{{ version }}",
+dev = [{% block dev_dependencies %}{% for pkg in requirements.dev %}
+    "{{ pkg }}",
 {%- endfor %}{% endblock dev_dependencies %}
 ]
-test = [{% block test_dependencies %}{% for pkg, version in test_requirements.items() %}
-    "{{ pkg }}{{ version }}",
+test = [{% block test_dependencies %}{% for pkg in requirements.test %}
+    "{{ pkg }}",
 {%- endfor %}{% endblock test_dependencies %}
 ]
-docs = [{% block docs_dependencies %}{% for pkg, version in docs_requirements.items() %}
-    "{{ pkg }}{{ version }}",
+docs = [{% block docs_dependencies %}{% for pkg in requirements.docs %}
+    "{{ pkg }}",
 {%- endfor %}{% endblock docs_dependencies %}
 ]
+{% endblock optional_dependencies %}
 
 [tool.hatch.version]
 path = "{{ repo_name }}/__init__.py"
