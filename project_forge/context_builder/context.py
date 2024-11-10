@@ -1,9 +1,10 @@
 """Builds and manages the rendering context."""
 
 import datetime
-from typing import Callable
+from typing import Callable, Mapping
 
 from project_forge.configurations.composition import Composition
+from project_forge.context_builder.data_merge import MERGE_FUNCTION, MergeMethods
 from project_forge.context_builder.overlays import process_overlay
 from project_forge.rendering.expressions import render_expression
 
@@ -36,5 +37,27 @@ def build_context(composition: Composition, ui: Callable) -> dict:
         running_context[key] = render_expression(value, running_context)
 
     for overlay in composition.overlays:
-        running_context.update(process_overlay(overlay, running_context, ui))
+        overlay_context = process_overlay(overlay, running_context, ui)
+        running_context = update_context(composition.merge_keys or {}, running_context, overlay_context)
     return running_context
+
+
+def update_context(merge_keys: Mapping[str, MergeMethods], left: dict, right: dict) -> dict:
+    """Return a dict where the left is updated with the right according to the composition rules."""
+    left_keys = set(left.keys())
+    right_keys = set(right.keys())
+    common_keys = left_keys.intersection(right_keys)
+    new_keys = right_keys - common_keys
+    result = {}
+
+    for key, value in left.items():
+        if key in right:
+            merge_func = MERGE_FUNCTION[merge_keys.get(key.lower(), "comprehensive")]
+            result[key] = merge_func(value, right[key])
+        else:
+            result[key] = value
+
+    for key in new_keys:
+        result[key] = right[key]
+
+    return result

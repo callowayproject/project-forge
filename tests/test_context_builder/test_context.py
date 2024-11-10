@@ -2,7 +2,7 @@
 
 import datetime
 
-from project_forge.context_builder.context import build_context, get_starting_context
+from project_forge.context_builder.context import build_context, get_starting_context, update_context
 from unittest.mock import Mock, patch
 
 
@@ -25,6 +25,7 @@ def test_build_context_with_extra_context_and_overlays_composes_correct():
         patch("project_forge.context_builder.context.process_overlay") as mock_process_overlay,
     ):
         composition = Mock()
+        composition.merge_keys = {}
         composition.extra_context = {"key": "{{ value }}", "overlay_key": "I should get overwritten"}
         composition.overlays = ["overlay1", "overlay2"]
 
@@ -67,3 +68,49 @@ def test_build_context_with_empty_composition_is_starting_context():
         mock_render_expression.assert_not_called()
         mock_process_overlay.assert_not_called()
         assert mock_get_starting_context.called
+
+
+class TestUpdateContext:
+    """Tests for the update_context function."""
+
+    def test_default_behavior_uses_comprehensive_merge(self):
+        """The result should contain all the keys and the values should be merged comprehensively."""
+        # Assemble
+        merge_keys = {}
+        left = {"a": 1, "b": [1, 2, 3], "c": 3}
+        right = {"a": 2, "b": [4, 5, 6], "d": 4}
+        expected_result = {"a": 2, "b": [1, 2, 3, 4, 5, 6], "c": 3, "d": 4}
+
+        # Act
+        result = update_context(merge_keys, left, right)
+
+        # Assert
+        assert result == expected_result, f"Expected {expected_result}, but got {result}"
+
+    def test_updating_empty_dicts_returns_empty_dict(self):
+        """Updating an empty dict with an empty dict should return an empty dict."""
+        # Assemble
+        merge_keys = {"a": "update", "b": "nested_overwrite"}
+        left = {}
+        right = {}
+        expected_result = {}
+
+        # Act
+        result = update_context(merge_keys, left, right)
+
+        # Assert
+        assert result == expected_result, f"Expected {expected_result}, but got {result}"
+
+    def test_respects_methods_in_merge_keys(self):
+        """Update context should use the specified merge strategy."""
+        # Assemble
+        merge_keys = {"b": "update"}
+        left = {"a": 1, "b": [1, 2, 3], "c": 3}
+        right = {"a": 2, "b": [4, 5, 6], "d": 4}
+        expected_result = {"a": 2, "b": [4, 5, 6], "c": 3, "d": 4}
+
+        # Act
+        result = update_context(merge_keys, left, right)
+
+        # Assert
+        assert result == expected_result, f"Expected {expected_result}, but got {result}"

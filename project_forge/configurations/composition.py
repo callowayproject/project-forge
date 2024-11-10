@@ -7,15 +7,13 @@ from pydantic import BaseModel, Field, field_validator
 from pydantic_core.core_schema import ValidationInfo
 
 from project_forge.configurations.pattern import Pattern, read_pattern_file
+from project_forge.context_builder.data_merge import MergeMethods
 from project_forge.core.exceptions import PathNotFoundError, RepoAuthError, RepoNotFoundError
 from project_forge.core.io import parse_file
 from project_forge.core.location import Location
 
 SkippedHook = Literal["pre", "post", "all", "none"]
 """Types of hooks to skip."""
-
-MergeMethods = Literal["overwrite", "nested-overwrite", "comprehensive"]
-"""Types of merge methods."""
 
 
 class Overlay(BaseModel):
@@ -127,7 +125,11 @@ class Composition(BaseModel):
         return cls(overlays=[Overlay(pattern_location=location)])
 
     def cache_data(self) -> None:
-        """Makes sure all the patterns are cached and have their pattern objects loaded."""
+        """
+        Makes sure all the patterns are cached and have their pattern objects loaded.
+
+        Accessing the `pattern` property on the overlay will lazily load the pattern.
+        """
         for overlay in self.overlays:
             _ = overlay.pattern
 
