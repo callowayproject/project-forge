@@ -78,9 +78,7 @@ def answer_question(
     else:
         default = render_expression(question.default, running_context) if question.default else None
 
-    force_default = render_bool_expression(question.force_default or "False", running_context)
-
-    if force_default:
+    if render_bool_expression(question.force_default or "False", running_context):
         return {question.name: default}
 
     answer = question_ui(

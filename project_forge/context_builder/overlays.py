@@ -31,8 +31,11 @@ def process_overlay(overlay: Overlay, running_context: dict, question_ui: Callab
     current_context = deepcopy(running_context)
     pattern = overlay.pattern
     current_context = merge_contexts(current_context, overlay.extra_context, pattern.extra_context)
+    force_default = not overlay.ask_questions
 
     for question in pattern.questions:
+        if force_default:
+            question.force_default = True
         current_context.update(
             answer_question(
                 question=question,
@@ -65,5 +68,8 @@ def merge_contexts(
     out_context = deepcopy(initial_context)
     extra_context = {**pattern_context, **overlay_context}
     for key, value in extra_context.items():
-        out_context[key] = render_expression(value, out_context)
+        if isinstance(value, str):
+            out_context[key] = render_expression(value, out_context)
+        else:
+            out_context[key] = value
     return dict(out_context)
