@@ -155,7 +155,8 @@ class Pattern(BaseModel):
     """The configuration of a pattern."""
 
     questions: List[Question] = Field(
-        description="A list of question objects that define the available context variables for project generation."
+        default_factory=list,
+        description="A list of question objects that define the available context variables for project generation.",
     )
     template_location: Union[str, Location] = Field(
         description=(
