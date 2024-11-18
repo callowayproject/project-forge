@@ -78,7 +78,7 @@ def update(left_val: T, right_val: T) -> T:
     """Do a `dict.update` on all the dicts."""
     match left_val, right_val:
         case (dict(), dict()):
-            return left_val | right_val  # type: ignore[operator]
+            return left_val | right_val  # type: ignore[return-value]
         case _:
             return right_val
 

@@ -1,7 +1,7 @@
 """Builds and manages the rendering context."""
 
 import datetime
-from typing import Callable, Mapping
+from typing import Callable, Mapping, Optional
 
 from project_forge.configurations.composition import Composition
 from project_forge.context_builder.data_merge import MERGE_FUNCTION, MergeMethods
@@ -14,7 +14,7 @@ def get_starting_context() -> dict:
     return {"now": datetime.datetime.now(tz=datetime.timezone.utc)}
 
 
-def build_context(composition: Composition, ui: Callable) -> dict:
+def build_context(composition: Composition, ui: Callable, initial_context: Optional[dict] = None) -> dict:
     """
     Build the context for the composition.
 
@@ -28,12 +28,14 @@ def build_context(composition: Composition, ui: Callable) -> dict:
     Args:
         composition: The composition configuration.
         ui: A callable that takes question information and returns the result from the user interface.
+        initial_context: The initial context to add to the context.
 
     Returns:
         A dictionary
     """
     running_context = get_starting_context()
-    for key, value in composition.extra_context.items():
+    initial_context = initial_context or {}
+    for key, value in {**composition.extra_context, **initial_context}.items():
         running_context[key] = render_expression(value, running_context)
 
     for overlay in composition.overlays:
