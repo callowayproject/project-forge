@@ -14,8 +14,8 @@ package_root = src_root / package_name
 
 
 for path in sorted(package_root.rglob("*.py")):
-    module_path = path.with_suffix("")
-    doc_path = path.with_suffix(".md")
+    module_path = path.relative_to(src_root).with_suffix("")
+    doc_path = path.relative_to(src_root).with_suffix(".md")
     full_doc_path = Path("reference/api", doc_path)
 
     parts = tuple(module_path.parts)

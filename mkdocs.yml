@@ -7,15 +7,15 @@ theme:
   logo: assets/logo.svg
   favicon: assets/favicon.png
   features:
-    - navigation.tabs
     - navigation.sections
     - navigation.path
     - navigation.indexes
-    - toc.integrate
+    - navigation.top
     - content.action.edit
     - content.action.view
     - content.code.annotate
     - content.tabs.link
+    - toc.integrate
   palette:
     - media: "(prefers-color-scheme: light)"
       scheme: default

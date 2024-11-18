@@ -25,6 +25,7 @@ dependencies = [
     "pydantic-settings>=2.4.0",
     "platformdirs>=4.2.2",
     "immutabledict>=4.2.0",
+    "rich-click>=1.8.3",
 ]
 authors = [
     { name = "Calloway Project",  email = "coreyoordt@gmail.com" },
@@ -55,13 +56,31 @@ test = [
     "pytest-sugar",
 ]
 docs = [
+    "black",
+    "markdown-customblocks",
+    "mdx-truly-sane-lists",
+    "mkdocs",
+    "mkdocs-click",
+    "mkdocs-gen-files",
+    "mkdocs-git-authors-plugin",
+    "mkdocs-git-committers-plugin",
+    "mkdocs-git-revision-date-localized-plugin",
+    "mkdocs-include-markdown-plugin",
+    "mkdocs-literate-nav",
+    "mkdocs-material",
+    "mkdocs-section-index",
+    "mkdocstrings[python]",
+    "python-frontmatter",
 ]
 
-#[project.scripts]
-#project-forge = project_forge.cli:cli
+[project.scripts]
+project-forge = "project_forge.cli:cli"
 
 [tool.hatch.version]
 path = "project_forge/__init__.py"
+
+[tool.mypy]
+python_version = "3.12"
 
 [tool.coverage.run]
 branch = true
