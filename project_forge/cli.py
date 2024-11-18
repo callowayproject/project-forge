@@ -73,9 +73,10 @@ def build(
 
     initial_context: dict[str, Any] = {}
     if data_file:
-        initial_context |= parse_file(data_file)
+        values = parse_file(data_file)
+        initial_context |= values or {}
 
     if data:
         initial_context |= dict(data)
-    print(type(output_dir))
+
     build_project(composition, output_dir=output_dir, use_defaults=use_defaults, initial_context=initial_context)

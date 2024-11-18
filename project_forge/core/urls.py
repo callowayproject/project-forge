@@ -108,7 +108,7 @@ def parse_git_path(path: str) -> PathInfo:
     return {**default, **match_dict, **internal_path}  # type: ignore[typeddict-item]
 
 
-# TODO: Add abbreviation support such as `gh:` and `gl:`
+# TODO[#4]: Add abbreviation support such as `gh:` and `gl:`
 
 
 def parse_git_url(git_url: str) -> ParsedURL:
@@ -141,7 +141,7 @@ def parse_git_url(git_url: str) -> ParsedURL:
     else:
         url = ParsedURL(protocol="file", full_path=bits.path.rstrip("/"))
 
-    # TODO: parse_git_path won't work against a file:// scheme. The owner/repo_name will be in different places
+    # TODO[#5]: parse_git_path won't work against a file:// scheme. The owner/repo_name will be in different places
     parsed_path = parse_git_path(url.full_path)
     url.owner = parsed_path.get("owner")
     url.repo_name = parsed_path.get("repo_name")

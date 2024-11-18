@@ -107,7 +107,7 @@ class Question(BaseModel):
         ),
     )
 
-    # TODO: How to do a basic regex or other string pattern validation?
+    # TODO[#6]: How to do a basic regex or other string pattern validation?
 
     validator: str = Field(
         default="",

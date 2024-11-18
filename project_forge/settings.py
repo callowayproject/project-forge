@@ -27,5 +27,5 @@ class Settings(BaseSettings):
 
 def get_settings(config_file: Path = DEFAULT_CONFIG_FILE) -> Settings:
     """Return the settings."""
-    # TODO: Implement settings management
+    # TODO[#3]: Implement settings management
     return Settings()

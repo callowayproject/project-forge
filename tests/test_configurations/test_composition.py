@@ -124,8 +124,7 @@ class TestReadCompositionFile:
         assert pattern.template_location.resolve() == fixtures_dir / "mkdocs" / "{{ repo_name }}"
 
 
-# TODO: Composition scenarios to test
-# - patterns with optional questions
-# - patterns with optional questions that are answered in a previous pattern
-# - patterns with files/directories named with mapped keys. They should properly get mapped to the combined template structure
-# - patterns with mixed file types
+# TODO[#7]: Write composition test scenario patterns with optional questions
+# TODO[#8]: Write composition test scenario patterns with optional questions that are answered in a previous pattern
+# TODO[#9]: Write composition test scenario patterns with files/directories named with mapped keys. They should properly get mapped to the combined template structure
+# TODO[#10]: Write composition test scenario patterns with mixed file types
