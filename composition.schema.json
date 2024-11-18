@@ -1,0 +1,141 @@
+{
+  "$defs": {
+    "Location": {
+      "description": "The location of a file or directory.\n\nA location supports referencing the file or directory using:\n\n- relative path\n- absolute path\n- git URL\n- git URL plus revision/tag/branch plus path in the repo\n\nWhen `url` is specified, the `path` is relative to the root of the repository.\n\nAt least one of `path` or `url` must be specified.",
+      "properties": {
+        "path": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "The relative or absolute path to the location.",
+          "title": "Path"
+        },
+        "url": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "The Git URL to the location.",
+          "title": "Url"
+        }
+      },
+      "title": "Location",
+      "type": "object"
+    },
+    "Overlay": {
+      "description": "An object describing how to overlay a pattern in a composition.",
+      "properties": {
+        "pattern_location": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "$ref": "#/$defs/Location"
+            }
+          ],
+          "description": "The location of the pattern file for this overlay.",
+          "title": "Pattern Location"
+        },
+        "ask_questions": {
+          "default": true,
+          "description": "Ask the user this pattern's questions? When false, the defaults are used.",
+          "title": "Ask Questions",
+          "type": "boolean"
+        },
+        "defaults": {
+          "description": "Override one or more question's default values in this pattern. Values can be a template string.",
+          "title": "Defaults",
+          "type": "object"
+        },
+        "extra_context": {
+          "description": "Override one or more keys in this pattern's `extra_context`. Values can be a template string.",
+          "title": "Extra Context",
+          "type": "object"
+        },
+        "answer_map": {
+          "description": "This signifies that a previous overlay has already answered one or more of this pattern's questions. The key is this pattern's question name and the value is a template string that references or modifies a previous pattern's question name.",
+          "title": "Answer Map",
+          "type": "object"
+        },
+        "overwrite_files": {
+          "description": "A list of paths or glob patterns of files that may be overwritten. An empty list means do not overwrite any files.",
+          "items": {
+            "type": "string"
+          },
+          "title": "Overwrite Files",
+          "type": "array"
+        },
+        "exclude_files": {
+          "description": "A list of paths or glob patterns of files to exclude from the generation (overrides the pattern's configuration)",
+          "items": {
+            "type": "string"
+          },
+          "title": "Exclude Files",
+          "type": "array"
+        },
+        "skip_hooks": {
+          "default": "none",
+          "description": "Which hooks to skip? Valid options are `all`, `none`, `pre`, `post`.",
+          "enum": [
+            "pre",
+            "post",
+            "all",
+            "none"
+          ],
+          "title": "Skip Hooks",
+          "type": "string"
+        }
+      },
+      "required": [
+        "pattern_location"
+      ],
+      "title": "Overlay",
+      "type": "object"
+    }
+  },
+  "description": "The settings for a composition.",
+  "properties": {
+    "overlays": {
+      "description": "A list of pattern overlays to compose.",
+      "items": {
+        "$ref": "#/$defs/Overlay"
+      },
+      "title": "Overlays",
+      "type": "array"
+    },
+    "merge_keys": {
+      "additionalProperties": {
+        "enum": [
+          "overwrite",
+          "nested-overwrite",
+          "comprehensive"
+        ],
+        "type": "string"
+      },
+      "description": "Merge the values of one or more keys in a specific way. This is useful for `yaml` or `json` values. Valid merge methods are `overwrite`, `nested-overwrite`, and `comprehensive`.",
+      "title": "Merge Keys",
+      "type": "object"
+    },
+    "extra_context": {
+      "description": "Override one or more keys in this pattern's `extra_context`. Values can be a template string.",
+      "title": "Extra Context",
+      "type": "object"
+    }
+  },
+  "title": "Composition",
+  "type": "object",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/callowayproject/project-forge/composition.schema.json"
+}
