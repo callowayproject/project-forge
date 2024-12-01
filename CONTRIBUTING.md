@@ -5,6 +5,7 @@ First off, thanks for taking the time to contribute! ❤️
 All types of contributions are encouraged and valued. See the [Table of Contents](#table-of-contents) for different ways to help and details about how this project handles them. Please make sure to read the relevant section before making your contribution. It will make it much easier for us maintainers and smooth out the experience for all involved. The community looks forward to your contributions. 🎉
 
 > If you like the project but don't have time to contribute, that's fine. There are other easy ways to support the project and show your appreciation, which we would also be very happy about:
+>
 > - Star the project
 > - Tweet about it
 > - Refer to this project in your project's readme
@@ -21,13 +22,11 @@ All types of contributions are encouraged and valued. See the [Table of Contents
 - [Styleguides](#styleguides)
 - [Join The Project Team](#join-the-project-team)
 
-
 ## Code of Conduct
 
 This project and everyone participating in it are governed by the
 [Bump My Version Code of Conduct](https://github.com/callowayproject/bump-my-versionblob/master/CODE_OF_CONDUCT.md). By participating, you are expected to uphold this code. Please report unacceptable behavior
 to <coreyoordt@gmail.com>.
-
 
 ## I Have a Question
 
@@ -60,7 +59,6 @@ A good bug report shouldn't leave others needing to chase you up for more inform
   - Possibly your input and the output
   - Can you reliably reproduce the issue? And can you also reproduce it with older versions?
 
-
 ### How Do I Submit a Good Bug Report?
 
 > You must never report security-related issues, vulnerabilities, or bugs that include sensitive information to the issue tracker or elsewhere in public. Instead, sensitive bugs must be sent by email to <coreyoordt@gmail.com>.
@@ -77,7 +75,6 @@ Once it's filed:
 - The project team will label the issue accordingly.
 - A team member will try to reproduce the issue with your provided steps. If there are no reproduction steps or no obvious way to reproduce the issue, the team will ask you for those steps and will not address them until they are included.
 - If the team is able to reproduce the issue, the issue will be left to be [implemented by someone](#your-first-code-contribution).
-
 
 ## Suggesting Enhancements
 
@@ -103,7 +100,6 @@ Enhancement suggestions are tracked as [GitHub issues](https://github.com/callow
 <!-- You might want to create an issue template for enhancement suggestions that can be used as a guide and that defines the structure of the information to be included. If you do so, reference it here in the description. -->
 
 ## Your First Code Contribution
-
 
 > ### Legal Notice
 >
@@ -133,15 +129,15 @@ python -m pip install ".[dev,test,docs]"
 ### Run tests
 
 Once setup, you should be able to run tests:
-```
-pytest
+
+```console
+$ pytest
 ```
 
 ## Install Pre-commit Hooks
 
-
 Pre-commit hooks are scripts that run every time you make a commit. If any of the scripts fail, it stops the commit. You can see a listing of the checks in the ``.pre-commit-config.yaml`` file.
 
-```
-pre-commit install
+```console
+$ pre-commit install
 ```

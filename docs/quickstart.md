@@ -17,12 +17,12 @@ Getting started quickly with Project Forge.
 From source...from pypi?
 
 ## The Basics
+
 To use `project-forge` in a project:
 
 ```python
 import project_forge
 ```
-
 
 ## Basic Operations
 

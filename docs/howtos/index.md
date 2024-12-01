@@ -4,7 +4,7 @@ summary: Recipes for common tasks using Project Forge.
 date: 2024-08-26
 ---
 
-The *How To's* are intended as recipes for common tasks using project-forge. See the API reference for detailed reference documentation and function, class etc definitions. 
+The *How To's* are intended as recipes for common tasks using project-forge. See the API reference for detailed reference documentation and function, class etc definitions.
 
 !!! warning
 

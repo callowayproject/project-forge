@@ -9,7 +9,7 @@ comments: true
 
 We are going to convert an existing project into a pattern. This process is going to require _lots_ of search and replace.
 
-In another tutorial, we will break it into several patterns. 
+In another tutorial, we will break it into several patterns.
 
 ## Setup
 
@@ -20,7 +20,7 @@ In another tutorial, we will break it into several patterns.
 
 !!! Note
 
-​	If you are doing this with an actual project, remove the `.git` directory if it exists.
+    If you are doing this with an actual project, remove the `.git` directory if it exists.
 
 4. Inside the `patterns/` directory, create a file named `core_pattern.toml`
 
@@ -52,7 +52,7 @@ Now, let's deal with the outer folder name and the code folder. Python package n
 
 We'll call the name of the code folder the `package_name`. Add this question to `core_pattern.toml`:
 
-```toml title="patterns/core_pattern.toml"
+```toml title="patterns/core_pattern.toml"
 # ... previous question
 
 [[questions]]
@@ -68,7 +68,7 @@ This sets the default answer to a modification of the previous question's answer
 
 We'll call the name of the outer folder the `repo_name`. Add this question to `core_pattern.toml`:
 
-```toml title="patterns/core_pattern.toml"
+```toml title="patterns/core_pattern.toml"
 # ... previous questions
 
 [[questions]]

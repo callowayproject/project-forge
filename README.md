@@ -7,10 +7,10 @@
 
 a tool that combines one or more templates and the user's answers to questions to generate a code project
 
-*Put a meaningful, short, plain-language description of:* 
+*Put a meaningful, short, plain-language description of:*
 
 - *what this project is trying to accomplish.*
-- *why it matters.* 
+- *why it matters.*
 - *the problem(s) this project solves.*
 - *how this software can improve the lives of its audience.*
 - *what sets this apart from related-projects. Linking to another doc or page is OK if this can't be expressed in a sentence or two.*
