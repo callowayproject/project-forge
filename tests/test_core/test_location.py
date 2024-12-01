@@ -45,7 +45,7 @@ class TestLocation:
     class TestResolve:
         """Tests for the `Location.resolve` method."""
 
-        def test_url_calls_resolve_url_location(tmp_path: Path):
+        def test_url_calls_resolve_url_location(self, tmp_path: Path):
             """A location with a URL calls `resolve_url_location`."""
             mocked_resolve_url_location = MagicMock("project_forge.core.location.resolve_url_location")
             location = Location(url="http://localhost/repo.git")
@@ -140,3 +140,6 @@ class TestResolveUrlLocation:
         with patch("project_forge.caching.clone_repo", mocked_clone_repo):
             with pytest.raises(PathNotFoundError):
                 result_path = resolve_url_location(test_location)
+
+
+# TODO[#12]: Test a location with a URL and a relative path with a `../` does not resolve outside the repository

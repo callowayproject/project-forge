@@ -3,6 +3,7 @@ from unittest.mock import patch
 
 import pytest
 from project_forge.cli import build
+from project_forge.tui import ask_question
 from click.testing import CliRunner
 
 
@@ -38,7 +39,7 @@ class TestBuildCommand:
 
         assert result.exit_code == 0
         mock_build_project.assert_called_once_with(
-            composition_path, output_dir=Path.cwd(), use_defaults=True, initial_context={}
+            composition_path, output_dir=Path.cwd(), ui_function=ask_question, use_defaults=True, initial_context={}
         )
 
     @patch("project_forge.commands.build.build_project")
@@ -56,7 +57,7 @@ class TestBuildCommand:
 
         assert result.exit_code == 0
         mock_build_project.assert_called_once_with(
-            composition_path, output_dir=output_dir, use_defaults=False, initial_context={}
+            composition_path, output_dir=output_dir, ui_function=ask_question, use_defaults=False, initial_context={}
         )
 
     @patch("project_forge.commands.build.build_project")
@@ -78,7 +79,11 @@ class TestBuildCommand:
 
         mock_parse_file.assert_called_once_with(data_file_path)
         mock_build_project.assert_called_once_with(
-            composition_path, output_dir=Path.cwd(), use_defaults=False, initial_context={"key": "value"}
+            composition_path,
+            output_dir=Path.cwd(),
+            ui_function=ask_question,
+            use_defaults=False,
+            initial_context={"key": "value"},
         )
 
     @patch("project_forge.commands.build.build_project")
@@ -92,5 +97,9 @@ class TestBuildCommand:
 
         assert result.exit_code == 0
         mock_build_project.assert_called_once_with(
-            composition_path, output_dir=Path.cwd(), use_defaults=False, initial_context={"key": "value"}
+            composition_path,
+            output_dir=Path.cwd(),
+            ui_function=ask_question,
+            use_defaults=False,
+            initial_context={"key": "value"},
         )

@@ -6,7 +6,7 @@ required to render the template and the rendering rules.
 
 *Patterns* are meant to be focused and reusable. *Patterns* are combined with other *patterns* using a *composition.*
 
-*Patterns* are renderable as is. They do not need to be a part of a composition.
+*Patterns* are renderable as-is. They do not need to be a part of a composition.
 """
 
 from pathlib import Path
@@ -33,8 +33,8 @@ class Choice(BaseModel):
         description=(
             "A template string that will render as `True` if the choice is not valid based on previous context "
             "values.\n\n"
-            "Take care to have at least one option without a `when` clause to avoid accidentally creating a situation "
-            "with no valid choices."
+            "Take care to have at least one option without a `skip_when` clause to avoid accidentally creating "
+            "a situation with no valid choices."
         ),
     )
 
@@ -56,8 +56,6 @@ class Choice(BaseModel):
 
         return result_dict
 
-
-"""Valid values for question types."""
 
 QUESTION_TYPE_VALIDATORS = {
     "int": is_int,

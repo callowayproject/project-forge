@@ -1,32 +1,14 @@
 """Configuration and utilities for PyTest."""
 
 import sys
-from contextlib import contextmanager
 from pathlib import Path
-from typing import Generator
 from git import Actor, Repo
 
 import pytest
 
 from project_forge.core.io import remove_single_path
 
-
-@contextmanager
-def inside_dir(dirpath: Path) -> Generator:
-    """
-    Temporarily switch to a specific directory.
-
-    Args:
-        dirpath: Path of the directory to switch to
-    """
-    import os
-
-    old_path = os.getcwd()
-    try:
-        os.chdir(dirpath)
-        yield
-    finally:
-        os.chdir(old_path)
+pytest_plugins = ["pytester", "forger"]
 
 
 @pytest.fixture(scope="session")
