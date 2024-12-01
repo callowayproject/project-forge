@@ -49,7 +49,8 @@ markdown_extensions:
         - name: mermaid
           class: mermaid
           format: !!python/name:pymdownx.superfences.fence_code_format
-  - pymdownx.tabbed
+  - pymdownx.tabbed:
+      alternate_style: true
   - smarty
   - toc:
       permalink: true
@@ -80,6 +81,9 @@ plugins:
               ignore_init_summary: true
             docstring_section_style: spacy
             enable_inventory: true
+            extensions:
+              - griffe_pydantic:
+                  schema: true
             group_by_category: true
             members_order: alphabetical
             merge_init_into_class: true
