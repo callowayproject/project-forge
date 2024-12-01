@@ -2,7 +2,7 @@
 
 from dataclasses import dataclass
 from pathlib import Path
-from typing import Any, Callable, Literal, MutableMapping, Optional, Protocol, Union
+from typing import Any, Callable, Literal, Optional, Protocol, Union
 
 TemplateEngine = Literal["default"]
 """Supported template engines."""
@@ -35,7 +35,7 @@ class BuildResult:
     root_path: Path
     """The path to the rendered project."""
 
-    context: MutableMapping
+    context: dict[str, Any]
     """The rendered context for the project."""
 
 
