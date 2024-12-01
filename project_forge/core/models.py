@@ -1,28 +1,8 @@
 """Data models core to project forge."""
 
-from typing import Any, Callable, Literal, Optional, Protocol, TypeVar, Union
-
-T = TypeVar("T")
-
-
-class UndefinedType:
-    """A singleton that indicates an undefined state."""
-
-    def __repr__(self) -> str:
-        return "Undefined"
-
-    def __copy__(self: T) -> T:
-        return self
-
-    def __reduce__(self) -> str:
-        return "Undefined"
-
-    def __deepcopy__(self: T, _: Any) -> T:
-        return self
-
-
-Undefined = UndefinedType()
-Skipped = Undefined
+from dataclasses import dataclass
+from pathlib import Path
+from typing import Any, Callable, Literal, MutableMapping, Optional, Protocol, Union
 
 TemplateEngine = Literal["default"]
 """Supported template engines."""
@@ -48,6 +28,17 @@ VARIABLE_REGEX = r"[a-zA-Z_][\w_]*"
 Must start with a letter and can contain alpha-numeric and underscores."""
 
 
+@dataclass
+class BuildResult:
+    """The result of a build operation."""
+
+    root_path: Path
+    """The path to the rendered project."""
+
+    context: MutableMapping
+    """The rendered context for the project."""
+
+
 class UIFunction(Protocol):
     """The function signature for a UI prompt."""
 
@@ -60,6 +51,7 @@ class UIFunction(Protocol):
         default: Any = None,
         multiselect: bool = False,
         validator_func: Optional[Callable] = None,
+        **kwargs: Any,
     ) -> Any:
         """
         A function that asks the user for input.
@@ -72,6 +64,7 @@ class UIFunction(Protocol):
             default: The default value.
             multiselect: Can the user select multiple answers?
             validator_func: A callable that takes an answer and returns True if it is valid.
+            **kwargs: Additional keyword arguments to pass to the UI function.
 
         Returns:
             The answer to the prompt.
