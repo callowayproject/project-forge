@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
 """Export the schemas for the compositions and patterns."""
 import json
-
-from project_forge.configurations.pattern import Pattern
-from project_forge.configurations.composition import Composition
 from pathlib import Path
+
+from project_forge.configurations.composition import Composition
+from project_forge.configurations.pattern import Pattern
 
 
 def main():
