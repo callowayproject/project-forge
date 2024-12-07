@@ -13,16 +13,14 @@ jobs:
         with:
           fetch-depth: 0
           ref: ${{ github.event.pull_request.head.sha }}
-          token: ${{ secrets.PAT }}
 
       - name: Setup Python and Git
         uses: ./.github/actions/setup-python-and-git
         with:
-          python-version: '3.11'
+          python-version: '3.12'
 
-      - name: Install requirements
-        run: |
-          python -m pip install generate-changelog bump-my-version
+      - name: Install test dependencies
+        run: uv sync -p 3.12 --group test
 
       - name: Get the release hint
         id: generate-changelog
@@ -39,8 +37,6 @@ jobs:
           echo "pull_request_number=${PR_NUMBER}" >> $GITHUB_OUTPUT
           echo "::notice::PR_NUMBER is ${PR_NUMBER}"
           echo "PR_NUMBER=$PR_NUMBER" >> $GITHUB_ENV
-        env:
-          GITHUB_TOKEN: ${{ secrets.PAT }}
 
       - name: Bump version dry run
         if: ${{ env.RELEASE_KIND != 'no-release' }}
