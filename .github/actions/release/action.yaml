@@ -31,9 +31,6 @@ runs:
         files: dist/*
         tag_name: "${{ inputs.tag-name }}"
         body_path: release-notes.md
-        token: ${{ inputs.github-token }}
 
     - name: Upload package to PyPI
       uses: pypa/gh-action-pypi-publish@release/v1
-      with:
-        password: ${{ inputs.pypi-api-token }}

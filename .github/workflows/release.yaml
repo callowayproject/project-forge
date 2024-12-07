@@ -16,7 +16,6 @@ jobs:
         name: Checkout the repository
         with:
           fetch-depth: 0
-          token: ${{ secrets.PAT }}
 
       - name: Setup Python and Git
         uses: ./.github/actions/setup-python-and-git
@@ -43,8 +42,6 @@ jobs:
           echo "pull_request_number=${PR_NUMBER}" >> $GITHUB_OUTPUT
           echo "::notice::PR_NUMBER is ${PR_NUMBER}"
           echo "PR_NUMBER=$PR_NUMBER" >> $GITHUB_ENV
-        env:
-          GITHUB_TOKEN: ${{ secrets.PAT }}
 
       - name: Bump version
         if: ${{ env.RELEASE_KIND != 'no-release' }}
