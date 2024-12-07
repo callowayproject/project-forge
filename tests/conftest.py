@@ -54,7 +54,6 @@ def default_origin(tmp_path: Path) -> Repo:
     tmp_repo.remotes.origin.push("remote-branch")
     tmp_repo.remotes.origin.push("v1.0.0")
 
-    remove_single_path(tmp_repo_path)
     return origin
 
 

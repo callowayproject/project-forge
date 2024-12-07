@@ -20,7 +20,7 @@ jobs:
           python-version: '3.12'
 
       - name: Install test dependencies
-        run: uv sync -p 3.12 --group test
+        run: uv sync -p 3.12 --group dev
 
       - name: Get the release hint
         id: generate-changelog
