@@ -12,9 +12,8 @@ runs:
       name: Setup Python
       with:
         python-version: ${{ inputs.python-version }}
-        cache: 'pip' # caching pip dependencies
     - name: Install the latest version of uv
-      uses: astral-sh/setup-uv@v3
+      uses: astral-sh/setup-uv@v4
       with:
         version: "latest"
     - name: Git check

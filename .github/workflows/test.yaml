@@ -35,8 +35,6 @@ jobs:
           python-version: ${{ matrix.python-version }}
       - name: Install test dependencies
         run: uv sync -p ${{ matrix.python-version }} --group test
-      - name: show fixture dir
-        run: tree tests/fixtures
       - name: Test
         run: uv run pytest
 
@@ -58,8 +56,7 @@ jobs:
       - name: Install requirements
         shell: bash
         run: |
-          uv pip install build
-          uv pip install bump-my-version
+          uv pip install build bump-my-version
 
       - name: Set dev version
         shell: bash
