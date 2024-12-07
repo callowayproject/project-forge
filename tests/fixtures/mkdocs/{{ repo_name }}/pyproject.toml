@@ -1,0 +1,1 @@
+{% extends "{{ repo_name }}/pyproject.toml" %}
