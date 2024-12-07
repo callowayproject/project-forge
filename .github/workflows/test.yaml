@@ -35,6 +35,8 @@ jobs:
           python-version: ${{ matrix.python-version }}
       - name: Install test dependencies
         run: uv sync -p ${{ matrix.python-version }} --group test
+      - name: show fixture dir
+        run: tree tests/fixtures
       - name: Test
         run: uv run pytest
 
