@@ -53,7 +53,7 @@ class TestGetRemoteClone:
     @patch("project_forge.caching.clone")
     @patch("project_forge.caching.remove_single_path")
     def test_repo_is_cloned_once_if_not_detached(self, mock_remove_single_path, mock_clone, mock_get_cache_dir):
-        """When the head is not detatched, the repo is only cloned once."""
+        """When the head is not detached, the repo is only cloned once."""
         # Assemble
         ParsedURL = MagicMock()
         ParsedURL.repo_name = "my_test_repo"
@@ -73,7 +73,7 @@ class TestGetRemoteClone:
     @patch("project_forge.caching.clone")
     @patch("project_forge.caching.remove_single_path")
     def test_repo_is_cloned_twice_if_detached(self, mock_remove_single_path, mock_clone, mock_get_cache_dir):
-        """If the head is detatched, the repo is cloned, deleted, and cloned again."""
+        """If the head is detached, the repo is cloned, deleted, and cloned again."""
         # Assemble
         ParsedURL = MagicMock()
         ParsedURL.repo_name = "my_test_repo"

@@ -27,4 +27,4 @@ jobs:
 
       - name: Build and deploy documentation
         run: |
-          uv run mkdocs gh-deploy --strict -v
+          uv run mkdocs gh-deploy --strict

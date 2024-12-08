@@ -25,7 +25,7 @@ ScalarType = Union[str, int, float, bool, None]
 
 VARIABLE_REGEX = r"[a-zA-Z_][\w_]*"
 """The regular expression to validate a variable name.
-Must start with a letter and can contain alpha-numeric and underscores."""
+Must start with a letter and can contain alphanumeric and underscores."""
 
 
 @dataclass

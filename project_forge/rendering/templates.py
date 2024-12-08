@@ -41,10 +41,10 @@ def catalog_templates(template_dir: Path) -> Dict[str, Path]:
     for root, dirs, files in template_dir.walk():
         for file in files:
             template_path = root / file
-            templates[str(template_path.relative_to(root_dir))] = template_path
+            templates[str(template_path.relative_to(root_dir).as_posix())] = template_path
         for dir_ in dirs:
             template_path = root / dir_
-            templates[str(template_path.relative_to(root_dir))] = template_path
+            templates[str(template_path.relative_to(root_dir).as_posix())] = template_path
     return {key: templates[key] for key in sorted(templates)}
 
 

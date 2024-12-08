@@ -47,7 +47,7 @@ class TestCatalogTemplates:
         result = catalog_templates(template1)
 
         # Assert
-        assert set(result.keys()) == expected_keys
+        assert {x.replace("\\", "/") for x in result.keys()} == expected_keys
 
         for key in expected_keys:
             assert (tmp_path / key).exists()
