@@ -24,7 +24,7 @@ jobs:
 
       - name: Install requirements
         run: |
-          uv pip install generate-changelog bump-my-version
+          uv sync -p 3.12 --group dev
 
       - name: Generate the changelog and get the release hint
         id: generate-changelog
