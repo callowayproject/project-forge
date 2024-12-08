@@ -64,12 +64,12 @@ jobs:
           export PR_NUMBER=$(gh pr view --json number -q .number || echo "")
           echo "PR_NUMBER=$PR_NUMBER" >> $GITHUB_ENV
           echo "::notice::PR_NUMBER is: ${PR_NUMBER}"
-          bump-my-version bump dev --no-commit --no-tag -v
+          uv run bump-my-version bump dev --no-commit --no-tag -v
 
       - name: Package
         shell: bash
         run: |
-          python -m build
+          uv run python -m build
 
       - name: Upload package to Test PyPI
         uses: pypa/gh-action-pypi-publish@release/v1

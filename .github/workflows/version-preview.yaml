@@ -25,7 +25,7 @@ jobs:
       - name: Get the release hint
         id: generate-changelog
         run: |
-          RELEASE_KIND=$(generate-changelog --output release-hint --branch-override ${{ github.base_ref }} --skip-output-pipeline)
+          RELEASE_KIND=$(uv run generate-changelog --output release-hint --branch-override ${{ github.base_ref }} --skip-output-pipeline)
           echo "::notice::Suggested release type upon merge to ${{ github.base_ref }}: ${RELEASE_KIND}"
           echo "RELEASE_KIND=$RELEASE_KIND" >> $GITHUB_ENV
           echo "release-kind=$RELEASE_KIND" >> $GITHUB_OUTPUT
@@ -43,18 +43,18 @@ jobs:
         shell: bash
         run: |
           # This will display a full log of what would happen if we were to bump the version.
-          bump-my-version bump --dry-run --verbose "$RELEASE_KIND"
+          uv run bump-my-version bump --dry-run --verbose "$RELEASE_KIND"
 
           # This retrieves the current and new version numbers as a JSON-formatted string.
-          VERSION_INFO=$(bump-my-version show --format json --increment "$RELEASE_KIND" current_version new_version)
+          VERSION_INFO=$(uv run bump-my-version show --format json --increment "$RELEASE_KIND" current_version new_version)
           echo "CURRENT_VERSION=$(echo $VERSION_INFO | jq -r .current_version)" >> $GITHUB_ENV
           echo "NEW_VERSION=$(echo $VERSION_INFO | jq -r .new_version)" >> $GITHUB_ENV
 
       - name: Set no-release information
         if: ${{ env.RELEASE_KIND == 'no-release' }}
         run: |
-          echo "CURRENT_VERSION=$(bump-my-version show current_version)" >> $GITHUB_ENV
-          echo "NEW_VERSION=$(bump-my-version show current_version)" >> $GITHUB_ENV
+          echo "CURRENT_VERSION=$(uv run bump-my-version show current_version)" >> $GITHUB_ENV
+          echo "NEW_VERSION=$(uv run bump-my-version show current_version)" >> $GITHUB_ENV
 
       - name: Display the version hint
         uses: s-gehring/singleton-comment@v1
