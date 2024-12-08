@@ -76,12 +76,13 @@ class TestForgerFixture:
         """The forge command properly builds a project."""
         # Assemble
         composition_path = fixtures_dir.joinpath("composition1.toml").resolve()
+        composition_path_str = str(composition_path).replace("\\", "\\\\")
         output_dir = tmp_path / "test_output"
         output_dir.mkdir(parents=True, exist_ok=True)
         pytester.makepyfile(
             f"""
             def test_forger_fixture(forger):
-                result = forger.forge(config_path="{composition_path}", use_defaults=True)
+                result = forger.forge(config_path="{composition_path_str}", use_defaults=True)
                 assert result.exception == None
                 assert result.exit_code == 0
                 assert result.project_dir.exists()
