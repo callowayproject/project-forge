@@ -1,5 +1,92 @@
 # Changelog
 
+## 0.3.0 (2024-12-08)
+[Compare the full difference.](https://github.com/callowayproject/project-forge/compare/0.2.0...0.3.0)
+
+### Fixes
+
+- Fixed building. [64499b6](https://github.com/callowayproject/project-forge/commit/64499b63a24336e25c7c9b68d873cca9bbb0161a)
+    
+- Fixed release to test pypi. [610bfa6](https://github.com/callowayproject/project-forge/commit/610bfa67b773d3323e2576a0e9c8a90dad2b5e12)
+    
+- Fixed tests and version preview. [241e04d](https://github.com/callowayproject/project-forge/commit/241e04daa0b79fb66a2d70654f6c2246e5623ff9)
+    
+- Fixed minor linting bugs. [8cad0c3](https://github.com/callowayproject/project-forge/commit/8cad0c3254e0a74a619370d43c1b19ae41f4aa8f)
+    
+- Fixed windows testing bug when removing a directory. [a82f645](https://github.com/callowayproject/project-forge/commit/a82f64566871fa476f79c019166de0c7698a2d0d)
+    
+- Fixed caching issues with uv in actions. [283590f](https://github.com/callowayproject/project-forge/commit/283590fb9aa0ee64ade78c7df290492358f13bdd)
+    
+- Fixed more GitHub Actions. [862197a](https://github.com/callowayproject/project-forge/commit/862197adf3be740d31d86b64c1030414561fde99)
+    
+- Fixed GitHub Actions. [a6733bc](https://github.com/callowayproject/project-forge/commit/a6733bc98d6a990e93e3b8540d42b1c49affc01a)
+    
+- Fixed coverage in GitHub Actions. [d35db77](https://github.com/callowayproject/project-forge/commit/d35db7784dea1a3fef7c7470d51b64761c839eb5)
+    
+- Fixed tooling and formatting. [217cfb8](https://github.com/callowayproject/project-forge/commit/217cfb8fa2e7d100d6f934f4651efbe7fa50305f)
+    
+### New
+
+- Added pyproject.toml for test fixture. [91d4b1f](https://github.com/callowayproject/project-forge/commit/91d4b1f83c8edb43962acc230b36dfccd5bdb967)
+    
+- Added documentation configuration. [8a3c86c](https://github.com/callowayproject/project-forge/commit/8a3c86c0e1f7c56df8b72a3de1c89ea457f26e0e)
+    
+- Add UI function to CLI tests and refactor conftest.py. [0fbb915](https://github.com/callowayproject/project-forge/commit/0fbb915dd9ed2ab0afb37812fa6216ea65928a3d)
+    
+  Incorporate 'ask_question' as a UI function across CLI tests to enhance interactivity. Remove the 'inside_dir' context manager from conftest.py, streamlining the test setup by relying on pytest plugins for directory management.
+- Add testing utilities and tests for Project Forge. [58b22c7](https://github.com/callowayproject/project-forge/commit/58b22c75063b9fc89fbe59e76279c11e112a1e5a)
+    
+  Introduce a new `project_forge.testing` module providing utilities such as `inside_dir`, `run_inside_dir`, and `use_default_ui` for testing Project Forge patterns and compositions. Additionally, implement tests for these utilities to ensure correct functionality, including context management, command execution, and handling of project creation using default settings.
+### Other
+
+- Debugging GitHub Actions. [b1a4175](https://github.com/callowayproject/project-forge/commit/b1a4175a125b1af499487f42f97bf9caac4ce179)
+    
+- Bump the github-actions group across 1 directory with 3 updates. [e74f7fe](https://github.com/callowayproject/project-forge/commit/e74f7fed312c6597beb5ab03aa471dcb1095b1ff)
+    
+  Bumps the github-actions group with 3 updates in the / directory: [actions/checkout](https://github.com/actions/checkout), [actions/setup-python](https://github.com/actions/setup-python) and [codecov/codecov-action](https://github.com/codecov/codecov-action).
+
+
+  Updates `actions/checkout` from 3 to 4
+  - [Release notes](https://github.com/actions/checkout/releases)
+  - [Changelog](https://github.com/actions/checkout/blob/main/CHANGELOG.md)
+  - [Commits](https://github.com/actions/checkout/compare/v3...v4)
+
+  Updates `actions/setup-python` from 4 to 5
+  - [Release notes](https://github.com/actions/setup-python/releases)
+  - [Commits](https://github.com/actions/setup-python/compare/v4...v5)
+
+  Updates `codecov/codecov-action` from 3 to 5
+  - [Release notes](https://github.com/codecov/codecov-action/releases)
+  - [Changelog](https://github.com/codecov/codecov-action/blob/main/CHANGELOG.md)
+  - [Commits](https://github.com/codecov/codecov-action/compare/v3...v5)
+
+  ---
+  **updated-dependencies:** - dependency-name: actions/checkout
+dependency-type: direct:production
+update-type: version-update:semver-major
+dependency-group: github-actions
+
+
+  **signed-off-by:** dependabot[bot] <support@github.com>
+
+
+- [pre-commit.ci] pre-commit autoupdate. [5e87280](https://github.com/callowayproject/project-forge/commit/5e87280b5cd9260addee260048b2d910c7fcb10c)
+    
+  **updates:** - [github.com/astral-sh/ruff-pre-commit: v0.7.4 → v0.8.0](https://github.com/astral-sh/ruff-pre-commit/compare/v0.7.4...v0.8.0)
+
+
+### Updates
+
+- Changed the handling of paths in test yet again. [d3d35cb](https://github.com/callowayproject/project-forge/commit/d3d35cbab928b263946f18edd559272509f98494)
+    
+- Changed the handling of paths in test again. [5b49897](https://github.com/callowayproject/project-forge/commit/5b49897d1c079f82278fcb11e2e8cad978adbd57)
+    
+- Changed the handling of paths in test. [a1904ea](https://github.com/callowayproject/project-forge/commit/a1904ea5902c999bae620d4f559520c4085f7713)
+    
+- Refactor to use dataclass for build results. [d1fbcdd](https://github.com/callowayproject/project-forge/commit/d1fbcdd7edee1011527b3af9dc0d544b0a772fe6)
+    
+  Updated `build_project` function to return a `BuildResult`, now including additional UI function parameter for better flexibility. The `render_env` function now identifies and returns the project root path, enhancing build tracking.
+
 ## 0.2.0 (2024-11-18)
 
 [Compare the full difference.](https://github.com/callowayproject/project-forge/compare/0.1.0...0.2.0)
