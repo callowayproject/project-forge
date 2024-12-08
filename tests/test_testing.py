@@ -41,7 +41,7 @@ class TestForgerFixture:
         pytester.makepyfile(
             f"""
             def test_forger_fixture(forger):
-                assert str(forger._output_dir) == "{output_dir}"
+                assert str(forger._output_dir.as_posix()) == "{output_dir.as_posix()}"
             """
         )
 
