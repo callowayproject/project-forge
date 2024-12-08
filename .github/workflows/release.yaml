@@ -29,7 +29,7 @@ jobs:
       - name: Generate the changelog and get the release hint
         id: generate-changelog
         run: |
-          RELEASE_KIND=$(generate-changelog --output release-hint)
+          RELEASE_KIND=$(uv run generate-changelog --output release-hint)
           echo "::notice::Suggested release type for this branch is: ${RELEASE_KIND}"
           echo "RELEASE_KIND=$RELEASE_KIND" >> $GITHUB_ENV
           echo "release-kind=$RELEASE_KIND" >> $GITHUB_OUTPUT
