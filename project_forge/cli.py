@@ -8,6 +8,7 @@ from click.core import Context
 
 from project_forge import __version__
 from project_forge.core.io import parse_file
+from project_forge.tui import ask_question
 
 
 @click.group(
@@ -79,4 +80,10 @@ def build(
     if data:
         initial_context |= dict(data)
 
-    build_project(composition, output_dir=output_dir, use_defaults=use_defaults, initial_context=initial_context)
+    build_project(
+        composition,
+        output_dir=output_dir,
+        ui_function=ask_question,
+        use_defaults=use_defaults,
+        initial_context=initial_context,
+    )

@@ -10,7 +10,6 @@ from typing import Iterator, Optional, Union
 from git import GitCommandError, InvalidGitRepositoryError, NoSuchPathError, Repo
 
 from project_forge.core.exceptions import GitError
-from project_forge.core.io import remove_single_path
 from project_forge.core.urls import ParsedURL
 
 logger = logging.getLogger(__name__)
@@ -241,6 +240,9 @@ def temp_git_worktree_dir(
         raise GitError(f"Could not create a worktree for {repo_path}") from e
     finally:
         # Clean up the temporary working directory.
-        remove_single_path(worktree_path)
-        remove_single_path(tmp_dir)
+        # Windows has an issue with this:
+        #     The process cannot access the file because it is being used by another process
+        # Since these will get purged by the OS, I'm not going to worry about determining the problem.
+        # remove_single_path(worktree_path)
+        # remove_single_path(tmp_dir)
         repo.git.worktree("prune")

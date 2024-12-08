@@ -33,7 +33,7 @@ class ExprValidator:
 
 
 def is_int(value: Any) -> bool:
-    """Is the value an int or convertable to an int?"""
+    """Is the value an int or convertible to an int?"""
     if not isinstance(value, (int, float, str, bool)):
         return False
 
@@ -45,7 +45,7 @@ def is_int(value: Any) -> bool:
 
 
 def is_float(value: Any) -> bool:
-    """Is the value a float or convertable to a float?"""
+    """Is the value a float or convertible to a float?"""
     if not isinstance(value, (int, float, str, bool)):
         return False
 
@@ -57,7 +57,7 @@ def is_float(value: Any) -> bool:
 
 
 def is_bool(value: Any) -> bool:
-    """Is the value a boolean or convertable to a boolean?"""
+    """Is the value a boolean or convertible to a boolean?"""
     if not isinstance(value, (int, float, str, bool)):
         return False
 

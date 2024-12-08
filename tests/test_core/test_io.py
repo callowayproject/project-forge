@@ -97,9 +97,9 @@ class TestParseFile:
     def test_unsupported_file_returns_content(self, tmp_path: Path):
         """Parsing an unknown file just returns the file's contents."""
         test_file_path = tmp_path / "test.unsupported"
-        test_file_path.write_text("unsupport type file content")
+        test_file_path.write_text("unsupported type file content")
         result = io.parse_file(test_file_path)
-        assert result == "unsupport type file content"
+        assert result == "unsupported type file content"
 
 
 class TestMakeSurePathExists:

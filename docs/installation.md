@@ -8,7 +8,6 @@ date: 2024-08-26
 
     Installation instructions not implemented yet!
 
-
 ## Installing the Stable Release from PyPI
 
 To install project-forge, run this command in your terminal:

@@ -10,6 +10,7 @@ classifiers = [
     "Intended Audience :: Developers",
     "Natural Language :: English",
     "Programming Language :: Python :: 3.12",
+    "Framework :: Pytest",
 ]
 keywords = ["project_forge"]
 dynamic = ["version"]
@@ -28,7 +29,7 @@ dependencies = [
     "rich-click>=1.8.3",
 ]
 authors = [
-    { name = "Calloway Project",  email = "coreyoordt@gmail.com" },
+    { name = "Calloway Project", email = "coreyoordt@gmail.com" },
 ]
 
 [project.readme]
@@ -41,7 +42,7 @@ Documentation = "https://callowayproject.github.io/project_forge"
 Repository = "https://github.com/callowayproject/project-forge"
 Changelog = "https://github.com/callowayproject/project-forge/CHANGELOG.md"
 
-[project.optional-dependencies]
+[dependency-groups]
 dev = [
     "bump-my-version",
     "generate-changelog>=0.7.6",
@@ -50,6 +51,7 @@ dev = [
 ]
 test = [
     "coverage>=6.1.2",
+    "gitpython",
     "pre-commit>=2.15.0",
     "pytest-cov>=3.0.0",
     "pytest>=6.0.0",
@@ -57,6 +59,7 @@ test = [
 ]
 docs = [
     "black",
+    "griffe-pydantic",
     "markdown-customblocks",
     "mdx-truly-sane-lists",
     "mkdocs",
@@ -76,6 +79,9 @@ docs = [
 [project.scripts]
 project-forge = "project_forge.cli:cli"
 
+[project.entry-points.pytest11]
+forger = "project_forge.testing.plugin"
+
 [tool.hatch.version]
 path = "project_forge/__init__.py"
 
@@ -84,6 +90,7 @@ python_version = "3.12"
 
 [tool.coverage.run]
 branch = true
+source = ["project_forge"]
 omit = ["**/test_*.py", "**/__main__.py"]
 
 [tool.coverage.report]
@@ -98,16 +105,7 @@ exclude_lines = [
     "pragma: no-coverage",
 ]
 
-[tool.coverage.html]
-directory = "test-reports/htmlcov"
-
 [tool.pytest.ini_options]
-addopts = [
-    "--cov=project_forge",
-    "--cov-branch",
-    "--cov-report=term",
-    "--cov-report=html",
-]
 norecursedirs = [
     ".*",
     "build",
@@ -118,7 +116,11 @@ norecursedirs = [
     "requirements*",
     "lib",
 ]
-python_files = "test*.py"
+python_files = [
+    "test_*.py",
+    "*_test.py",
+    "tests.py",
+]
 
 [tool.interrogate]
 ignore-init-method = true
@@ -196,8 +198,6 @@ select = [
 ignore = [
     "ANN002", # missing-type-args
     "ANN003", # missing-type-kwargs
-    "ANN101", # missing-type-self
-    "ANN102", # missing-type-cls
     "ANN204", # missing-return-type-special-method
     "ANN401", # any-type
     "S101", # assert
@@ -226,7 +226,6 @@ typing-modules = ["typing", "types", "typing_extensions", "mypy", "mypy_extensio
 "tests/*" = ["S101", "PLR0913", "PLR0915", "PGH003", "ANN001", "ANN202", "ANN201", "PLR0912", "TRY301", "PLW0603", "PLR2004", "ANN101", "S106", "TRY201", "ANN003", "ANN002", "S105", "TRY003"]
 
 [tool.ruff.lint.mccabe]
-# Unlike Flake8, default to a complexity level of 10.
 max-complexity = 10
 
 [tool.ruff.lint.isort]
@@ -247,8 +246,8 @@ exclude = '\.git|tests'
 require-return-section-when-returning-nothing = false
 arg-type-hints-in-docstring = false
 check-return-types = false
+skip-checking-raises = true
 quiet = true
-
 
 [tool.bumpversion]
 current_version = "0.2.0"

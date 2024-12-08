@@ -1,8 +1,6 @@
 """Functions to render a composition using answered questions."""
 
 import logging
-import pprint
-from io import StringIO
 from pathlib import Path
 
 from jinja2 import Environment
@@ -13,15 +11,15 @@ from project_forge.rendering.expressions import render_expression
 logger = logging.getLogger(__name__)
 
 
-def render_env(env: Environment, path_list: InheritanceMap, context: dict, destination_path: Path):
+def render_env(env: Environment, path_list: InheritanceMap, context: dict, destination_path: Path) -> Path:
     """Render the templates in path_list using context."""
-    context_stream = StringIO()
-    pprint.pprint(context, context_stream)
-    logger.debug(f"Rendering templates using context:\n{context_stream.getvalue()}")
+    project_root = None
 
     for path, val in path_list.items():
         dst_rel_path = render_expression(path, context)
         full_path = destination_path / dst_rel_path
+        if project_root is None:
+            project_root = full_path
 
         if not val.exists():
             raise ValueError(f"Path {path} does not exist")
@@ -36,3 +34,4 @@ def render_env(env: Environment, path_list: InheritanceMap, context: dict, desti
             full_path.mkdir(parents=True, exist_ok=True)
         else:
             raise ValueError(f"Path {val} does not exist")
+    return project_root

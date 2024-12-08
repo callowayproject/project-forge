@@ -7,10 +7,10 @@ comments: true
 
 # Project Forge
 
-{% 
-    include-markdown 
-    "../README.md" 
-    start="<!--start-->" 
+{%
+    include-markdown
+    "../README.md"
+    start="<!--start-->"
     end="<!--end-->"
     rewrite-relative-urls=false
 %}
