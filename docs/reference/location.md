@@ -6,21 +6,22 @@ All fields that accept a [location](api/project_forge/core/location.md/) object 
 
 ```toml title="Locations specified by strings"
 overlays = [
-    { pattern_location = "python-package/pattern.toml" },
-    { pattern_location = "https://github.com/owner/repository/" }
+  { pattern_location = "python-package/pattern.toml" },
+  { pattern_location = "https://github.com/owner/repository/" },
 ]
 ```
 
 ```toml title="Locations specified by objects"
 overlays = [
-    { pattern_location = { path = "python-package/pattern.toml" } },
-    { pattern_location = { url = "https://github.com/owner/repository/" } }
+  { pattern_location = { path = "python-package/pattern.toml" } },
+  { pattern_location = { url = "https://github.com/owner/repository/" } },
 ]
 ```
 
 At least one of `path` or `url` must be specified. Here is how the `url` and `path` attributes work together:
 
 - **`url` specified, `path` specified:** The `path` is resolved using the root of the repository. Relative paths cannot resolve to locations outside the repository.
+
 - **`url` specified, `path` unspecified:** The `path` is the root of the repository.
 
 - **`url` unspecified, `path` specified:** The `path` is resolved using the local filesystem and current working directory.

@@ -1,5 +1,5 @@
 ---
-title: Quickstart 
+title: Quickstart
 summary: Quickstart instructions for Project Forge.
 date: 2024-08-26
 ---
