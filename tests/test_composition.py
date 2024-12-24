@@ -10,6 +10,7 @@ from project_forge.core.exceptions import (
 from project_forge.models.composition import Composition, read_composition_file
 from project_forge.models.location import Location
 from project_forge.models.overlay import _validate_pattern_location  # noqa: PLC2701
+from project_forge.models.task import Task
 from tests.mocks import MockValidationInfo
 
 
@@ -94,10 +95,12 @@ class TestReadCompositionFile:
     def test_reads_a_composition_file(self, fixtures_dir: Path):
         """The composition and its patterns are correctly read from a file."""
         composition = read_composition_file(fixtures_dir / "composition1.toml")
-        assert len(composition.steps) == 3
+        assert len(composition.steps) == 4
         pattern1 = composition.steps[0].pattern
         pattern2 = composition.steps[1].pattern
         pattern3 = composition.steps[2].pattern
+        command = composition.steps[3].command
+
         assert pattern1 is not None
         assert len(pattern1.questions) == 6
         assert pattern1.template_location.resolve() == fixtures_dir / "python-package" / "{{ repo_name }}"
@@ -109,6 +112,9 @@ class TestReadCompositionFile:
         assert pattern3 is not None
         assert len(pattern3.questions) == 8
         assert pattern3.template_location.resolve() == fixtures_dir / "python-boilerplate" / "{{ repo_name }}"
+
+        assert isinstance(composition.steps[3], Task)
+        assert command == ["git", "init"]
 
     def test_reads_and_converts_a_pattern_file(self, fixtures_dir: Path):
         """A pattern file is read and converted into a composition with one overlay."""
