@@ -1,8 +1,8 @@
 # Location
 
-The [location](api/project_forge/core/location.md/) is a hashable reference to a source. A location consists of a `url` and `path` combination.
+The [location](api/project_forge/models/location.md) is a hashable reference to a source. A location consists of a `url` and `path` combination.
 
-All fields that accept a [location](api/project_forge/core/location.md/) object will also accept a string representing a URL _or_ a path. So the following are equivalent:
+All fields that accept a [location](api/project_forge/models/location.md) object will also accept a string representing a URL _or_ a path. So the following are equivalent:
 
 ```toml title="Locations specified by strings"
 overlays = [

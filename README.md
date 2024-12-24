@@ -10,6 +10,8 @@
 (https://github.com/callowayproject/project-forge/workflows/CI/badge.svg)]
 (https://github.com/callowayproject/project-forge/actions)
 
+<!--start-->
+
 Project Forge is a composable project scaffolding tool.
 Developers can quickly generate new projects by only answering a few questions.
 
@@ -60,3 +62,5 @@ It includes configuration and instructions only.
 Each _overlay_ references a pattern and how to configure it for the composition,
 like "Hamburger, well done, placed between buns."
 A task performs an action during project generation, like "stir for 3 minutes."
+
+<!--end-->
