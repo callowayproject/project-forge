@@ -31,7 +31,6 @@ class TestBuildCommand:
     @patch("project_forge.commands.build.build_project")
     def test_use_defaults_passed_to_build_project(self, mock_build_project, runner: CliRunner, composition_path: Path):
         """The `use-defaults` flag is correctly passed to the `build_project` function."""
-
         result = runner.invoke(build, [str(composition_path), "--use-defaults"])
 
         if result.exit_code != 0:
@@ -39,7 +38,11 @@ class TestBuildCommand:
 
         assert result.exit_code == 0
         mock_build_project.assert_called_once_with(
-            composition_path, output_dir=Path.cwd(), ui_function=ask_question, use_defaults=True, initial_context={}
+            composition_path,
+            output_dir=Path.cwd(),
+            ui_function=ask_question,
+            use_defaults=True,
+            initial_context={"output_dir": Path.cwd()},
         )
 
     @patch("project_forge.commands.build.build_project")
@@ -57,7 +60,11 @@ class TestBuildCommand:
 
         assert result.exit_code == 0
         mock_build_project.assert_called_once_with(
-            composition_path, output_dir=output_dir, ui_function=ask_question, use_defaults=False, initial_context={}
+            composition_path,
+            output_dir=output_dir,
+            ui_function=ask_question,
+            use_defaults=False,
+            initial_context={"output_dir": output_dir},
         )
 
     @patch("project_forge.commands.build.build_project")
@@ -83,7 +90,7 @@ class TestBuildCommand:
             output_dir=Path.cwd(),
             ui_function=ask_question,
             use_defaults=False,
-            initial_context={"key": "value"},
+            initial_context={"key": "value", "output_dir": Path.cwd()},
         )
 
     @patch("project_forge.commands.build.build_project")
@@ -101,5 +108,5 @@ class TestBuildCommand:
             output_dir=Path.cwd(),
             ui_function=ask_question,
             use_defaults=False,
-            initial_context={"key": "value"},
+            initial_context={"key": "value", "output_dir": Path.cwd()},
         )

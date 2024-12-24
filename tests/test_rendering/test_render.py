@@ -1,11 +1,10 @@
 """Tests for project_forge.rendering.render.py."""
 
 from pathlib import Path
-from unittest.mock import MagicMock, patch
 
 import pytest
 
-from project_forge.configurations.composition import read_composition_file
+from project_forge.models.composition import read_composition_file
 from project_forge.rendering.environment import load_environment
 from project_forge.rendering.render import render_env
 from project_forge.context_builder.context import build_context
@@ -22,12 +21,14 @@ def template(tmp_path: Path):
     template_dir.joinpath("{{ repo_name }}", "file.txt").write_text("{{ key }}")
     pattern_content = 'template_location = "{{ repo_name }}"\n[extra_context]\nkey = "value"\n'
     template_dir.joinpath("pattern.toml").write_text(pattern_content)
-    composition_content = (
-        "overlays = [\n"
-        '{ pattern_location = "pattern.toml" }\n'
-        "]\n"
-        "[extra_context]\n"
-        'repo_name = "my-project"\n'
+    composition_content = "\n".join(
+        [
+            "steps = [",
+            '  { pattern_location = "pattern.toml" }',
+            "]",
+            "[extra_context]",
+            'repo_name = "my-project"',
+        ]
     )
     template_dir.joinpath("composition.toml").write_text(composition_content)
     return template_dir
@@ -37,7 +38,7 @@ def test_render_env_for_file(tmp_path: Path, template: Path):
     # Assemble
     composition = read_composition_file(template / "composition.toml")
     context = build_context(composition, ask_question)
-    template_paths = [overlay.pattern.template_location.resolve() for overlay in composition.overlays]
+    template_paths = [overlay.pattern.template_location.resolve() for overlay in composition.steps]
     inheritance = catalog_inheritance(template_paths)
     env = load_environment(inheritance)
 
@@ -54,7 +55,7 @@ def test_render_env_for_directory(tmp_path: Path, template: Path):
     # Assemble
     composition = read_composition_file(template / "composition.toml")
     context = build_context(composition, ask_question)
-    template_paths = [overlay.pattern.template_location.resolve() for overlay in composition.overlays]
+    template_paths = [overlay.pattern.template_location.resolve() for overlay in composition.steps]
     inheritance = catalog_inheritance(template_paths)
     env = load_environment(inheritance)
 

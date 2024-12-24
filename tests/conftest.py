@@ -2,11 +2,9 @@
 
 import sys
 from pathlib import Path
-from git import Actor, Repo
 
 import pytest
-
-from project_forge.core.io import remove_single_path
+from git import Actor, Repo
 
 pytest_plugins = ["pytester", "forger"]
 
@@ -65,3 +63,11 @@ def default_repo(default_origin: Repo, tmp_path: Path) -> Repo:
     repo.remotes.origin.pull()
 
     return repo
+
+
+@pytest.fixture
+def temp_directory(tmp_path: Path) -> Path:
+    """Fixture to provide a temporary directory for testing."""
+    temp_dir = tmp_path / "subdir"
+    temp_dir.mkdir()
+    return temp_dir

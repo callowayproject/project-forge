@@ -1,5 +1,6 @@
-overlays = [
+steps = [
     { pattern_location = "python-package/pattern.toml" },
-    { pattern_location = "mkdocs/pattern.toml"},
-    { pattern_location = "python-boilerplate/pattern.toml"},
+    { pattern_location = "mkdocs/pattern.toml" },
+    { pattern_location = "python-boilerplate/pattern.toml" },
+    { command = ["git", "init"] },
 ]

@@ -5,7 +5,8 @@ from unittest.mock import MagicMock
 import pytest
 from pathlib import Path
 
-from project_forge.context_builder.overlays import merge_contexts, process_overlay, Overlay
+from project_forge.context_builder.overlays import merge_contexts, process_overlay
+from project_forge.models.overlay import Overlay
 
 
 # composition_path is None

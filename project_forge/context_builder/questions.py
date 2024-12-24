@@ -2,8 +2,8 @@
 
 from typing import Any, Callable, Dict, List, Optional
 
-from project_forge.configurations.pattern import Choice, Question
 from project_forge.core.validators import ExprValidator
+from project_forge.models.pattern import Choice, Question
 from project_forge.rendering.expressions import render_bool_expression, render_expression
 
 

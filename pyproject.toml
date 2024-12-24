@@ -61,6 +61,8 @@ docs = [
     "black",
     "griffe-pydantic",
     "markdown-customblocks",
+    "mdformat-mkdocs[recommended]>=4.1.1",
+    "mdformat>=0.7.21",
     "mdx-truly-sane-lists",
     "mkdocs",
     "mkdocs-click",

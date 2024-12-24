@@ -4,9 +4,10 @@ import logging
 from pathlib import Path
 from typing import Optional
 
-from project_forge.configurations.composition import read_composition_file
 from project_forge.context_builder.context import build_context
-from project_forge.core.models import BuildResult, UIFunction
+from project_forge.core.types import BuildResult, UIFunction
+from project_forge.models.composition import read_composition_file
+from project_forge.models.overlay import Overlay
 from project_forge.rendering.environment import load_environment
 from project_forge.rendering.render import render_env
 from project_forge.rendering.templates import catalog_inheritance
@@ -24,13 +25,13 @@ def build_project(
     """Render a project to a directory."""
     initial_context = initial_context or {}
     composition = read_composition_file(composition_file)
-
+    overlays = [item for item in composition.steps if isinstance(item, Overlay)]
     if use_defaults:
-        for overlay in composition.overlays:
+        for overlay in overlays:
             overlay.ask_questions = False
     context = build_context(composition, ui_function, initial_context)
 
-    template_paths = [overlay.pattern.template_location.resolve() for overlay in composition.overlays]  # type: ignore[union-attr]
+    template_paths = [overlay.pattern.template_location.resolve() for overlay in overlays]  # type: ignore[union-attr]
     inheritance = catalog_inheritance(template_paths)
     env = load_environment(inheritance)
     root_path = render_env(env, inheritance, context, output_dir)

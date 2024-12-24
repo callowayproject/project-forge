@@ -1,15 +1,16 @@
 from pathlib import Path
-from unittest.mock import MagicMock, patch
+from unittest.mock import patch
 
 import pytest
-from project_forge.configurations.composition import (
-    _validate_pattern_location,
-    Location,
-    RepoNotFoundError,
+
+from project_forge.core.exceptions import (
     RepoAuthError,
-    Composition,
-    read_composition_file,
+    RepoNotFoundError,
 )
+from project_forge.models.composition import Composition, read_composition_file
+from project_forge.models.location import Location
+from project_forge.models.overlay import _validate_pattern_location  # noqa: PLC2701
+from project_forge.models.task import Task
 from tests.mocks import MockValidationInfo
 
 
@@ -48,9 +49,7 @@ class TestValidateTemplateLocation:
         def mock_resolve(*args):
             raise RepoNotFoundError()
 
-        with patch(
-            "project_forge.configurations.composition.Location", spec=Location, resolve=mock_resolve
-        ) as MockLocation:
+        with patch("project_forge.models.location.Location", spec=Location, resolve=mock_resolve) as MockLocation:
             # Use a mocked Location object whose `resolve` method always raises a RepoNotFound error
             with pytest.raises(ValueError):
                 _validate_pattern_location(MockLocation(), MockValidationInfo())
@@ -61,9 +60,7 @@ class TestValidateTemplateLocation:
         def mock_resolve(*args):
             raise RepoAuthError()
 
-        with patch(
-            "project_forge.configurations.composition.Location", spec=Location, resolve=mock_resolve
-        ) as MockLocation:
+        with patch("project_forge.models.location.Location", spec=Location, resolve=mock_resolve) as MockLocation:
             # Use a mocked Location object whose `resolve` method always raises a RepoAuthError
             with pytest.raises(ValueError):
                 _validate_pattern_location(MockLocation(), MockValidationInfo())
@@ -80,7 +77,7 @@ def test_create_composition_from_str_location(tmp_path: Path):
     template = tmp_path.joinpath("template")
     template.touch()
     comp = Composition.from_location(str(template))
-    assert comp.overlays[0].pattern_location.path == str(template)
+    assert comp.steps[0].pattern_location.path == str(template)
 
 
 def test_create_composition_from_location(tmp_path: Path):
@@ -89,7 +86,7 @@ def test_create_composition_from_location(tmp_path: Path):
     template.touch()
     location = Location(path=str(template))
     comp = Composition.from_location(location)
-    assert comp.overlays[0].pattern_location.path == str(template)
+    assert comp.steps[0].pattern_location.path == str(template)
 
 
 class TestReadCompositionFile:
@@ -98,10 +95,12 @@ class TestReadCompositionFile:
     def test_reads_a_composition_file(self, fixtures_dir: Path):
         """The composition and its patterns are correctly read from a file."""
         composition = read_composition_file(fixtures_dir / "composition1.toml")
-        assert len(composition.overlays) == 3
-        pattern1 = composition.overlays[0].pattern
-        pattern2 = composition.overlays[1].pattern
-        pattern3 = composition.overlays[2].pattern
+        assert len(composition.steps) == 4
+        pattern1 = composition.steps[0].pattern
+        pattern2 = composition.steps[1].pattern
+        pattern3 = composition.steps[2].pattern
+        command = composition.steps[3].command
+
         assert pattern1 is not None
         assert len(pattern1.questions) == 6
         assert pattern1.template_location.resolve() == fixtures_dir / "python-package" / "{{ repo_name }}"
@@ -114,11 +113,14 @@ class TestReadCompositionFile:
         assert len(pattern3.questions) == 8
         assert pattern3.template_location.resolve() == fixtures_dir / "python-boilerplate" / "{{ repo_name }}"
 
+        assert isinstance(composition.steps[3], Task)
+        assert command == ["git", "init"]
+
     def test_reads_and_converts_a_pattern_file(self, fixtures_dir: Path):
         """A pattern file is read and converted into a composition with one overlay."""
         composition = read_composition_file(fixtures_dir / "mkdocs" / "pattern.toml")
-        assert len(composition.overlays) == 1
-        pattern = composition.overlays[0].pattern
+        assert len(composition.steps) == 1
+        pattern = composition.steps[0].pattern
         assert pattern is not None
         assert len(pattern.questions) == 4
         assert pattern.template_location.resolve() == fixtures_dir / "mkdocs" / "{{ repo_name }}"
