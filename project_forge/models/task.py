@@ -2,6 +2,7 @@
 
 import os
 import subprocess
+from pathlib import Path
 from typing import Annotated, List, Optional
 
 from pydantic import AfterValidator, BaseModel, Field, model_validator
@@ -66,7 +67,8 @@ def execute_task(task: Task, context: dict) -> dict:
         extra_env = {key: render_expression(val) for key, val in task.env.items()}
         env |= extra_env
 
-    with inside_dir(context["output_dir"]):
+    working_dir = context.get("working_dir", Path.cwd())
+    with inside_dir(working_dir):
         result = subprocess.run(  # noqa: S603
             task.command,
             shell=task.use_shell,
