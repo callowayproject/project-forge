@@ -20,7 +20,7 @@ from project_forge.tui import ask_question
 @click.version_option(version=__version__)
 @click.pass_context
 def cli(ctx: Context) -> None:
-    """Version bump your Python project."""
+    """Generate projects from compositions and patterns."""
     pass
 
 
@@ -72,7 +72,7 @@ def build(
     """Build a project from a composition and render it to a directory."""
     from project_forge.commands.build import build_project
 
-    initial_context: dict[str, Any] = {}
+    initial_context: dict[str, Any] = {"output_dir": output_dir.resolve()}
     if data_file:
         values = parse_file(data_file)
         initial_context |= values or {}

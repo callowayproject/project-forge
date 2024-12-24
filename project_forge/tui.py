@@ -4,7 +4,7 @@ from typing import Any, Callable, Optional
 
 import questionary
 
-from project_forge.core.models import QUESTION_TYPE_CAST, QuestionType
+from project_forge.core.types import QUESTION_TYPE_CAST, QuestionType
 
 
 def make_validator(validator_func: Callable) -> Optional[Callable]:

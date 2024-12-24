@@ -1,14 +1,14 @@
 """Compile the context from all the overlays."""
 
 from copy import deepcopy
-from typing import Callable, MutableMapping
+from typing import Any, Callable, MutableMapping
 
-from project_forge.configurations.composition import Overlay
 from project_forge.context_builder.questions import answer_question
+from project_forge.models.overlay import Overlay
 from project_forge.rendering.expressions import render_expression
 
 
-def process_overlay(overlay: Overlay, running_context: dict, question_ui: Callable) -> dict:
+def process_overlay(overlay: Overlay, running_context: dict[str, Any], question_ui: Callable) -> dict[str, Any]:
     """
     Get the context from an overlay.
 
@@ -16,7 +16,7 @@ def process_overlay(overlay: Overlay, running_context: dict, question_ui: Callab
     - render extra_context with running_context
     - update running_context with extra_context
     - for each question in pattern
-        - set response to result of answer_question
+        - set response to the result of answer_question
         - update running context with response
 
     Args:

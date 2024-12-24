@@ -1,38 +1,21 @@
 """Utilities for testing Project Forge patterns and compositions."""
 
-import os
 import pathlib
+import shlex
 import subprocess
-from contextlib import contextmanager
 from dataclasses import dataclass
 from pathlib import Path
-import shlex
 from subprocess import CompletedProcess
-from typing import Generator, Optional, Any, Callable
+from typing import Any, Callable, Optional
 
 from project_forge.commands.build import build_project
-from project_forge.core.models import QuestionType
-
-
-@contextmanager
-def inside_dir(dir_path: Path) -> Generator[None, None, None]:
-    """
-    Temporarily switch the current directory to the given path.
-
-    Args:
-        dir_path: path of the directory the command is being run.
-    """
-    old_path = os.getcwd()
-    try:
-        os.chdir(dir_path)
-        yield
-    finally:
-        os.chdir(old_path)
+from project_forge.core.types import QuestionType
+from project_forge.utils import inside_dir
 
 
 def run_inside_dir(command: str, dir_path: Path) -> CompletedProcess:
     """
-    Run a command from inside a given directory, returning the exit status
+    Run a command from inside a given directory, returning the exit status.
 
     Args:
         command: Command string to execute within the directory
@@ -42,7 +25,7 @@ def run_inside_dir(command: str, dir_path: Path) -> CompletedProcess:
         The result code of the command.
     """
     with inside_dir(dir_path):
-        return subprocess.run(shlex.split(command), capture_output=True, check=True)
+        return subprocess.run(shlex.split(command), capture_output=True, check=True)  # noqa: S603
 
 
 def use_default_ui(
@@ -61,7 +44,7 @@ def use_default_ui(
 
 @dataclass
 class Result:
-    """Holds the captured result of the cookiecutter project generation."""
+    """Holds the captured result of the project forge project generation."""
 
     exception: Optional[BaseException] = None
     exit_code: str | int = 0

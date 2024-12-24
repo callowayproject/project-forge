@@ -3,7 +3,9 @@
 import datetime
 
 from project_forge.context_builder.context import build_context, get_starting_context, update_context
-from unittest.mock import Mock, patch
+from unittest.mock import Mock, patch, MagicMock
+
+from project_forge.models.overlay import Overlay
 
 
 def test_get_starting_context_contains_correct_keys():
@@ -30,7 +32,7 @@ class TestBuildContext:
             composition = Mock()
             composition.merge_keys = {}
             composition.extra_context = {"key": "{{ value }}", "overlay_key": "I should get overwritten"}
-            composition.overlays = ["overlay1", "overlay2"]
+            composition.steps = [MagicMock(spec=Overlay), MagicMock(spec=Overlay)]
 
             mock_get_starting_context.return_value = {}
             mock_render_expression.return_value = "rendered_value"
@@ -58,7 +60,7 @@ class TestBuildContext:
         ):
             composition = Mock()
             composition.extra_context = {}
-            composition.overlays = []
+            composition.steps = []
 
             mock_get_starting_context.return_value = starting_context
             mock_render_expression.return_value = ""

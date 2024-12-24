@@ -16,9 +16,9 @@ from pydantic import BaseModel, Field, ValidationInfo, field_validator, model_va
 
 from project_forge.core.exceptions import PathNotFoundError, RepoAuthError, RepoNotFoundError
 from project_forge.core.io import parse_file
-from project_forge.core.location import Location
-from project_forge.core.models import VARIABLE_REGEX, QuestionType, ScalarType, TemplateEngine
+from project_forge.core.types import VARIABLE_REGEX, QuestionType, ScalarType, TemplateEngine
 from project_forge.core.validators import is_bool, is_float, is_int
+from project_forge.models.location import Location
 
 
 class Choice(BaseModel):
