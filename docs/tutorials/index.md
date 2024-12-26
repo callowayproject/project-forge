@@ -1,5 +1,5 @@
 ---
-title: Tutorials 
+title: Tutorials
 summary: Tutorials for how to use a tool that combines one or more templates and the user's answers to questions to generate a code project.
 date: 2024-08-26
 ---

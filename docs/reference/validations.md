@@ -1,4 +1,3 @@
-
 is_boolean | Return true if the object is a boolean value.
 is_defined | Checks if a value is defined.
 is_divisibleby | Return true if the value is divisible by another one.
@@ -13,9 +12,9 @@ is_gt | Test version of >.
 is_in | Test version of in.
 is_integer | Checks if this value is an integer.
 is_iterable | Checks if this value can be iterated over.
-is_le | Test version of <=.
+is_le | Test version of \<=.
 is_lower | Checks if a string is all lowercase.
-is_lt | Test version of <.
+is_lt | Test version of \<.
 is_mapping | Checks if this value is a mapping
 is_ne | Test version of !=.
 is_none | Checks if a value is none.
