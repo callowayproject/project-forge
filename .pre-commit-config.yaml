@@ -71,6 +71,8 @@ repos:
     rev: 0.7.21
     hooks:
       - id: mdformat
+        args:
+          - "--check"
         additional_dependencies:
           - "mdformat-mkdocs[recommended]"
 ci:
