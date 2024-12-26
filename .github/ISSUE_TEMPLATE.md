@@ -1,6 +1,6 @@
-* project-forge version:
-* Python version:
-* Operating System:
+- project-forge version:
+- Python version:
+- Operating System:
 
 ### Description
 
