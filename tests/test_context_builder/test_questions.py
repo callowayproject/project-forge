@@ -20,7 +20,7 @@ def choices(running_context):
 
 import pytest
 from project_forge.context_builder.questions import answer_question
-from project_forge.configurations.pattern import Question
+from project_forge.models.pattern import Question
 
 
 @pytest.fixture(scope="function")

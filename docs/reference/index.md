@@ -1,5 +1,5 @@
 ---
-title: Reference 
+title: Reference
 summary: Technical reference of Project Forge.
 date: 2024-08-26
 ---
@@ -12,7 +12,7 @@ date: 2024-08-26
 - **Overlay.** A reference to a pattern and the configuration for using it in a specific composition.
 - **Composition.** A list of overlays and context to render a project.
 - **Template Rendering Engine.** The system that defines the structure of the templates and renders them into the final product
-- **Hooks.** Scripts that are stored in a specific place and executed before or after the generation process.
+- **Tasks.** Commands that are run during the generation process.
 - **Context.** The set of values that the *template rendering engine* uses to render templates
 - **Question management.** Manages the questions across multiple overlays in a composition. Handles actual validation (Passes UI a validation function for each question)
 - **User input.** Manages the questioning, validation, and error handling of user input for the pattern questions.

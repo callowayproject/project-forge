@@ -1,9 +1,12 @@
 """Tests for the project_forge.context_builder.context module."""
 
 import datetime
+from unittest.mock import MagicMock, Mock, patch
 
 from project_forge.context_builder.context import build_context, get_starting_context, update_context
-from unittest.mock import Mock, patch
+from project_forge.models.composition import Composition
+from project_forge.models.overlay import Overlay
+from project_forge.models.task import Task
 
 
 def test_get_starting_context_contains_correct_keys():
@@ -26,16 +29,18 @@ class TestBuildContext:
             patch("project_forge.context_builder.context.get_starting_context") as mock_get_starting_context,
             patch("project_forge.context_builder.context.render_expression") as mock_render_expression,
             patch("project_forge.context_builder.context.process_overlay") as mock_process_overlay,
+            patch("project_forge.context_builder.context.process_task") as mock_process_task,
         ):
-            composition = Mock()
-            composition.merge_keys = {}
-            composition.extra_context = {"key": "{{ value }}", "overlay_key": "I should get overwritten"}
-            composition.overlays = ["overlay1", "overlay2"]
+            composition = self.create_mock_composition(
+                extra_context={
+                    "key": "{{ value }}",
+                    "overlay_key": "I should get overwritten",
+                }
+            )
 
-            mock_get_starting_context.return_value = {}
-            mock_render_expression.return_value = "rendered_value"
-            mock_process_overlay.return_value = {"overlay_key": "overlay_value"}
-
+            self.set_mocked_return_values(
+                mock_get_starting_context, mock_render_expression, mock_process_overlay, mock_process_task
+            )
             context = build_context(composition, ui)
 
             assert context == {
@@ -43,9 +48,12 @@ class TestBuildContext:
                 "overlay_key": "overlay_value",
             }
 
-            assert mock_render_expression.called
-            assert mock_process_overlay.called
-            assert mock_get_starting_context.called
+            self.assert_mocked_functions_called(
+                mock_render_expression,
+                mock_process_overlay,
+                mock_get_starting_context,
+                mock_process_task,
+            )
 
     def test_empty_composition_is_starting_context(self):
         """Building a context with an empty composition returns the starting context."""
@@ -56,9 +64,8 @@ class TestBuildContext:
             patch("project_forge.context_builder.context.render_expression") as mock_render_expression,
             patch("project_forge.context_builder.context.process_overlay") as mock_process_overlay,
         ):
-            composition = Mock()
-            composition.extra_context = {}
-            composition.overlays = []
+            composition = self.create_mock_composition()
+            composition.steps = []
 
             mock_get_starting_context.return_value = starting_context
             mock_render_expression.return_value = ""
@@ -79,17 +86,22 @@ class TestBuildContext:
             patch("project_forge.context_builder.context.get_starting_context") as mock_get_starting_context,
             patch("project_forge.context_builder.context.render_expression") as mock_render_expression,
             patch("project_forge.context_builder.context.process_overlay") as mock_process_overlay,
+            patch("project_forge.context_builder.context.process_task") as mock_process_task,
         ):
-            composition = Mock()
-            composition.merge_keys = {}
-            composition.extra_context = {"key": "{{ value }}", "overlay_key": "I should get overwritten"}
-            composition.overlays = ["overlay1", "overlay2"]
+            composition = self.create_mock_composition(
+                extra_context={
+                    "key": "{{ value }}",
+                    "overlay_key": "I should get overwritten",
+                }
+            )
             initial_context = {"initial_key": "initial_value"}
 
-            mock_get_starting_context.return_value = {}
-            mock_render_expression.return_value = "rendered_value"
-            mock_process_overlay.return_value = {"overlay_key": "overlay_value"}
-
+            self.set_mocked_return_values(
+                mock_get_starting_context,
+                mock_render_expression,
+                mock_process_overlay,
+                mock_process_task,
+            )
             context = build_context(composition, ui, initial_context)
 
             assert context == {
@@ -98,9 +110,43 @@ class TestBuildContext:
                 "initial_key": "initial_value",
             }
 
-            assert mock_render_expression.called
-            assert mock_process_overlay.called
-            assert mock_get_starting_context.called
+            self.assert_mocked_functions_called(
+                mock_render_expression,
+                mock_process_overlay,
+                mock_get_starting_context,
+                mock_process_task,
+            )
+
+    def create_mock_composition(self, extra_context=None):
+        """Create a mock composition."""
+        result = MagicMock(spec=Composition)
+        result.merge_keys = {}
+        result.extra_context = extra_context or {}
+        result.steps = [
+            MagicMock(spec=Overlay),
+            MagicMock(spec=Task),
+            MagicMock(spec=Overlay),
+            MagicMock(spec=Task),
+        ]
+        return result
+
+    def set_mocked_return_values(
+        self, mock_get_starting_context, mock_render_expression, mock_process_overlay, mock_process_task
+    ):
+        """Set the return values for the mocked functions."""
+        mock_get_starting_context.return_value = {}
+        mock_render_expression.return_value = "rendered_value"
+        mock_process_overlay.return_value = {"overlay_key": "overlay_value"}
+        mock_process_task.return_value = {}
+
+    def assert_mocked_functions_called(
+        self, mock_render_expression, mock_process_overlay, mock_get_starting_context, mock_process_task
+    ):
+        """Assert that the mocked functions were called."""
+        assert mock_render_expression.called
+        assert mock_process_overlay.called
+        assert mock_get_starting_context.called
+        assert mock_process_task.called
 
 
 class TestUpdateContext:

@@ -1,5 +1,5 @@
 ---
-title: How Tos 
+title: How Tos
 summary: Recipes for common tasks using Project Forge.
 date: 2024-08-26
 ---

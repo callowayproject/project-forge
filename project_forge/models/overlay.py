@@ -1,19 +1,14 @@
-"""Data models for configurations."""
+"""An object describing how to apply a pattern to a composition."""
 
 from pathlib import Path
-from typing import Dict, List, Literal, Optional, Union
+from typing import List, Optional, Union
 
 from pydantic import BaseModel, Field, field_validator
 from pydantic_core.core_schema import ValidationInfo
 
-from project_forge.configurations.pattern import Pattern, read_pattern_file
-from project_forge.context_builder.data_merge import MergeMethods
 from project_forge.core.exceptions import PathNotFoundError, RepoAuthError, RepoNotFoundError
-from project_forge.core.io import parse_file
-from project_forge.core.location import Location
-
-SkippedHook = Literal["pre", "post", "all", "none"]
-"""Types of hooks to skip."""
+from project_forge.models.location import Location
+from project_forge.models.pattern import Pattern, read_pattern_file
 
 
 class Overlay(BaseModel):
@@ -62,9 +57,6 @@ class Overlay(BaseModel):
             "(overrides the pattern's configuration)"
         ),
     )
-    skip_hooks: SkippedHook = Field(
-        default="none", description="Which hooks to skip? Valid options are `all`, `none`, `pre`, `post`."
-    )
 
     @field_validator("pattern_location")
     @classmethod
@@ -101,63 +93,3 @@ def _validate_pattern_location(value: Union[str, Location], info: ValidationInfo
         return value
     except (RepoNotFoundError, RepoAuthError, PathNotFoundError) as e:
         raise ValueError(str(e)) from e
-
-
-class Composition(BaseModel):
-    """The settings for a composition."""
-
-    overlays: List[Overlay] = Field(default_factory=list, description="A list of pattern overlays to compose.")
-    merge_keys: Dict[str, MergeMethods] = Field(
-        default_factory=dict,
-        description=(
-            "Merge the values of one or more keys in a specific way. This is useful for `yaml` or `json` values. "
-            "Valid merge methods are `overwrite`, `nested-overwrite`, and `comprehensive`."
-        ),
-    )
-    extra_context: dict = Field(
-        default_factory=dict,
-        description="Override one or more keys in this pattern's `extra_context`. Values can be a template string.",
-    )
-
-    @classmethod
-    def from_location(cls, location: Union[str, Location]) -> "Composition":
-        """Convert the location to a pattern into a composition."""
-        return cls(overlays=[Overlay(pattern_location=location)])
-
-    def cache_data(self) -> None:
-        """
-        Makes sure all the patterns are cached and have their pattern objects loaded.
-
-        Accessing the `pattern` property on the overlay will lazily load the pattern.
-        """
-        for overlay in self.overlays:
-            _ = overlay.pattern
-
-
-def is_composition_data(data: dict) -> bool:
-    """Returns True if the data is for a composition, otherwise False."""
-    return "overlays" in data
-
-
-def read_composition_file(path: Union[str, Path]) -> Composition:
-    """
-    Read, parse, and validate the contents of a composition file and patterns.
-
-    If the path is to a pattern file, it is added to a composition and returned.
-
-    Args:
-        path: The path to the composition or pattern file
-
-    Returns:
-        A resolved and validated composition object.
-    """
-    data = parse_file(path)
-    context = {"composition_path": Path(path).parent}
-    if is_composition_data(data):
-        composition = Composition.model_validate(data, context=context)
-    else:
-        composition = Composition.model_validate({"overlays": [Overlay(pattern_location=str(path))]}, context=context)
-
-    composition.cache_data()
-
-    return composition

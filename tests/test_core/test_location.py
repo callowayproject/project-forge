@@ -2,13 +2,12 @@
 
 import os
 from pathlib import Path
-from typing import Any
 from unittest.mock import MagicMock, patch
 
 import pytest
-from pathlib import Path
-from project_forge.core.location import Location, resolve_url_location
-from project_forge.core.exceptions import RepoNotFoundError, RepoAuthError, PathNotFoundError
+
+from project_forge.core.exceptions import PathNotFoundError, RepoNotFoundError
+from project_forge.models.location import Location, resolve_url_location
 
 VALID_URL = "http://example.com/repo"
 VALID_PATH = "/valid/path"
@@ -20,25 +19,29 @@ class TestLocation:
     class TestFromString:
         """Tests for the `Location.from_string` class method."""
 
-        def test_with_url(self):
+        def test_recognizes_url_string(self):
+            """A URL should be put into the `url` attribute."""
             url = "http://localhost/repo.git"
             location = Location.from_string(url)
             assert location.url == url
             assert location.path is None
 
-        def test_with_path(self):
+        def test_recognizes_path_string(self):
+            """A path should be put into the `path` attribute."""
             path = "/local/path"
             location = Location.from_string(path)
             assert location.path == path
             assert location.url is None
 
-        def test_with_git_protocol(self):
+        def test_recognizes_git_protocol_string(self):
+            """A git protocol should be put into the `url` attribute."""
             url = "git@github.com:user/repo.git"
             location = Location.from_string(url)
             assert location.url == url
             assert location.path is None
 
-        def test_ensure_path_or_url(self):
+        def test_raises_error_for_empty_string(self):
+            """An empty string should raise a `ValueError`."""
             with pytest.raises(ValueError):
                 Location().from_string("")
 
@@ -49,7 +52,7 @@ class TestLocation:
             """A location with a URL calls `resolve_url_location`."""
             mocked_resolve_url_location = MagicMock("project_forge.core.location.resolve_url_location")
             location = Location(url="http://localhost/repo.git")
-            with patch("project_forge.core.location.resolve_url_location", mocked_resolve_url_location):
+            with patch("project_forge.models.location.resolve_url_location", mocked_resolve_url_location):
                 location.resolve()
                 mocked_resolve_url_location.assert_called_once_with(location)
 
@@ -59,6 +62,7 @@ class TestLocation:
             assert location.resolve() == tmp_path
 
         def test_missing_absolute_path_raises_error(self):
+            """Attempting to resolve an absolute path that doesn't exist raises a `FileNotFoundError`."""
             path = "/non/existing/absolute/path"
             location = Location(path=path)
             with pytest.raises(PathNotFoundError):

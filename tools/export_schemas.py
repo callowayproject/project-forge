@@ -3,8 +3,8 @@
 import json
 from pathlib import Path
 
-from project_forge.configurations.composition import Composition
-from project_forge.configurations.pattern import Pattern
+from project_forge.models.composition import Composition
+from project_forge.models.pattern import Pattern
 
 
 def main():

@@ -26,8 +26,7 @@ class ExprValidator:
         Raises:
             ValueError: If the expression returns a value. The message of the ValueError is the rendered expression.
         """
-        result = render_expression(self._expr, {"value": value})
-        if result:
+        if result := render_expression(self._expr, {"value": value}):
             raise ValueError(result)
         return value
 

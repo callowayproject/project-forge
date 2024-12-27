@@ -1,13 +1,12 @@
 """Tests for the `project_forge.testing` module."""
 
-import contextlib
 from pathlib import Path
 from subprocess import CompletedProcess
 from unittest.mock import patch
 
 import pytest
-import os
-from project_forge.testing import inside_dir, run_inside_dir, use_default_ui
+
+from project_forge.testing import run_inside_dir, use_default_ui
 
 
 class TestForgerFixture:
@@ -99,33 +98,6 @@ class TestForgerFixture:
 
         assert result.ret == 0
         assert output_dir.joinpath("my-project").exists()
-
-
-@pytest.fixture
-def temp_directory(tmp_path: Path) -> Path:
-    """Fixture to provide a temporary directory for testing."""
-    temp_dir = tmp_path / "subdir"
-    temp_dir.mkdir()
-    return temp_dir
-
-
-class TestInsideDir:
-    """Tests for the `inside_dir` context manager."""
-
-    def test_inside_dir_changes_directory(self, temp_directory):
-        """Test that inside_dir changes the current working directory."""
-        initial_directory = Path(os.getcwd())
-        with inside_dir(temp_directory):
-            assert Path(os.getcwd()) == temp_directory
-        assert Path(os.getcwd()) == initial_directory
-
-    def test_inside_dir_restores_directory_on_exception(self, temp_directory):
-        """Test that inside_dir restores the directory in case of an exception."""
-        initial_directory = Path(os.getcwd())
-        with contextlib.suppress(ValueError):
-            with inside_dir(temp_directory):
-                raise ValueError("Intentional exception")
-        assert Path(os.getcwd()) == initial_directory
 
 
 class TestRunInsideDir:

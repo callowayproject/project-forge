@@ -1,20 +1,20 @@
 """Tests for project_forge.configurations.pattern."""
 
 from pathlib import Path
-from unittest.mock import patch, MagicMock
+from unittest.mock import patch
 
 import pytest
 from pytest import param
 
-from project_forge.configurations.pattern import (
-    _validate_template_location,
-    find_template_root,
+from project_forge.core.exceptions import PathNotFoundError, RepoAuthError, RepoNotFoundError
+from project_forge.models.location import Location
+from project_forge.models.pattern import (
+    Choice,
     Pattern,
     Question,
-    Choice,
+    _validate_template_location,
+    find_template_root,
 )
-from project_forge.core.location import Location
-from project_forge.core.exceptions import RepoNotFoundError, RepoAuthError, PathNotFoundError
 from tests.mocks import MockValidationInfo
 
 
@@ -23,9 +23,7 @@ class TestValidateTemplateLocation:
 
     def test_string_location_is_converted_to_location(self, tmp_path: Path):
         """A string value is converted to a Location object."""
-        expected_path = tmp_path.joinpath("template")
         expected_location = Location(path=str(tmp_path))
-        mocked_find_template_root = MagicMock(return_value=expected_path)
         response = _validate_template_location(expected_location.path, MockValidationInfo())
         assert response == expected_location
 
@@ -35,7 +33,7 @@ class TestValidateTemplateLocation:
         template_dir.mkdir(exist_ok=True, parents=True)
         location = Location(path="template")
         mock_info = MockValidationInfo(context={"pattern_path": tmp_path})
-        with patch("project_forge.configurations.pattern.find_template_root", return_value=template_dir):
+        with patch("project_forge.models.pattern.find_template_root", return_value=template_dir):
             actual = _validate_template_location(location, mock_info)
             assert actual == location
 
@@ -45,9 +43,7 @@ class TestValidateTemplateLocation:
         def mock_resolve(*args):
             raise RepoNotFoundError()
 
-        with patch(
-            "project_forge.configurations.pattern.Location", spec=Location, resolve=mock_resolve
-        ) as MockLocation:
+        with patch("project_forge.models.pattern.Location", spec=Location, resolve=mock_resolve) as MockLocation:
             # Use a mocked Location object whose `resolve` method always raises a RepoNotFound error
             with pytest.raises(ValueError):
                 _validate_template_location(MockLocation(), MockValidationInfo())
@@ -58,9 +54,7 @@ class TestValidateTemplateLocation:
         def mock_resolve(*args):
             raise RepoAuthError()
 
-        with patch(
-            "project_forge.configurations.pattern.Location", spec=Location, resolve=mock_resolve
-        ) as MockLocation:
+        with patch("project_forge.models.pattern.Location", spec=Location, resolve=mock_resolve) as MockLocation:
             # Use a mocked Location object whose `resolve` method always raises a RepoAuthError
             with pytest.raises(ValueError):
                 _validate_template_location(MockLocation(), MockValidationInfo())
@@ -92,7 +86,6 @@ class TestFindTemplateRoot:
 
     def test_no_directory_with_prefix_in_root_path_raises_error(self, tmp_path: Path):
         """If there is no directory starting with the prefix, an error is raised."""
-
         root_path = tmp_path
         prefix = "{{"
 

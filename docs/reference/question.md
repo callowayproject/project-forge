@@ -5,7 +5,7 @@
 - Uses the *User Interface* to ask questions and updates context and dependencies
 - Output is a single context used to render all templates
 - Handles validation
-  - Can pass validation function for each question to user interface
+    - Can pass validation function for each question to user interface
 - Interface:
-  - `Pattern` or `Composition`
-  - `UI` (reference)
+    - `Pattern` or `Composition`
+    - `UI` (reference)
