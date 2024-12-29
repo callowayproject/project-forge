@@ -84,18 +84,6 @@
           },
           "title": "Exclude Files",
           "type": "array"
-        },
-        "skip_hooks": {
-          "default": "none",
-          "description": "Which hooks to skip? Valid options are `all`, `none`, `pre`, `post`.",
-          "enum": [
-            "pre",
-            "post",
-            "all",
-            "none"
-          ],
-          "title": "Skip Hooks",
-          "type": "string"
         }
       },
       "required": [
@@ -103,23 +91,102 @@
       ],
       "title": "Overlay",
       "type": "object"
+    },
+    "Task": {
+      "description": "A task to run while rendering a composition.",
+      "properties": {
+        "command": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            }
+          ],
+          "description": "The command to run.",
+          "title": "Command"
+        },
+        "use_shell": {
+          "default": false,
+          "description": "Whether to run the command in a shell.\n\nIf `command` is a str, this is always `True`.",
+          "title": "Use Shell",
+          "type": "boolean"
+        },
+        "env": {
+          "anyOf": [
+            {
+              "additionalProperties": {
+                "type": "string"
+              },
+              "type": "object"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Environment variables to set when running the command.\n\nEach environment variable value may be a template string rendered using the context so far.",
+          "title": "Env"
+        },
+        "when": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "A template string that will render as `True` if the task should run.",
+          "title": "When"
+        },
+        "context_variable_name": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "The name of a context variable that will be set to the command's stdout. If not provided, the the output is not saved to the context.",
+          "title": "Context Variable Name"
+        }
+      },
+      "required": [
+        "command"
+      ],
+      "title": "Task",
+      "type": "object"
     }
   },
   "description": "The settings for a composition.",
   "properties": {
-    "overlays": {
-      "description": "A list of pattern overlays to compose.",
+    "steps": {
+      "description": "A list of pattern overlays and tasks to compose.",
       "items": {
-        "$ref": "#/$defs/Overlay"
+        "anyOf": [
+          {
+            "$ref": "#/$defs/Overlay"
+          },
+          {
+            "$ref": "#/$defs/Task"
+          }
+        ]
       },
-      "title": "Overlays",
+      "title": "Steps",
       "type": "array"
     },
     "merge_keys": {
       "additionalProperties": {
         "enum": [
           "overwrite",
-          "nested-overwrite",
           "comprehensive"
         ],
         "type": "string"
@@ -137,5 +204,5 @@
   "title": "Composition",
   "type": "object",
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://github.com/callowayproject/project-forge/composition.schema.json"
+  "$id": "https://github.com/callowayproject/project-forge/modelmetaclass.schema.json"
 }

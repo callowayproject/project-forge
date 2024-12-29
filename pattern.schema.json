@@ -1,0 +1,232 @@
+{
+  "$defs": {
+    "Choice": {
+      "description": "A choice to a Question.",
+      "properties": {
+        "label": {
+          "description": "The label for this choice when prompted to the user.",
+          "pattern": "[a-zA-Z_][\\w_]*",
+          "title": "Label",
+          "type": "string"
+        },
+        "value": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "integer"
+            },
+            {
+              "type": "number"
+            },
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "The value used when this choice is selected. It should match the questions's type.",
+          "title": "Value"
+        },
+        "skip_when": {
+          "default": "",
+          "description": "A template string that will render as `True` if the choice is not valid based on previous context values.\n\nTake care to have at least one option without a `skip_when` clause to avoid accidentally creating a situation with no valid choices.",
+          "title": "Skip When",
+          "type": "string"
+        }
+      },
+      "required": [
+        "label",
+        "value"
+      ],
+      "title": "Choice",
+      "type": "object"
+    },
+    "Location": {
+      "description": "The location of a file or directory.\n\nA location supports referencing the file or directory using:\n\n- relative path\n- absolute path\n- git URL\n- git URL plus revision/tag/branch plus path in the repo\n\nWhen `url` is specified, the `path` is relative to the root of the repository.\n\nAt least one of `path` or `url` must be specified.",
+      "properties": {
+        "path": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "The relative or absolute path to the location.",
+          "title": "Path"
+        },
+        "url": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "The Git URL to the location.",
+          "title": "Url"
+        }
+      },
+      "title": "Location",
+      "type": "object"
+    },
+    "Question": {
+      "description": "A question for a pattern.",
+      "properties": {
+        "name": {
+          "description": "The name of the variable used in the template.",
+          "pattern": "[a-zA-Z_][\\w_]*",
+          "title": "Name",
+          "type": "string"
+        },
+        "type": {
+          "default": "str",
+          "description": "The type of this variable.",
+          "enum": [
+            "int",
+            "float",
+            "bool",
+            "str",
+            "multiline",
+            "secret",
+            "yaml",
+            "json"
+          ],
+          "title": "Type",
+          "type": "string"
+        },
+        "prompt": {
+          "default": "",
+          "description": "The message to ask the user for this information. If no prompt is provided, 'What is the <name>?' is used.",
+          "title": "Prompt",
+          "type": "string"
+        },
+        "help": {
+          "default": "",
+          "description": "Additional information to explain how to answer this question.",
+          "title": "Help",
+          "type": "string"
+        },
+        "choices": {
+          "description": "A list of choice values or `choice` objects",
+          "items": {
+            "$ref": "#/$defs/Choice"
+          },
+          "title": "Choices",
+          "type": "array"
+        },
+        "multiselect": {
+          "default": false,
+          "description": "When `true` allow multiple selections. The type of this context element will then be a list of this question's `type`",
+          "title": "Multiselect",
+          "type": "boolean"
+        },
+        "default": {
+          "default": null,
+          "description": "Provide a default to save them from typing. \n\nWhen using `choices`, the default must be the choice _value_, not its _key_, and must match its _type_. Leave this empty to force the user to answer.\n\nThis value may also be a template string rendered using the context so far. This allows you to provide defaults based on previous context elements.",
+          "title": "Default"
+        },
+        "validator": {
+          "default": "",
+          "description": "Template string to validate the user input. \n\nThis template is rendered using the context so far; it should render _nothing_ if the value is valid and an error message to show to the user otherwise.",
+          "title": "Validator",
+          "type": "string"
+        },
+        "force_default": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "boolean"
+            }
+          ],
+          "default": false,
+          "description": "A condition that, if `True`, will not prompt the user for a value and uses the `default`.\n\n`bool` values are used directly. Setting this to `True` is a good way to make this value a computed value.\n\n`str` values should be template strings that evaluate to a boolean value.",
+          "title": "Force Default"
+        }
+      },
+      "required": [
+        "name"
+      ],
+      "title": "Question",
+      "type": "object"
+    }
+  },
+  "description": "The configuration of a pattern.",
+  "properties": {
+    "questions": {
+      "description": "A list of question objects that define the available context variables for project generation.",
+      "items": {
+        "$ref": "#/$defs/Question"
+      },
+      "title": "Questions",
+      "type": "array"
+    },
+    "template_location": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "$ref": "#/$defs/Location"
+        }
+      ],
+      "description": "The location of the root directory of the templates. This directory's name will be rendered using the context. ",
+      "title": "Template Location"
+    },
+    "extra_context": {
+      "description": "Static Key-Values. Values may be template strings.",
+      "title": "Extra Context",
+      "type": "object"
+    },
+    "template_engine": {
+      "const": "default",
+      "default": "default",
+      "description": "The template engine required to render the templates.",
+      "title": "Template Engine",
+      "type": "string"
+    },
+    "template_engine_ops": {
+      "description": "Options to pass to the template engine before rendering.",
+      "title": "Template Engine Ops",
+      "type": "object"
+    },
+    "skip": {
+      "description": "A list of paths or glob patterns of files to exclude from the generation process.",
+      "items": {
+        "type": "string"
+      },
+      "title": "Skip",
+      "type": "array"
+    },
+    "copy_only": {
+      "description": "A list of paths or glob patterns of files to copy without rendering during generation.",
+      "items": {
+        "type": "string"
+      },
+      "title": "Copy Only",
+      "type": "array"
+    },
+    "migrations": {
+      "description": "TBD",
+      "items": {},
+      "title": "Migrations",
+      "type": "array"
+    }
+  },
+  "required": [
+    "template_location"
+  ],
+  "title": "Pattern",
+  "type": "object",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/callowayproject/project-forge/modelmetaclass.schema.json"
+}

@@ -59,8 +59,7 @@ A *composition* is a recipe.
 It includes configuration and instructions only.
 
 *Overlays* and *tasks* are like recipe instructions.
-Each _overlay_ references a pattern and how to configure it for the composition,
-like "Hamburger, well done, placed between buns."
+Each _overlay_ references a pattern and how to configure it for the composition, like "Hamburger, well done."
 A task performs an action during project generation, like "stir for 3 minutes."
 
 <!--end-->
