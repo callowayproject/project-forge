@@ -75,5 +75,13 @@ repos:
           - "--check"
         additional_dependencies:
           - "mdformat-mkdocs[recommended]"
+
+  - repo: https://github.com/executablebooks/mdformat
+    rev: 0.7.21
+    hooks:
+      - id: mdformat
+        additional_dependencies:
+          - "mdformat-mkdocs[recommended]"
+
 ci:
   autofix_prs: false

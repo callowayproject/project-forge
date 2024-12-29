@@ -87,3 +87,33 @@ def build(
         use_defaults=use_defaults,
         initial_context=initial_context,
     )
+
+
+@cli.command()
+@click.argument(
+    "OUTPUT_DIR",
+    type=click.Path(
+        exists=True,
+        file_okay=False,
+        dir_okay=True,
+        resolve_path=True,
+        writable=True,
+        path_type=Path,
+    ),
+)
+def write_schemas(output_dir: Path):
+    """
+    Write the JSON schemas for compositions and patterns to the specified output directory.
+
+    The JSON schemas are used by IDEs to provide validation and autocompletion.
+    The output directory must exist and be writable by the user.
+    """
+    from project_forge.commands.export_schemas import export_schemas
+
+    result = export_schemas()
+
+    composition_path = output_dir / "composition.schema.json"
+    composition_path.write_text(result.composition_schema)
+
+    pattern_path = output_dir / "pattern.schema.json"
+    pattern_path.write_text(result.pattern_schema)
