@@ -1,14 +1,9 @@
 # Project Forge
 
-\[![image]
-(https://img.shields.io/pypi/v/project-forge.svg)]
-(https://pypi.org/project/project-forge/) \[![image]
-(https://img.shields.io/pypi/l/project-forge.svg)]
-(https://pypi.org/project/project-forge/) \[![image]
-(https://img.shields.io/pypi/pyversions/project-forge.svg)]
-(https://pypi.org/project/project-forge/) \[![GitHub Actions]
-(https://github.com/callowayproject/project-forge/workflows/CI/badge.svg)]
-(https://github.com/callowayproject/project-forge/actions)
+<a href="https://pypi.org/project/project-forge/"><img src="https://img.shields.io/pypi/v/project-forge.svg"></a>
+<a href="https://pypi.org/project/project-forge/"><img src="https://img.shields.io/pypi/l/project-forge.svg"></a>
+<a href="https://pypi.org/project/project-forge/"><img src="https://img.shields.io/pypi/pyversions/project-forge.svg"></a>
+<a href="https://github.com/callowayproject/project-forge/actions"><img src="https://github.com/callowayproject/project-forge/workflows/CI/badge.svg"></a>
 
 <!--start-->
 
