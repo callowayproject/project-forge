@@ -6,10 +6,10 @@ import subprocess
 from dataclasses import dataclass
 from pathlib import Path
 from subprocess import CompletedProcess
-from typing import Any, Callable, Optional
+from typing import Optional
 
 from project_forge.commands.build import build_project
-from project_forge.core.types import QuestionType
+from project_forge.ui.defaults import return_defaults
 from project_forge.utils import inside_dir
 
 
@@ -26,20 +26,6 @@ def run_inside_dir(command: str, dir_path: Path) -> CompletedProcess:
     """
     with inside_dir(dir_path):
         return subprocess.run(shlex.split(command), capture_output=True, check=True)  # noqa: S603
-
-
-def use_default_ui(
-    prompt: str,
-    type: QuestionType = "str",
-    help: Optional[str] = None,
-    choices: Optional[dict] = None,
-    default: Any = None,
-    multiselect: bool = False,
-    validator_func: Optional[Callable] = None,
-    **kwargs,
-) -> Any:
-    """A testing UI that simply returns the default answer."""
-    return default
 
 
 @dataclass
@@ -71,7 +57,7 @@ class Forger:
                 composition_file=config_path,
                 output_dir=self._output_dir,
                 use_defaults=use_defaults,
-                ui_function=use_default_ui,
+                ui_function=return_defaults,
                 initial_context=initial_context,
             )
         except SystemExit as e:  # pragma: no-coverage
