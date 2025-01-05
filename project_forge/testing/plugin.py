@@ -21,6 +21,7 @@ def forger(request: FixtureRequest, tmp_path: pathlib.Path):
 
 
 def pytest_addoption(parser):
+    """Add the --forge-output-dir option to the pytest command line."""
     group = parser.getgroup("forger")
     group.addoption(
         "--forge-output-dir",

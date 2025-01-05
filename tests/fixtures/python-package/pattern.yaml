@@ -24,3 +24,5 @@ questions:
   prompt: What is the author's name?
   type: str
 template_location: '{{ repo_name }}'
+extra_context:
+  package_path: "{{ repo_name }}/{{ package_name }}"

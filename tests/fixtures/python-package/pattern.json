@@ -37,5 +37,8 @@
       "default": "Who am I?",
       "type": "str"
     }
-  ]
+  ],
+  "extra_context": {
+    "package_path": "{{ repo_name }}/{{ package_name }}"
+  }
 }
