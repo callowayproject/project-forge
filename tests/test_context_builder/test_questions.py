@@ -3,7 +3,9 @@
 from unittest.mock import MagicMock
 
 import pytest
-from project_forge.context_builder.questions import filter_choices, Choice
+
+from project_forge.context_builder.questions import Choice, answer_question, filter_choices
+from project_forge.models.pattern import Question
 
 
 @pytest.fixture
@@ -15,12 +17,8 @@ def running_context():
 def choices(running_context):
     choice1 = Choice(label="label1", value="value1", skip_when="{% if key1 == 'value1' %}True{% endif %}")
     choice2 = Choice(label="label2", value="value2", skip_when="{% if key2 == 'value3' %}True{% endif %}")
-    return [choice1, choice2]
-
-
-import pytest
-from project_forge.context_builder.questions import answer_question
-from project_forge.models.pattern import Question
+    choice3 = Choice(label="label3", value="value3")
+    return [choice1, choice2, choice3]
 
 
 @pytest.fixture(scope="function")

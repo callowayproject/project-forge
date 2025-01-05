@@ -27,7 +27,7 @@ def filter_choices(choices: List[Choice], running_context: dict) -> dict:
     """
     result = {}
     for choice in choices:
-        skip_when = render_bool_expression(choice.skip_when, running_context)
+        skip_when = render_bool_expression(choice.skip_when, running_context) if choice.skip_when else False
         if not skip_when:
             result[choice.label] = (
                 render_expression(choice.value, running_context) if isinstance(choice.value, str) else choice.value
