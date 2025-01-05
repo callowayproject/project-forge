@@ -19,6 +19,8 @@ from project_forge.core.io import parse_file
 from project_forge.core.types import VARIABLE_REGEX, QuestionType, ScalarType, TemplateEngine
 from project_forge.core.validators import is_bool, is_float, is_int
 from project_forge.models.location import Location
+from project_forge.path_matching import matches_any_glob
+from project_forge.rendering.templates import ProcessMode
 
 
 class Choice(BaseModel):
@@ -156,7 +158,7 @@ class Pattern(BaseModel):
         default_factory=list,
         description="A list of question objects that define the available context variables for project generation.",
     )
-    template_location: Union[str, Location] = Field(
+    template_location: Location = Field(
         description=(
             "The location of the root directory of the templates. "
             "This directory's name will be rendered using the context. "
@@ -174,19 +176,28 @@ class Pattern(BaseModel):
     )
     skip: List[str] = Field(
         default_factory=list,
-        description="A list of paths or glob patterns of files to exclude from the generation process.",
+        description="A list of paths or glob patterns of files to exclude from writing to the destination.",
     )
     copy_only: List[str] = Field(
         default_factory=list,
-        description="A list of paths or glob patterns of files to copy without rendering during generation.",
+        description="A list of paths or glob patterns of files to write to the destination without rendering.",
     )
     migrations: List = Field(default_factory=list, description="TBD")
 
-    @field_validator("template_location")
+    @field_validator("template_location", mode="before")
     @classmethod
     def validate_template_location(cls, value: Union[str, Location], info: ValidationInfo) -> Location:
         """Check that the template_location exists."""
         return _validate_template_location(value, info)  # pragma: no-coverage
+
+    def get_process_mode(self, path: Path) -> ProcessMode:
+        """Calculates the process mode for a path based on the pattern's skip and copy_only attributes."""
+        mode = ProcessMode.render | ProcessMode.write
+        if matches_any_glob(path, self.skip):
+            mode &= ~ProcessMode.write
+        if matches_any_glob(path, self.copy_only):
+            mode &= ~ProcessMode.render
+        return mode
 
 
 def _validate_template_location(value: Union[str, Location], info: ValidationInfo) -> Location:
