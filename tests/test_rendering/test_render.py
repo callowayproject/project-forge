@@ -9,7 +9,7 @@ from project_forge.rendering.environment import load_environment
 from project_forge.rendering.render import render_env
 from project_forge.context_builder.context import build_context
 from project_forge.rendering.templates import catalog_inheritance
-from project_forge.tui import ask_question
+from project_forge.ui.terminal import ask_question
 
 
 @pytest.fixture

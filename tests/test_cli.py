@@ -2,9 +2,10 @@ from pathlib import Path
 from unittest.mock import patch
 
 import pytest
-from project_forge.cli import build
-from project_forge.tui import ask_question
 from click.testing import CliRunner
+
+from project_forge.cli import build
+from project_forge.ui.terminal import ask_question
 
 
 @pytest.fixture
