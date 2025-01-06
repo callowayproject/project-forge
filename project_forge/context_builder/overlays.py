@@ -46,7 +46,8 @@ def process_overlay(overlay: Overlay, running_context: dict[str, Any], question_
             )
         )
 
-    return current_context
+    # Re-merge the pattern context to render any pattern extra context that requires answers
+    return merge_contexts(current_context, {}, pattern.extra_context)
 
 
 def merge_contexts(

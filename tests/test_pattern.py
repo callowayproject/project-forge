@@ -15,6 +15,7 @@ from project_forge.models.pattern import (
     _validate_template_location,
     find_template_root,
 )
+from project_forge.rendering.templates import ProcessMode
 from tests.mocks import MockValidationInfo
 
 
@@ -198,3 +199,57 @@ class TestChoice:
         for index, choice in enumerate(question.choices):
             assert choice.value == values[index]
             assert choice.label == labels[index]
+
+
+class TestGetProcessMode:
+    """Tests for the get_process_mode method in the Pattern class."""
+
+    @pytest.fixture
+    def pattern(self, fixtures_dir: Path):
+        """Fixture for creating a Pattern instance."""
+        return Pattern(
+            questions=[],
+            template_location=str(fixtures_dir.joinpath("python-package", "{{ repo_name }}")),
+            extra_context={},
+            template_engine="default",
+            template_engine_ops={},
+            skip=[],
+            copy_only=[],
+            migrations=[],
+        )
+
+    def test_default_mode_is_render_write(self, pattern):
+        """Test that default process mode is render and write."""
+        path = Path("some/path")
+        mode = pattern.get_process_mode(path)
+        assert mode == (ProcessMode.render | ProcessMode.write)
+
+    def test_process_mode_skip_only(self, pattern):
+        """Test that a path matching skip excludes the write mode."""
+        pattern.skip = ["some/*"]
+        path = Path("some/path")
+        mode = pattern.get_process_mode(path)
+        assert mode == ProcessMode.render
+
+    def test_process_mode_copy_only(self, pattern):
+        """Test that a path matching copy_only excludes the render mode."""
+        pattern.copy_only = ["some/*"]
+        path = Path("some/path")
+        mode = pattern.get_process_mode(path)
+        assert mode == ProcessMode.write
+
+    def test_process_mode_skip_and_copy_only(self, pattern):
+        """Test that a path matching both skip and copy_only excludes both modes."""
+        pattern.skip = ["some/*"]
+        pattern.copy_only = ["some/*"]
+        path = Path("some/path")
+        mode = pattern.get_process_mode(path)
+        assert mode == ProcessMode.ignore
+
+    def test_process_mode_non_matching_path(self, pattern):
+        """Test that a non-matching path keeps default modes."""
+        pattern.skip = ["other/*"]
+        pattern.copy_only = ["another/*"]
+        path = Path("some/path")
+        mode = pattern.get_process_mode(path)
+        assert mode == (ProcessMode.render | ProcessMode.write)

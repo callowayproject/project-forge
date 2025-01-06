@@ -2,37 +2,13 @@
 
 import logging
 import re
-from collections import ChainMap
-from pathlib import Path
-from typing import Any, Callable, List, Optional
+from typing import Any, Callable, Optional
 
 from jinja2 import BaseLoader, Environment, TemplateNotFound, Undefined
 
+from project_forge.rendering.templates import InheritanceMap
+
 logger = logging.getLogger(__name__)
-
-
-class InheritanceMap(ChainMap[str, Path]):
-    """Provides convenience functions for managing template inheritance."""
-
-    @property
-    def is_empty(self) -> bool:
-        """The context has only one mapping and it is empty."""
-        return len(self.maps) == 1 and len(self.maps[0]) == 0
-
-    def inheritance(self, key: str) -> List[Path]:
-        """
-        Show all the values associated with a key, from most recent to least recent.
-
-        If the maps were added in the order `{"a": Path("1")}, {"a": Path("2")}, {"a": Path("3")}`,
-        The output for `inheritance("a")` would be `[Path("3"), Path("2"), Path("1")]`.
-
-        Args:
-            key: The key to look up
-
-        Returns:
-            The values for that key with the last value first.
-        """
-        return [mapping[key] for mapping in self.maps[::-1] if key in mapping]
 
 
 class SuperUndefined(Undefined):
@@ -79,7 +55,12 @@ class InheritanceLoader(BaseLoader):
         if index >= inheritance_len:
             raise TemplateNotFound(template)  # Maybe this wasn't one of our customized extended paths
 
-        path = inheritance[index]
+        template_file = inheritance[index]
+
+        if not template_file.is_renderable:
+            raise TemplateNotFound(template)
+
+        path = template_file.path
         logger.debug(f"Loading template {template_name} from: {path}")
         source = path.read_text()
 

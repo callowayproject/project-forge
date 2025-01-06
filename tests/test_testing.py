@@ -4,9 +4,8 @@ from pathlib import Path
 from subprocess import CompletedProcess
 from unittest.mock import patch
 
-import pytest
-
-from project_forge.testing import run_inside_dir, use_default_ui
+from project_forge.testing import run_inside_dir
+from project_forge.ui.defaults import return_defaults
 
 
 class TestForgerFixture:
@@ -146,5 +145,5 @@ class TestRunInsideDir:
 
 def test_testing_ui_returns_default():
     """The `testing_ui` function only returns the default value."""
-    result = use_default_ui("Question?", default="yes")
+    result = return_defaults("Question?", default="yes")
     assert result == "yes"

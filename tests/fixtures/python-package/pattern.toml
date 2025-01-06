@@ -35,3 +35,6 @@ name = "author"
 prompt = "What is the author's name?"
 default = "Who am I?"
 type = "str"
+
+[extra_context]
+package_path = "{{ repo_name }}/{{ package_name }}"

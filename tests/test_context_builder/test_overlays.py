@@ -1,13 +1,10 @@
 """Tests for the project_forge.context_builder.overlays module."""
 
-from unittest.mock import MagicMock
-
-import pytest
 from pathlib import Path
 
 from project_forge.context_builder.overlays import merge_contexts, process_overlay
 from project_forge.models.overlay import Overlay
-
+from project_forge.ui.defaults import return_defaults
 
 # composition_path is None
 # composition_path is File
@@ -28,13 +25,13 @@ class TestProcessOverlay:
         running_context = {
             "project_name": "test-project",
             "package_name": "test_package",
+            "package_path": "test-repo/test_package",
             "repo_name": "test-repo",
             "project_description": "A description",
             "initial_version": "0.1.0",
             "author": "Testy McTestface",
         }
-        mock_ui = MagicMock()
-        result = process_overlay(overlay, running_context, mock_ui)
+        result = process_overlay(overlay, running_context, return_defaults)
         assert result == running_context
 
     def test_uses_answers_from_ui(self, fixtures_dir: Path):
@@ -52,13 +49,14 @@ class TestProcessOverlay:
             "initial_version": "1.0.0",
             "author": "Boaty McBoatface",
         }
+        expected_result = {**answers, "package_path": "my-repo/my_package"}
         answers_iter = iter(answers.values())
 
         def mock_ui(*args, **kwargs):
             return next(answers_iter)
 
         result = process_overlay(overlay, running_context, mock_ui)
-        assert result == answers
+        assert result == expected_result
 
 
 class TestMergeContexts:

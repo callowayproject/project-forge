@@ -9,7 +9,7 @@ def render_bool_expression(expression: Union[str, bool], context: Optional[Mutab
     """
     Render a template expression and convert the result to a boolean.
 
-    Any string expression that is not a template string, is wrapped in an `{% if ... %}` block.
+    Any string expression that is not a template string is wrapped in an `{% if ... %}` block.
 
     Args:
         expression: A string expression, a template string, or a boolean.
@@ -31,5 +31,5 @@ def render_expression(expression: str, context: Optional[MutableMapping] = None)
     """Render a template expression."""
     context = context or {}
     env = load_environment()
-    template = env.from_string(expression)
+    template = env.from_string(str(expression))
     return template.render(**context).strip()

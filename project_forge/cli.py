@@ -8,7 +8,7 @@ from click.core import Context
 
 from project_forge import __version__
 from project_forge.core.io import parse_file
-from project_forge.tui import ask_question
+from project_forge.ui.terminal import ask_question
 
 
 @click.group(

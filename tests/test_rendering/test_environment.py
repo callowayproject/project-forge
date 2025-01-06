@@ -3,9 +3,13 @@
 from pathlib import Path
 
 import pytest
-from project_forge.rendering.environment import InheritanceMap, SuperUndefined, InheritanceLoader
-from jinja2.exceptions import UndefinedError
 from jinja2 import Environment, TemplateNotFound
+from jinja2.exceptions import UndefinedError
+
+from project_forge.rendering.environment import InheritanceLoader, SuperUndefined
+from project_forge.rendering.templates import InheritanceMap, ProcessMode, TemplateFile
+
+RW_MODE = ProcessMode.render | ProcessMode.write
 
 
 @pytest.fixture
@@ -20,7 +24,11 @@ def init_map(tmp_path: Path) -> InheritanceMap:
     p3 = tmp_path / "dir3" / "a.txt"
     p3.parent.mkdir(parents=True, exist_ok=True)
     p3.write_text("{% extends 'a.txt' %}")
-    return InheritanceMap({"a.txt": p1}, {"a.txt": p2}, {"a.txt": p3})
+    return InheritanceMap(
+        {"a.txt": TemplateFile(p1, RW_MODE)},
+        {"a.txt": TemplateFile(p2, RW_MODE)},
+        {"a.txt": TemplateFile(p3, RW_MODE)},
+    )
 
 
 class TestInheritanceMap:
@@ -35,6 +43,7 @@ class TestInheritanceMap:
         assert not init_map.is_empty
 
     def test_inheritance_for_key_returns_values_in_reverse_order(self, init_map: InheritanceMap):
+        """When a key is provided, inheritance returns the values in reverse order."""
         assert init_map.inheritance("a.txt") == [
             init_map.maps[2]["a.txt"],
             init_map.maps[1]["a.txt"],
