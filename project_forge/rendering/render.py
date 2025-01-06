@@ -21,6 +21,9 @@ def render_env(env: Environment, path_list: InheritanceMap, context: dict, desti
         if project_root is None:
             project_root = full_path
 
+        if not val.is_writable:
+            continue
+
         if val.path.is_file():
             logger.debug(f"Writing file {dst_rel_path}")
             full_path.parent.mkdir(parents=True, exist_ok=True)

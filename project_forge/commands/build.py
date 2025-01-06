@@ -31,8 +31,6 @@ def build_project(
             overlay.ask_questions = False
     context = build_context(composition, ui_function, initial_context)
 
-    # TODO[#20]: Need to incorporate `skip`, and `copy_only` attributes to the templates for rendering
-
     template_paths = [
         (overlay.pattern.template_location.resolve(), overlay.pattern.get_process_mode) for overlay in overlays
     ]

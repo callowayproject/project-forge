@@ -193,10 +193,12 @@ class Pattern(BaseModel):
     def get_process_mode(self, path: Path) -> ProcessMode:
         """Calculates the process mode for a path based on the pattern's skip and copy_only attributes."""
         mode = ProcessMode.render | ProcessMode.write
+
         if matches_any_glob(path, self.skip):
             mode &= ~ProcessMode.write
         if matches_any_glob(path, self.copy_only):
             mode &= ~ProcessMode.render
+
         return mode
 
 

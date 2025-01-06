@@ -175,10 +175,9 @@ Includes:
 ## Pattern Templates
 
 - how context is presented
-- can you have templates fill parts of other overlays?
-    - Like treating each overlay as a chain map
-- need to figure out how to use inheritance and multiple sources of templates
-- need to figure out all the files (including overwrites and )
+- default behavior is to render each template file in the pattern and save the results to the destination.
+- Template files that match a path or glob pattern in the `skip` attribute are available for inclusion in other templates, but are not rendered individually or saved to the destination
+- Template files that match a path or glob pattern in the `copy_only` attribute are not rendered. Their contents are copied to the destination
 
 ## Pattern source manager
 

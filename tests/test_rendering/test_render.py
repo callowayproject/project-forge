@@ -19,7 +19,15 @@ def template(tmp_path: Path):
     template_dir.mkdir()
     template_dir.joinpath("{{ repo_name }}").mkdir()
     template_dir.joinpath("{{ repo_name }}", "file.txt").write_text("{{ key }}")
-    pattern_content = 'template_location = "{{ repo_name }}"\n[extra_context]\nkey = "value"\n'
+    template_dir.joinpath("{{ repo_name }}", "skipme.txt").write_text("{{ key }}")
+    template_dir.joinpath("{{ repo_name }}", "copy_only.txt").write_text("{{ key }}")
+    pattern_content = (
+        'template_location = "{{ repo_name }}"\n'
+        'skip = ["{{ repo_name }}/skipme.txt"]\n'
+        'copy_only = ["{{ repo_name }}/copy_only.txt"]\n'
+        "[extra_context]\n"
+        'key = "value"\n'
+    )
     template_dir.joinpath("pattern.toml").write_text(pattern_content)
     composition_content = "\n".join(
         [
@@ -65,6 +73,24 @@ class TestRenderEnv:
     def test_creates_directories(self, tmp_path: Path, template: Path):
         """It creates directories for the rendered files."""
         assemble_and_render(template, tmp_path)
+
         # Assert
         dir_path = tmp_path / "my-project"
         assert dir_path.exists()
+
+    def test_skips_files(self, tmp_path: Path, template: Path):
+        """The files specified in the skip list are skipped."""
+        assemble_and_render(template, tmp_path)
+
+        # Assert
+        file_path = tmp_path / "my-project" / "skipme.txt"
+        assert not file_path.exists()
+
+    def test_copies_files(self, tmp_path: Path, template: Path):
+        """The files specified in the copy_only list are copied and not rendered."""
+        assemble_and_render(template, tmp_path)
+
+        # Assert
+        file_path = tmp_path / "my-project" / "copy_only.txt"
+        assert file_path.exists()
+        assert file_path.read_text() == "{{ key }}"

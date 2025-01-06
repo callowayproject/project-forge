@@ -14,7 +14,7 @@ class ProcessMode(IntFlag):
     This is a bitmask, so you can combine them.
     """
 
-    ignore = auto()
+    ignore = 0
     """Do not include the template in the inheritance map."""
 
     render = auto()
