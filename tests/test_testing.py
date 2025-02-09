@@ -80,7 +80,7 @@ class TestForgerFixture:
         pytester.makepyfile(
             f"""
             def test_forger_fixture(forger):
-                result = forger.forge(config_path="{composition_path_str}", use_defaults=True)
+                result = forger.forge(config_path="{composition_path_str}")
                 assert result.exception == None
                 assert result.exit_code == 0
                 assert result.project_dir.exists()

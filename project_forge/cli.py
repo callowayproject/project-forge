@@ -8,6 +8,7 @@ from click.core import Context
 
 from project_forge import __version__
 from project_forge.core.io import parse_file
+from project_forge.ui.defaults import return_defaults
 from project_forge.ui.terminal import ask_question
 
 
@@ -80,11 +81,12 @@ def build(
     if data:
         initial_context |= dict(data)
 
+    ui_function = return_defaults if use_defaults else ask_question
+
     build_project(
         composition,
         output_dir=output_dir,
-        ui_function=ask_question,
-        use_defaults=use_defaults,
+        ui_function=ui_function,
         initial_context=initial_context,
     )
 
