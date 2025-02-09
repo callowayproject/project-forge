@@ -20,9 +20,9 @@ def composition_contents(fixtures_dir: Path) -> str:
     return "\n".join(
         [
             "steps = [",
-            f'    {{ pattern_location = "{pattern1}" }},',
-            f'    {{ pattern_location = "{pattern2}" }},',
-            f'    {{ pattern_location = "{pattern3}" }},',
+            f"    {{ pattern_location = '{pattern1}' }},",
+            f"    {{ pattern_location = '{pattern2}' }},",
+            f"    {{ pattern_location = '{pattern3}' }},",
             '     { command = ["git", "init"] },',
             "]\n",
         ]
