@@ -51,6 +51,7 @@ class TestInheritanceMap:
         ]
 
     def test_inheritance_for_missing_key_returns_empty_list(self, init_map: InheritanceMap):
+        """The inheritance of a missing key returns empty list."""
         assert init_map.inheritance("b") == []
 
 

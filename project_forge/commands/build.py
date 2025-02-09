@@ -19,16 +19,12 @@ def build_project(
     composition_file: Path,
     output_dir: Path,
     ui_function: UIFunction,
-    use_defaults: bool = False,
     initial_context: Optional[dict] = None,
 ) -> BuildResult:
     """Render a project to a directory."""
     initial_context = initial_context or {}
     composition = read_composition_file(composition_file)
     overlays = [item for item in composition.steps if isinstance(item, Overlay)]
-    if use_defaults:
-        for overlay in overlays:
-            overlay.ask_questions = False
     context = build_context(composition, ui_function, initial_context)
 
     template_paths = [

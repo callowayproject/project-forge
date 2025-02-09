@@ -44,9 +44,7 @@ class Forger:
     def __init__(self, output_dir: pathlib.Path):
         self._output_dir = output_dir
 
-    def forge(
-        self, config_path: Optional[pathlib.Path], use_defaults: bool = False, initial_context: Optional[dict] = None
-    ) -> Result:
+    def forge(self, config_path: Optional[pathlib.Path], initial_context: Optional[dict] = None) -> Result:
         """Build a project from the given config."""
         exception: Optional[BaseException] = None
         exit_code: str | int = 0
@@ -56,7 +54,6 @@ class Forger:
             build_result = build_project(
                 composition_file=config_path,
                 output_dir=self._output_dir,
-                use_defaults=use_defaults,
                 ui_function=return_defaults,
                 initial_context=initial_context,
             )
