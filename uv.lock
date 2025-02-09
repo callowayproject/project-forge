@@ -201,7 +201,7 @@ name = "click"
 version = "8.1.7"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "colorama", marker = "platform_system == 'Windows'" },
+    { name = "colorama", marker = "sys_platform == 'win32'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/96/d3/f04c7bfcf5c1862a2a5b845c6b2b360488cf47af55dfa79c98f6a6bf98b5/click-8.1.7.tar.gz", hash = "sha256:ca9853ad459e787e2192211578cc907e7594e294c7ccc834310722b41b9ca6de", size = 336121 }
 wheels = [
@@ -856,7 +856,7 @@ version = "1.6.1"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "click" },
-    { name = "colorama", marker = "platform_system == 'Windows'" },
+    { name = "colorama", marker = "sys_platform == 'win32'" },
     { name = "ghp-import" },
     { name = "jinja2" },
     { name = "markdown" },
@@ -1163,17 +1163,18 @@ wheels = [
 
 [[package]]
 name = "project-forge"
-version = "0.3.0"
 source = { editable = "." }
 dependencies = [
     { name = "click" },
     { name = "environs" },
+    { name = "gitpython" },
     { name = "immutabledict" },
     { name = "jinja2" },
     { name = "platformdirs" },
     { name = "pydantic" },
     { name = "pydantic-settings" },
     { name = "pyyaml" },
+    { name = "questionary" },
     { name = "rich-click" },
     { name = "tomlkit" },
 ]
@@ -1218,12 +1219,14 @@ test = [
 requires-dist = [
     { name = "click", specifier = ">=8.1.7" },
     { name = "environs", specifier = ">=9.3.5" },
+    { name = "gitpython", specifier = ">=3.1.43" },
     { name = "immutabledict", specifier = ">=4.2.0" },
     { name = "jinja2", specifier = ">=3.1.0" },
     { name = "platformdirs", specifier = ">=4.2.2" },
     { name = "pydantic", specifier = ">=2.8.2" },
     { name = "pydantic-settings", specifier = ">=2.4.0" },
     { name = "pyyaml", specifier = ">=6.0.2" },
+    { name = "questionary", specifier = ">=2.0.1" },
     { name = "rich-click", specifier = ">=1.8.3" },
     { name = "tomlkit", specifier = ">=0.13.2" },
 ]
