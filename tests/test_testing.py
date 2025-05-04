@@ -19,6 +19,8 @@ class TestForgerFixture:
             def test_forger_fixture(forger):
                 assert forger.__class__.__name__ == "Forger"
                 assert hasattr(forger, "forge")
+                assert hasattr(forger, "inside_dir")
+                assert hasattr(forger, "run_inside_dir")
             """
         )
 
@@ -98,9 +100,30 @@ class TestForgerFixture:
         assert result.ret == 0
         assert output_dir.joinpath("my-project").exists()
 
+    @patch("project_forge.testing.run_inside_dir")
+    def test_run_inside_dir_calls_function(self, mock_run_inside_dir, pytester):
+        """The `run_inside_dir` function should call the `run_inside_dir` function."""
+        # Assemble
+        mock_run_inside_dir.return_value = CompletedProcess(args=["ls"], returncode=0, stdout=b"list", stderr=b"")
+        pytester.makepyfile(
+            """
+            from pathlib import Path
+            def test_forger_fixture(forger):
+                result = forger.run_inside_dir("ls", Path("/some/path"))
+                assert result.exception == None
+                assert result.exit_code == 0
+            """
+        )
+
+        # Act
+        pytester.runpytest()
+
+        # Assert
+        mock_run_inside_dir.assert_called_once_with("ls", Path("/some/path"))
+
 
 class TestRunInsideDir:
-    """Tests for the `run_inside_dir` decorator."""
+    """Tests for the `run_inside_dir` function."""
 
     @patch("project_forge.testing.subprocess")
     @patch("project_forge.testing.inside_dir")
@@ -143,7 +166,7 @@ class TestRunInsideDir:
         assert result.stderr == b"error"
 
 
-def test_testing_ui_returns_default():
-    """The `testing_ui` function only returns the default value."""
+def test_return_defaults_ui_returns_default():
+    """The `return_defaults` UI function only returns the default value."""
     result = return_defaults("Question?", default="yes")
     assert result == "yes"
