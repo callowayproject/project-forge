@@ -7,14 +7,20 @@
 
 <!--start-->
 
-Project Forge is a composable project scaffolding tool.
+Project Forge is an extensible and composable project scaffolding tool.
 Developers can quickly generate new projects by only answering a few questions.
 
-## Goals
+- In current project scaffolding, variations in templates magnify complexity.
+- Maintainability increases as complexity increases.
+
+A tool that lets platform teams pave a golden path and still allows developers to customize when necessary
+
+## Features
 
 - Create new projects from a composition of several patterns.
+- Compose individual files using template blocks.
 - *Coming soon.* Add new capabilities to an existing project by applying a pattern.
-- *Coming soon.* Update a generated project using updated patterns.
+- *Coming soon.* Update a generated project when its patterns are updated.
 
 ## Introduction
 
@@ -27,6 +33,9 @@ Other scaffolding tools treat project building like using a vending machine.
 Your choices are limited by what is available in the vending machine.
 
 ## Composable project templates
+
+- patterns can contain templates that extend other pattern templates
+- developers can customize an existing pattern's definition and still use the original's templates
 
 Project Forge's key feature is that it is designed to generate projects from multiple, smaller templates called _patterns_.
 

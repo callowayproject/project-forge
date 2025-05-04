@@ -1,77 +1,37 @@
-name: CI
+name: Test
+
+permissions:
+  contents: read
 
 on:
   pull_request:
-    types: [opened, synchronize]
-    branches: [master]
-
-defaults:
-  run:
-    shell: bash
-
-env:
-  PYTHONUTF8: "1"
+    paths:
+      - 'generate_changelog/*'
+      - 'tests/*'
 
 jobs:
-
   test:
-    strategy:
-      fail-fast: false
-      matrix:
-        os:
-          - ubuntu-latest
-          - windows-latest
-        python-version:
-          - "3.12"
-          - "3.13"
-    runs-on: ${{ matrix.os }}
-    steps:
-      - uses: actions/checkout@v4
-        name: Checkout the repository
-        with:
-          fetch-depth: 0
-      - uses: ./.github/actions/setup-python-and-git
-        with:
-          python-version: ${{ matrix.python-version }}
-      - name: Install test dependencies
-        run: uv sync -p ${{ matrix.python-version }} --group test
-      - name: Test
-        run: uv run pytest
 
-  # Upload to Test PyPI.
-  release-test-pypi:
-    name: Publish in-dev package to test.pypi.org
     runs-on: ubuntu-latest
-    permissions:
-      id-token: write
+    strategy:
+      matrix:
+        python-version: ["3.9", "3.10", "3.11", "3.12", "3.13"]
+
     steps:
-      - uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
+    - uses: actions/checkout@v4
 
-      - uses: ./.github/actions/setup-python-and-git
-        with:
-          python-version: "3.12"
+    - name: Install uv
+      uses: astral-sh/setup-uv@v5
+      with:
+        enable-cache: true
 
-      - name: Install requirements
-        shell: bash
-        run: |
-          uv sync -p 3.12 --group dev
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v5
+      with:
+        python-version: ${{ matrix.python-version }}
 
-      - name: Set dev version
-        shell: bash
-        run: |
-          export PR_NUMBER=$(gh pr view --json number -q .number || echo "")
-          echo "PR_NUMBER=$PR_NUMBER" >> $GITHUB_ENV
-          echo "::notice::PR_NUMBER is: ${PR_NUMBER}"
-          uv run bump-my-version bump dev --no-commit --no-tag -v
+    - name: Install dependencies
+      run: uv sync --all-extras --all-groups --dev
 
-      - name: Package
-        shell: bash
-        run: |
-          uv build
-
-      - name: Upload package to Test PyPI
-        uses: pypa/gh-action-pypi-publish@release/v1
-        with:
-          repository-url: https://test.pypi.org/legacy/
+    - name: Run Tests
+      run: uv run pytest

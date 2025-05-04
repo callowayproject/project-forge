@@ -67,10 +67,16 @@ def execute_task(task: Task, context: dict) -> dict:
         extra_env = {key: render_expression(val) for key, val in task.env.items()}
         env |= extra_env
 
+    command = (
+        [render_expression(cmd, context) for cmd in task.command]
+        if isinstance(task.command, list)
+        else render_expression(task.command, context)
+    )
+
     working_dir = context.get("working_dir", Path.cwd())
     with inside_dir(working_dir):
         result = subprocess.run(  # noqa: S603
-            task.command,
+            command,
             shell=task.use_shell,
             env=env,
             capture_output=True,

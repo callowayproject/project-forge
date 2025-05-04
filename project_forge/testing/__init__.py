@@ -3,10 +3,11 @@
 import pathlib
 import shlex
 import subprocess
+from contextlib import contextmanager
 from dataclasses import dataclass
 from pathlib import Path
 from subprocess import CompletedProcess
-from typing import Optional
+from typing import Generator, Optional
 
 from project_forge.commands.build import build_project
 from project_forge.ui.defaults import return_defaults
@@ -71,3 +72,20 @@ class Forger:
             project_dir=build_result.root_path if build_result else None,
             context=build_result.context if build_result else None,
         )
+
+    @staticmethod
+    @contextmanager
+    def inside_dir(dir_path: Path) -> Generator[None, None, None]:
+        """
+        Temporarily switch the current directory to the given path.
+
+        Args:
+            dir_path: path of the directory the command is being run.
+        """
+        with inside_dir(dir_path):
+            yield
+
+    @staticmethod
+    def run_inside_dir(command: str, dir_path: pathlib.Path) -> CompletedProcess:
+        """Run a command from inside a given directory, returning the exit status."""
+        return run_inside_dir(command, dir_path)
