@@ -24,6 +24,10 @@ def default_origin(tmp_path: Path) -> Repo:
     """Create a default origin repo."""
     tmp_repo_path = tmp_path / "tmp_repo"
     tmp_repo = Repo.init(tmp_repo_path)
+    configparser = tmp_repo.config_writer("repository")
+    configparser.set_value("commit", "gpgsign", False)
+    configparser.set_value("tag", "gpgsign", False)
+    configparser.release()
     tmp_repo_path.joinpath("README.md").write_text("Hello World!")
     tmp_repo.index.add(["README.md"])
     tmp_repo.index.commit(
@@ -61,6 +65,10 @@ def default_repo(default_origin: Repo, tmp_path: Path) -> Repo:
     repo = default_origin.clone(tmp_path / "repo")
     repo.heads.master.checkout()
     repo.remotes.origin.pull()
+    configparser = repo.config_writer("repository")
+    configparser.set_value("commit", "gpgsign", False)
+    configparser.set_value("tag", "gpgsign", False)
+    configparser.release()
 
     return repo
 
