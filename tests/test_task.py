@@ -6,6 +6,7 @@ from unittest.mock import MagicMock, patch
 
 import pytest
 from pydantic import ValidationError
+from pytest import param
 
 from project_forge.models.task import Task, execute_task
 
@@ -114,3 +115,22 @@ class TestExecuteTask:
             with pytest.raises(subprocess.CalledProcessError):
                 # Act
                 execute_task(task, context)
+
+    @pytest.mark.parametrize(
+        ["command"],
+        [
+            param(["echo", "{{ my_variable }}"], id="command-list"),
+            param("echo {{ my_variable }}", id="command-string"),
+        ],
+    )
+    def test_renders_context_variables_in_command_list(self, command: list | str, tmp_path: Path):
+        """Context variables in the command are rendered before executing."""
+        # Assemble
+        task = Task(command=command, context_variable_name="result")
+        context = {"output_dir": tmp_path, "my_variable": "test"}
+
+        # Act
+        result_context = execute_task(task, context)
+
+        # Assert
+        assert result_context["result"] == "test"
