@@ -281,9 +281,3 @@ search = "Unreleased"
 filename = "CHANGELOG.md"
 search = "{current_version}...HEAD"
 replace = "{current_version}...{new_version}"
-
-[[tool.bumpversion.files]]
-regex = true
-filename = "pyproject.toml"
-search = "^version = \"{current_version}\""
-replace = "version = \"{new_version}\""
