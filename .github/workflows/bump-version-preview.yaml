@@ -5,6 +5,10 @@ on:
     types: [synchronize, opened, reopened, ready_for_review]
     branches: [master]
 
+permissions:
+  contents: read
+  pull-requests: write
+
 concurrency: version-preview-${{ github.ref }}
 
 jobs:
