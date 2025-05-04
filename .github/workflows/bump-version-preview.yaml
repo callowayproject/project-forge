@@ -32,7 +32,7 @@ jobs:
 
       - name: Get the release hint
         id: changelog
-        uses: callowayproject/generate-changelog@v0
+        uses: docker://ghcr.io/callowayproject/generate-changelog@v0
         with:
           branch_override: ${{ github.event.pull_request.base.ref }}
 
