@@ -37,7 +37,7 @@ jobs:
 
       - name: Generate changelog and release hint
         id: changelog
-        uses: docker://ghcr.io/callowayproject/generate-changelog@v0
+        uses: docker://ghcr.io/callowayproject/generate-changelog:v0
 
       - name: Bump version
         id: bump-version
