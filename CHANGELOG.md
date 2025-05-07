@@ -1,5 +1,150 @@
 # Changelog
 
+## 0.4.0 (2025-05-07)
+[Compare the full difference.](https://github.com/callowayproject/project-forge/compare/0.3.0...0.4.0)
+
+### Fixes
+
+- Fixed GitHub workflows. [2a3e4b7](https://github.com/callowayproject/project-forge/commit/2a3e4b7836511d575387f384c368e7ceb98c5c76)
+    
+  - build-python.yaml: removed release-container call
+  - bump-version.yaml: added required permissions
+- Fixed quoting test composition strings. [49aab87](https://github.com/callowayproject/project-forge/commit/49aab873e471a42b91633dd95f9138877fc70f1a)
+    
+- Fixed missing dependencies. [7a73d3e](https://github.com/callowayproject/project-forge/commit/7a73d3e17590a4c5b4336612ff640c568e3f9367)
+    
+- Fixed README. [1e61954](https://github.com/callowayproject/project-forge/commit/1e619544ccc5d8b3cd4d295b5f9ee5e495d313df)
+    
+- Fixed click docs rendering. [baf2522](https://github.com/callowayproject/project-forge/commit/baf25221dae5635b4c9448c28488da4bb3527780)
+    
+- Fixed releasing. [6f232bd](https://github.com/callowayproject/project-forge/commit/6f232bd4f73acb97b431dd543eaf85e1e172878f)
+    
+### New
+
+- Add `run_inside_dir` and `inside_dir` utilities with tests. [3fe4460](https://github.com/callowayproject/project-forge/commit/3fe4460c968e0415e8ef510e22e63831610c137f)
+    
+  Introduced `run_inside_dir` and `inside_dir` utilities to streamline running commands within specific directories. Updated related tests to ensure proper behavior and functionality. Enhanced test coverage for `forger` fixture and adjusted naming for clarity in `return_defaults` test.
+- Add new assets for branding and web app support. [0094d37](https://github.com/callowayproject/project-forge/commit/0094d37854033da244a695bf12dcd34ab0d5b5b2)
+    
+  Added dark and light logos, updated the favicon, and included a web app manifest file to support Progressive Web App features. These changes enhance branding consistency and improve app usability across platforms.
+- Add utility functions for path and pattern matching. [84f637c](https://github.com/callowayproject/project-forge/commit/84f637cdd2354e12b244d58105d7217cf544ea92)
+    
+  Introduces `rel_fnmatch` to enforce relative pattern matching and `matches_any_glob` to check paths against multiple glob patterns. These functions enhance flexibility and simplify matching logic for file and path operations.
+- Add support for optional skip conditions in filter_choices. [f0af00b](https://github.com/callowayproject/project-forge/commit/f0af00b5cd87b8de08ced9b94c6756ee4bc2e064)
+    
+  Previously, the `skip_when` attribute for `Choice` was mandatory, causing issues when unset. This update ensures that `skip_when` defaults to `False` if not provided, improving robustness. Additionally, a new test case was added to cover this scenario with an extra choice.
+- Add issue templates for feature requests and bug reports. [4ab21e1](https://github.com/callowayproject/project-forge/commit/4ab21e18189b7d6bfacadea0797907dc3aaf9382)
+    
+  Introduced standardized GitHub issue templates to streamline project contributions. The feature request template helps users suggest ideas, while the bug report template aids in reporting issues clearly and consistently.
+- Add support for tasks in composition steps. [f1afc58](https://github.com/callowayproject/project-forge/commit/f1afc580e45fc88ee3fe91cee80843cc70c7ebf1)
+    
+  Updated `composition1.toml` to include a new task step with a `git init` command. Modified the test suite to handle and validate the inclusion of tasks, ensuring correct behavior when reading composition files.
+### Other
+
+- [pre-commit.ci] pre-commit autoupdate. [56331a7](https://github.com/callowayproject/project-forge/commit/56331a72fdc0f017a6056e70cb6077f0b1cfc89d)
+    
+  **updates:** - [github.com/psf/black: 24.10.0 → 25.1.0](https://github.com/psf/black/compare/24.10.0...25.1.0)
+
+
+- Create codeql.yml. [671be99](https://github.com/callowayproject/project-forge/commit/671be99aca5bd86265b77760e2444e926f41b393)
+    
+- Simplify URL existence check in _process_url method. [a7e87fc](https://github.com/callowayproject/project-forge/commit/a7e87fcab17b63260c72497c31def9109aa7a8b9)
+    
+  Removed unnecessary use of the second argument in `dict.get` method when checking for the presence of a URL key. This change streamlines the code and improves readability without altering functionality.
+- Set specific permissions for GitHub Actions workflows. [c552ada](https://github.com/callowayproject/project-forge/commit/c552ada1338f1e2c3aca6a8950a4d83e134ba318)
+    
+  Added `contents: read` and `pull-requests: write` permissions to ensure workflows have the least privilege required. This enhances security while maintaining necessary functionality.
+- Potential fix for code scanning alert no. 6: Workflow does not contain permissions. [80f897f](https://github.com/callowayproject/project-forge/commit/80f897f51103c98ba9dc4bfbe5bec2eb856c6898)
+    
+  **co-authored-by:** Copilot Autofix powered by AI <62310815+github-advanced-security[bot]@users.noreply.github.com>
+
+
+- Switch changelog action to use Docker image source. [06d8bf9](https://github.com/callowayproject/project-forge/commit/06d8bf9992ee7c1b9ecf037512c0be98164f2df4)
+    
+  Updated workflows to use the Docker image source for the `callowayproject/generate-changelog` action. This ensures consistency and better alignment with repository hosting. No functional changes to workflow behavior are introduced.
+- Disable GPG signing in test repository setup. [b1348b6](https://github.com/callowayproject/project-forge/commit/b1348b6c93d5fb6c72b5d41299bb60af1bdfc117)
+    
+  This ensures that GPG signing is disabled for commits and tags in test repositories, preventing unnecessary or failing GPG-related checks during testing. It improves the consistency and reliability of test environments.
+- Implement skip and copy_only file handling in rendering. [2e83acf](https://github.com/callowayproject/project-forge/commit/2e83acf7b8662191f8af493051f3596805018b2d)
+    
+  Added functionality to process skip and copy_only file patterns during template rendering. Updated corresponding tests and logic in multiple modules to ensure correct skipping, copying, and rendering behavior. Improved code clarity and removed outdated TODO comments.
+
+  Fixes #20
+- [pre-commit.ci] pre-commit autoupdate. [e4da30f](https://github.com/callowayproject/project-forge/commit/e4da30f2b31179539d9b904da15675d92db0fccc)
+    
+  **updates:** - [github.com/jsh9/pydoclint: 0.5.13 → 0.5.14](https://github.com/jsh9/pydoclint/compare/0.5.13...0.5.14)
+
+
+- Exclude cli.md from search results in docs. [caf433e](https://github.com/callowayproject/project-forge/commit/caf433e04906717e0686dd784616ed6766d42574)
+    
+  Updated the MkDocs configuration to exclude cli.md from search indexing. This helps streamline search results by removing irrelevant or less frequently needed content.
+- "Update documentation and fix formatting inconsistencies. [b228c5c](https://github.com/callowayproject/project-forge/commit/b228c5c8205afaaf9b54ae7b900b4b78120e60da)
+    
+  Revised multiple documentation files including CODE_OF_CONDUCT.md, CONTRIBUTING.md, and ISSUE_TEMPLATE.md to address formatting issues, ensure consistent indentation, and improve clarity. Updated outdated references and added accurate contact details to enhance usability and maintain alignment with project standards."
+- [pre-commit.ci] pre-commit autoupdate. [9702aef](https://github.com/callowayproject/project-forge/commit/9702aef5e7602c2c10fcfd24a0307a760f95259d)
+    
+  **updates:** - [github.com/astral-sh/ruff-pre-commit: v0.8.2 → v0.8.4](https://github.com/astral-sh/ruff-pre-commit/compare/v0.8.2...v0.8.4)
+
+
+- Use `working_dir` for task execution and implement `process_task`. [90add5e](https://github.com/callowayproject/project-forge/commit/90add5eb8d0b15affa3e19075c6a3657cb071ead)
+    
+  Updated task execution to utilize a configurable `working_dir` instead of defaulting to the output directory. Also implemented `process_task` to call `execute_task`, replacing the placeholder `NotImplementedError`.
+### Updates
+
+- Removed bumpversion replace rul for non-existent replacement. [6d49266](https://github.com/callowayproject/project-forge/commit/6d492661eacfd3af0df4ae8c3c41f06e68c41571)
+    
+- Update documentation for composition and add overlay reference. [74b125d](https://github.com/callowayproject/project-forge/commit/74b125d5c54ee57623f97c076c53658024b6d118)
+    
+  Clarified the composition file structure, including the `steps` and `merge_keys` attributes, to highlight overlay behavior and merging functionality. Enhanced the README to better explain Project Forge's extensibility and key features. Added a new `overlay.md` file to provide a dedicated reference for overlay configuration.
+- Refactor GitHub Actions workflows for improved modularization. [85067ec](https://github.com/callowayproject/project-forge/commit/85067ececb073445aaa97ac11e8c46bfa4a8e090)
+    
+  Reorganized workflows into smaller, modular components for clarity and maintainability. Legacy workflows were removed, and new workflows were introduced to separate tasks such as documentation, testing, version bumping, and releases to GitHub and PyPI.
+- Refactor command rendering to support context variables. [f9df4ab](https://github.com/callowayproject/project-forge/commit/f9df4abca4352e7f2db29a98d74bdc51b22f770c)
+    
+  Updated `Task` execution to render context variables in both string and list commands before execution. Added corresponding parameterized test cases to validate this behavior.
+- Remove `use_defaults` parameter for cleaner UI handling. [fa55dd7](https://github.com/callowayproject/project-forge/commit/fa55dd724b25e7e6eefc7831ee650f4dddc21a9b)
+    
+  Replaced the `use_defaults` parameter with explicit use of `return_defaults` in UI function handling to streamline and simplify the build logic. Updated related tests, CLI, and core functionality to align with this refactoring.
+- Refactor template processing to include process modes. [c2ab5ed](https://github.com/callowayproject/project-forge/commit/c2ab5ed12a34fbfc276748bb24d11fea549fce02)
+    
+  Updated the build process to handle template paths with associated processing modes. This change lays the groundwork for incorporating `skip` and `copy_only` attributes in a future update, as noted in TODO[#20].
+- Refactor template processing to support customizable modes. [2071e02](https://github.com/callowayproject/project-forge/commit/2071e029460f75512113b073f093887514c8b48a)
+    
+  Enhanced template handling by introducing `ProcessMode` and `TemplateFile` for fine-grained control over rendering and writing. Updated functions like `catalog_templates` and `catalog_inheritance` to utilize these new constructs. Adjusted tests and core logic to align with the updated template processing flow.
+- Refactor UI imports and streamline default handling. [fb8dae6](https://github.com/callowayproject/project-forge/commit/fb8dae6977427855235ecb4876e2d86ef3bd6103)
+    
+  Replaced `use_default_ui` function with `return_defaults` for simplification and unified default handling. Adjusted imports to reflect module restructuring. Improves code maintainability and aligns with updated project structure.
+- Refactor UI module and improve test structure. [299517f](https://github.com/callowayproject/project-forge/commit/299517fad60c54c3acb99346aa2b05b9a3eb14ad)
+    
+  Renamed `tui.py` to `ui/terminal.py` and introduced a new `ui/defaults.py` for handling default UI behavior. Updated tests to reflect these changes, including restructuring test files and replacing `tui` references with `ui.terminal` or `ui.defaults` as appropriate. This organizes the UI logic and testing structure for better clarity and maintainability.
+- Refactor overlay processing to improve context merging. [a86a74d](https://github.com/callowayproject/project-forge/commit/a86a74dcdb8ef30563fe50f1a3a8291c335d112b)
+    
+  Replaced mock UI with `return_defaults` and updated tests accordingly. Enhanced the `process_overlay` return logic to re-merge the pattern context, ensuring extra context requiring answers is properly rendered. Simplified and clarified related test cases.
+- Updated feature request template. [45827f7](https://github.com/callowayproject/project-forge/commit/45827f7d28389daa802bdb8d1f0acb7621660f3f)
+    
+- Refactor schema export and improve composition handling. [b4989f1](https://github.com/callowayproject/project-forge/commit/b4989f180cefb039adfb33294b486c84ba7c28cb)
+    
+  Replaced the standalone `export_schemas.py` script with a more structured `export_schemas` command in the CLI. Added support for tasks alongside overlays within compositions and introduced relevant JSON schema updates. Comprehensive tests were added to ensure reliable schema generation and export functionality.
+- Update documentation formatting. [f920794](https://github.com/callowayproject/project-forge/commit/f920794ffc24738082cecbf651feab1c92e7bd12)
+    
+- Update docs with generation of Click docs. [2b99189](https://github.com/callowayproject/project-forge/commit/2b99189dd918f661a761ec9e288f07b28d6a3de9)
+    
+- Update documentation and improve reference links. [7d48f18](https://github.com/callowayproject/project-forge/commit/7d48f18b709ff445d614830203b3db7f85b1c40c)
+    
+  Refactored documentation to correct and update API references from `configurations` to `models` for accuracy. Introduced a new CLI documentation file and adjusted formatting in tutorials for better readability. Added HTML comment markers in `README.md` for improved structure.
+- Refactor tests to improve composition mocking and assertions. [c9d6587](https://github.com/callowayproject/project-forge/commit/c9d6587b0f5980d216650c37f837b03f8cc20c6c)
+    
+  Simplified test setup by creating helper methods for mock composition creation and setting return values. Enhanced readability and maintainability by replacing repetitive mock assertions with a shared utility method. Added coverage for `process_task` functionality, ensuring all patches are handled consistently.
+- Refactor configuration models and adjust related modules. [a493bc8](https://github.com/callowayproject/project-forge/commit/a493bc8abd77caa472d5bf54a307f76996c3796e)
+    
+  Moved configuration-related logic into dedicated "models" module, splitting classes like Overlay into their own files. Updated references across the project to reflect this restructuring, improving maintainability and separation of concerns.
+- Updated readme. [64dc91e](https://github.com/callowayproject/project-forge/commit/64dc91ede59a57cdfceba768655e4019450c9cfb)
+    
+- Updated docs. [df2de03](https://github.com/callowayproject/project-forge/commit/df2de03733ddb0126ede8d7a8421d70ef3191b40)
+    
+- Updated tools. [b817479](https://github.com/callowayproject/project-forge/commit/b817479515902e3176c4e6060f7f1bfe9bdca51b)
+    
+
 ## 0.3.0 (2024-12-08)
 
 [Compare the full difference.](https://github.com/callowayproject/project-forge/compare/0.2.0...0.3.0)

@@ -43,7 +43,7 @@ class Location(BaseModel):
     @classmethod
     def _process_url(cls, values: dict) -> dict:
         """Parse the URL, and modify the `path` if the URL is a local path."""
-        if not values.get("url", None):
+        if not values.get("url"):
             return values
 
         parsed_url = parse_git_url(values["url"])

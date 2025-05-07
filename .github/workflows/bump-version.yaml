@@ -74,4 +74,6 @@ jobs:
     if: ${{ needs.bump-version.outputs.build_package == 'true' }}
     permissions:
       contents: read
+      attestations: write
+      id-token: write
     uses: ./.github/workflows/build-python.yaml
