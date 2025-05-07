@@ -30,14 +30,6 @@ jobs:
         with:
           attest-build-provenance-github: 'true'
 
-  release-container:
-    needs: build-package
-    runs-on: ubuntu-latest
-    permissions:
-      contents: read
-    steps:
-      - uses: ./.github/workflows/release-container.yaml
-
   release-github:
     needs: build-package
     runs-on: ubuntu-latest
