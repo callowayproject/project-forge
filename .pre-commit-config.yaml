@@ -3,7 +3,6 @@ repos:
     rev: 'v0.11.8'
     hooks:
       - id: ruff-format
-        args: [ --fix ]
         exclude: tests/fixtures/.*
       - id: ruff
         args: [ --fix, --exit-non-zero-on-fix ]
