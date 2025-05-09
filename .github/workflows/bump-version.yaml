@@ -52,7 +52,7 @@ jobs:
               bump-my-version bump --allow-dirty --verbose "$RELEASE_KIND"
               git push
               git push --tags
-              echo "build_package=false" >> $GITHUB_OUTPUT
+              echo "build_package=true" >> $GITHUB_OUTPUT
               ;;
             dev)
               echo "Intentionally not bumping version for dev release"
@@ -76,4 +76,5 @@ jobs:
       contents: read
       attestations: write
       id-token: write
+      packages: write
     uses: ./.github/workflows/build-python.yaml
