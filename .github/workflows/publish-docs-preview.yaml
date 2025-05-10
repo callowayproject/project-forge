@@ -11,7 +11,7 @@ on:
 concurrency: preview-${{ github.ref }}
 
 jobs:
-  publish-docs:
+  publish-preview-docs:
 
     runs-on: ubuntu-latest
     permissions:
