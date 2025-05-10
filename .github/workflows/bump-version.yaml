@@ -34,7 +34,7 @@ jobs:
 
       - name: Install requirements
         run: |
-          uv pip install bump-my-version
+          python -m pip install bump-my-version
 
       - name: Generate changelog and release hint
         id: changelog
