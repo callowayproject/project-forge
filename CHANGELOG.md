@@ -1,44 +1,45 @@
 # Changelog
 
 ## 0.5.0 (2025-05-10)
+
 [Compare the full difference.](https://github.com/callowayproject/project-forge/compare/0.4.0...0.5.0)
 
 ### Fixes
 
 - Fixed pre-commit configuration. [c78925c](https://github.com/callowayproject/project-forge/commit/c78925c10fe8a4332a60600d66c1575e749e9a20)
-    
+
 ### Other
 
 - Formatted the CHANGELOG.md file. [44555c3](https://github.com/callowayproject/project-forge/commit/44555c38fece334543dc45375bee1b88751d97d6)
-    
+
 - Bump astral-sh/setup-uv from 5 to 6 in the github-actions group. [836274b](https://github.com/callowayproject/project-forge/commit/836274b7c42a3b6335817cc84467dfd220a6ae70)
-    
-  Bumps the github-actions group with 1 update: [astral-sh/setup-uv](https://github.com/astral-sh/setup-uv).
 
+    Bumps the github-actions group with 1 update: [astral-sh/setup-uv](https://github.com/astral-sh/setup-uv).
 
-  Updates `astral-sh/setup-uv` from 5 to 6
-  - [Release notes](https://github.com/astral-sh/setup-uv/releases)
-  - [Commits](https://github.com/astral-sh/setup-uv/compare/v5...v6)
+    Updates `astral-sh/setup-uv` from 5 to 6
 
-  ---
-  **updated-dependencies:** - dependency-name: astral-sh/setup-uv
-dependency-version: '6'
-dependency-type: direct:production
-update-type: version-update:semver-major
-dependency-group: github-actions
+    - [Release notes](https://github.com/astral-sh/setup-uv/releases)
+    - [Commits](https://github.com/astral-sh/setup-uv/compare/v5...v6)
 
+    ---
 
-  **signed-off-by:** dependabot[bot] <support@github.com>
+    **updated-dependencies:** - dependency-name: astral-sh/setup-uv
+    dependency-version: '6'
+    dependency-type: direct:production
+    update-type: version-update:semver-major
+    dependency-group: github-actions
 
+    **signed-off-by:** dependabot[bot] <support@github.com>
 
 ### Updates
 
 - Refactor URL parsing to include `internal_path` handling. [edd72cc](https://github.com/callowayproject/project-forge/commit/edd72cc77563fd494c6010ef74cc33c1f95a9d78)
-    
-  Enhance the `parse_internal_path` function to handle `internal_path` and `checkout` extraction more robustly, including cases with blob paths. Update tests and related logic to reflect the new `internal_path` field support.
+
+    Enhance the `parse_internal_path` function to handle `internal_path` and `checkout` extraction more robustly, including cases with blob paths. Update tests and related logic to reflect the new `internal_path` field support.
+
 - Update bump-version workflow to enable package builds. [3ddd6cf](https://github.com/callowayproject/project-forge/commit/3ddd6cfc859ae0394e05323420cb8411a000ac2d)
-    
-  Changed the `build_package` output to `true` for version bumps, ensuring package building is triggered. Also added `packages: write` permission to support this new functionality.
+
+    Changed the `build_package` output to `true` for version bumps, ensuring package building is triggered. Also added `packages: write` permission to support this new functionality.
 
 ## 0.4.0 (2025-05-07)
 
