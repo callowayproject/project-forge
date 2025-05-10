@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 """Export the schemas for the compositions and patterns."""
+
 import json
 from dataclasses import dataclass
 

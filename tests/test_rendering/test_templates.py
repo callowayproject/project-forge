@@ -102,9 +102,9 @@ class TestCatalogInheritance:
 
         result = catalog_inheritance(template_paths)
         assert isinstance(result, InheritanceMap)
-        assert (
-            len(result.maps) == len(template_paths) + 1
-        ), "Number of children should match number of template paths plus 1"
+        assert len(result.maps) == len(template_paths) + 1, (
+            "Number of children should match number of template paths plus 1"
+        )
         assert result.maps[0] == {
             "template2/inherit.txt": TemplateFile(tmp_path / "template2/inherit.txt", RW_MODE),
             "template2/template2.txt": TemplateFile(tmp_path / "template2/template2.txt", RW_MODE),

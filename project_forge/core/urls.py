@@ -22,6 +22,7 @@ class ParsedURL:
     groups_path: str = ""
     repo_name: str = ""
     raw_internal_path: str = ""
+    internal_path: str = ""
     checkout: str = ""
     dot_git: str = ""
 
@@ -31,10 +32,11 @@ class ParsedURL:
         netloc = self.host
         if self.port:
             netloc += f":{self.port}"
-        if self.username and self.access_token:
-            netloc = f"{self.username}:{self.access_token}@{netloc}"
-        elif self.username:
-            netloc = f"{self.username}@{netloc}"
+        if self.username:
+            if self.access_token:
+                netloc = f"{self.username}:{self.access_token}@{netloc}"
+            else:
+                netloc = f"{self.username}@{netloc}"
         path = f"/{self.owner}/"
         if self.groups_path:
             path += f"{self.groups_path}/"
@@ -48,6 +50,7 @@ class PathInfo(TypedDict):
     owner: NotRequired[str]
     repo_name: NotRequired[str]
     raw_internal_path: NotRequired[str]
+    internal_path: NotRequired[str]
     checkout: NotRequired[str]
     groups_path: NotRequired[str]
     dot_git: NotRequired[str]
@@ -75,23 +78,34 @@ PATH_INFO_RE = re.compile(
 )
 
 INTERNAL_PATH_PREFIX_RE = re.compile(r"(?:/-)?/(tree|commit)/(.+)/?")
-PYTHON_PATH_CHECKOUT_RE = re.compile(r"(?P<at>@[^#]+)?(?P<hash>#\w+)?")
+PYTHON_PATH_CHECKOUT_RE = re.compile(r"(?:/blob/|/-/blob/)?(?P<internal_path>[^@#]*)(?P<at>@[^#]+)?(?P<hash>#\w+)?")
 
 
 def parse_internal_path(path: str) -> Dict[str, str]:
-    """Parse the internal path into internal_path and checkout components."""
-    # starts with /blob/, /-/blob/, /tree/, /-/tree/, /commit/
-    # /-/tree/, /tree/, /commit/ are pointers to the entire checkout
-    # /-/blob/ and /blob/ contain the checkout and the path
-    # branches/tags with slashes in them will not be able to be parsed out with blobs
+    """
+    Parse the internal path into internal_path and checkout components.
+
+    Branches or tags with slashes in them will not be able to be parsed out with blobs.
+
+    If the path starts with `/-/tree/`, `/tree/`, or `/commit/`, the remaining are pointers to the entire checkout.
+    Otherwise, the path may contain the checkout and the path
+
+    Args:
+        path: The raw internal path string.
+
+    Returns:
+        A dict with keys `internal_path` and `checkout`.
+    """
+    output = {"checkout": "", "internal_path": ""}
     if match := INTERNAL_PATH_PREFIX_RE.match(path):
-        return {"checkout": match.group(2).rstrip("/")}
-    if match2 := PYTHON_PATH_CHECKOUT_RE.match(path):
+        output["checkout"] = match.group(2).rstrip("/")
+    elif match2 := PYTHON_PATH_CHECKOUT_RE.match(path):
         groups = match2.groupdict()
-        checkout = groups.get("hash") or groups.get("at")
-        if checkout:
-            return {"checkout": checkout[1:]}
-    return {}
+        if internal_path := groups.get("internal_path"):
+            output["internal_path"] = internal_path
+        if checkout := groups.get("hash") or groups.get("at"):
+            output["checkout"] = checkout[1:]
+    return output
 
 
 def parse_git_path(path: str) -> PathInfo:
@@ -146,7 +160,8 @@ def parse_git_url(git_url: str) -> ParsedURL:
     url.owner = parsed_path.get("owner")
     url.repo_name = parsed_path.get("repo_name")
     url.raw_internal_path = parsed_path.get("raw_internal_path")
-    url.checkout = parsed_path.get("checkout")
+    url.checkout = parsed_path.get("checkout", "")
+    url.internal_path = parsed_path.get("internal_path", "")
     url.dot_git = parsed_path.get("dot_git", "")
     url.groups_path = parsed_path.get("groups_path", "")
     return url

@@ -3,21 +3,25 @@
 import pytest
 from pytest import param
 
-from project_forge.core.urls import parse_git_url, parse_internal_path, parse_git_path
+from project_forge.core.urls import parse_git_path, parse_git_url, parse_internal_path
 
 
 @pytest.mark.parametrize(
     ["path", "expected"],
     [
-        param("/path/to/repo", {}, id="does not start with blob, tree, or commit"),
-        param("/-/tree/feature/", {"checkout": "feature"}, id="/-/tree"),
-        param("/tree/feature/", {"checkout": "feature"}, id="tree"),
-        param("/tree/feature/ABC-111", {"checkout": "feature/ABC-111"}, id="slash in checkout"),
-        param("/commit/1234567890", {"checkout": "1234567890"}, id="commit"),
-        param("/-/blob/feature/", {}, id="/-/blob"),
-        param("/blob/feature/", {}, id="blob"),
-        param("@7921be1", {"checkout": "7921be1"}, id="Python version specifier 1"),
-        param("@1.3.1#7921be1", {"checkout": "7921be1"}, id="Python version specifier 2"),
+        param(
+            "/path/to/repo",
+            {"checkout": "", "internal_path": "/path/to/repo"},
+            id="does not start with blob, tree, or commit",
+        ),
+        param("/-/tree/feature/", {"checkout": "feature", "internal_path": ""}, id="/-/tree"),
+        param("/tree/feature/", {"checkout": "feature", "internal_path": ""}, id="tree"),
+        param("/tree/feature/ABC-111", {"checkout": "feature/ABC-111", "internal_path": ""}, id="slash in checkout"),
+        param("/commit/1234567890", {"checkout": "1234567890", "internal_path": ""}, id="commit"),
+        param("/-/blob/feature/", {"checkout": "", "internal_path": "feature/"}, id="/-/blob"),
+        param("/blob/feature/", {"checkout": "", "internal_path": "feature/"}, id="blob"),
+        param("@7921be1", {"checkout": "7921be1", "internal_path": ""}, id="Python version specifier 1"),
+        param("@1.3.1#7921be1", {"checkout": "7921be1", "internal_path": ""}, id="Python version specifier 2"),
     ],
 )
 def test_parse_internal_path(path: str, expected: dict):
