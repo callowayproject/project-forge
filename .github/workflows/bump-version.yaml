@@ -12,6 +12,7 @@ jobs:
       contents: write
     outputs:
       build_package: ${{ steps.bump-version.outputs.build_package }}
+      tag_name: ${{ steps.bump-version.outputs.tag_name }}
     steps:
       - name: Checkout the repository
         uses: actions/checkout@v4
@@ -33,7 +34,7 @@ jobs:
 
       - name: Install requirements
         run: |
-          python -m pip install bump-my-version
+          uv pip install bump-my-version
 
       - name: Generate changelog and release hint
         id: changelog
@@ -52,17 +53,8 @@ jobs:
               bump-my-version bump --allow-dirty --verbose "$RELEASE_KIND"
               git push
               git push --tags
+              echo "tag_name=${bump-my-version show current_version}" >> $GITHUB_OUTPUT
               echo "build_package=true" >> $GITHUB_OUTPUT
-              ;;
-            dev)
-              echo "Intentionally not bumping version for dev release"
-              echo "build_package=false" >> $GITHUB_OUTPUT
-              # to build a dev release
-              # bump-my-python bump --allow-dirty --verbose --no-commit --no-tag
-              # echo "build_package=true" >> $GITHUB_OUTPUT
-              ;;
-            no-release)
-              echo "build_package=false" >> $GITHUB_OUTPUT
               ;;
             *)
               echo "build_package=false" >> $GITHUB_OUTPUT
@@ -78,3 +70,5 @@ jobs:
       id-token: write
       packages: write
     uses: ./.github/workflows/build-python.yaml
+    with:
+      ref: ${{ needs.bump-version.outputs.tag_name }}
