@@ -8,6 +8,7 @@ from click.core import Context
 
 from project_forge import __version__
 from project_forge.core.io import parse_file
+from project_forge.core.urls import parse_git_url
 from project_forge.ui.defaults import return_defaults
 from project_forge.ui.terminal import ask_question
 
@@ -28,7 +29,7 @@ def cli(ctx: Context) -> None:
 @cli.command()
 @click.argument(
     "composition",
-    type=click.Path(exists=True, dir_okay=False, file_okay=True, resolve_path=True, path_type=Path),
+    type=str,
 )
 @click.option(
     "--use-defaults",
@@ -64,7 +65,7 @@ def cli(ctx: Context) -> None:
     help="The key-value pairs added to the initial context. Great for providing answers to composition questions.",
 )
 def build(
-    composition: Path,
+    composition: str,
     use_defaults: bool,
     output_dir: Path,
     data_file: Optional[Path] = None,
@@ -72,6 +73,9 @@ def build(
 ):
     """Build a project from a composition and render it to a directory."""
     from project_forge.commands.build import build_project
+
+    parsed_url = parse_git_url(composition)
+    composition_path = Path(parsed_url.full_path)
 
     initial_context: dict[str, Any] = {"output_dir": output_dir.resolve()}
     if data_file:
@@ -84,7 +88,7 @@ def build(
     ui_function = return_defaults if use_defaults else ask_question
 
     build_project(
-        composition,
+        composition_path,
         output_dir=output_dir,
         ui_function=ui_function,
         initial_context=initial_context,
