@@ -1,5 +1,28 @@
 # Changelog
 
+## 0.5.1 (2025-05-10)
+[Compare the full difference.](https://github.com/callowayproject/project-forge/compare/0.5.0...0.5.1)
+
+### Fixes
+
+- Fixed installation of bump-my-version. [a1b8b59](https://github.com/callowayproject/project-forge/commit/a1b8b59fd22007df550929ed5ef6bdf0c83ebd35)
+    
+- Refactor CLI to parse composition as git URL. [78282f2](https://github.com/callowayproject/project-forge/commit/78282f2523baeae3d17629a6af1f4148fd39f987)
+    
+  Updated the `composition` argument in the `build` command to accept a git URL instead of a file path. Added parsing logic to convert the URL into a file path before processing, enabling more flexible input handling.
+- Refactor workflows for improved release management. [b9d119b](https://github.com/callowayproject/project-forge/commit/b9d119b7bf66db57dde852cf7f455adc5095abf1)
+    
+  Updated workflows to support passing a reference (ref) input for consistent release processes. Renamed jobs, fixed pip command, and added outputs like tag_name for improved clarity and functionality.
+- Fixed permissions on release-github and release-pypi workflows. [36502b4](https://github.com/callowayproject/project-forge/commit/36502b4b9a5a3c195385a513afa2a50c7f978903)
+    
+### Other
+
+- Reformated the CHANGELOG.md file. [d9e9def](https://github.com/callowayproject/project-forge/commit/d9e9def463f66398360a575c673792f953dd9e44)
+    
+- Simplify workflow definition by replacing steps with "uses". [74e023a](https://github.com/callowayproject/project-forge/commit/74e023ad4ca35d4450cb0ff904c8c9474c72bf27)
+    
+  Removed explicit steps under `release-github` and `release-pypi` jobs, replacing them with direct `uses` references to corresponding workflow files.
+
 ## 0.5.0 (2025-05-10)
 
 [Compare the full difference.](https://github.com/callowayproject/project-forge/compare/0.4.0...0.5.0)
