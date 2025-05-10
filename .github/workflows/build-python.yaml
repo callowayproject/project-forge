@@ -34,10 +34,13 @@ jobs:
     needs: build-package
     permissions:
       contents: read
+      packages: write
+      id-token: write
     uses: ./.github/workflows/release-github.yaml
 
   release-pypi:
     needs: build-package
     permissions:
       contents: read
+      id-token: write
     uses: ./.github/workflows/release-pypi.yaml
