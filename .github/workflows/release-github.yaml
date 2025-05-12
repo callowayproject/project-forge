@@ -4,9 +4,8 @@ on:
     inputs:
       ref:
         description: The branch, tag or SHA to checkout. Otherwise, uses the default branch.
-        required: false
+        required: true
         type: string
-        default: ""
 
 jobs:
   release:
