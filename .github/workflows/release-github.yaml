@@ -8,7 +8,7 @@ on:
         type: string
 
 jobs:
-  release:
+  release-github:
     name: Create a GitHub release
     runs-on: ubuntu-latest
     permissions:
