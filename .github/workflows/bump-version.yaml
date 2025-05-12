@@ -65,7 +65,7 @@ jobs:
     needs: bump-version
     if: ${{ needs.bump-version.outputs.build_package == 'true' }}
     permissions:
-      contents: read
+      contents: write
       attestations: write
       id-token: write
       packages: write
