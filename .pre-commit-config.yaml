@@ -1,6 +1,6 @@
 repos:
   - repo: https://github.com/astral-sh/ruff-pre-commit
-    rev: 'v0.11.8'
+    rev: 'v0.11.10'
     hooks:
       - id: ruff-format
         exclude: tests/fixtures/.*
@@ -53,7 +53,7 @@ repos:
         additional_dependencies: [ "pydantic>2.0", "toml", "types-PyYAML" ]
         exclude: "^tests/"
   - repo: https://github.com/jsh9/pydoclint
-    rev: 0.6.6
+    rev: 0.6.7
     hooks:
       - id: pydoclint
         args:
