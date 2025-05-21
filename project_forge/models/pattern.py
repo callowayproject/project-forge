@@ -21,6 +21,7 @@ from project_forge.core.validators import is_bool, is_float, is_int
 from project_forge.models.location import Location
 from project_forge.path_matching import matches_any_glob
 from project_forge.rendering.templates import ProcessMode
+from project_forge.settings import get_settings
 
 
 class Choice(BaseModel):
@@ -192,9 +193,11 @@ class Pattern(BaseModel):
 
     def get_process_mode(self, path: Path) -> ProcessMode:
         """Calculates the process mode for a path based on the pattern's skip and copy_only attributes."""
+        settings = get_settings()
         mode = ProcessMode.render | ProcessMode.write
+        skip_patterns = self.skip + settings.always_skip
 
-        if matches_any_glob(path, self.skip):
+        if matches_any_glob(path, skip_patterns):
             mode &= ~ProcessMode.write
         if matches_any_glob(path, self.copy_only):
             mode &= ~ProcessMode.render

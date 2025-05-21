@@ -29,3 +29,9 @@ class GitError(ProjectForgeError):
     """There was a problem doing git operations."""
 
     pass
+
+
+class RenderError(ProjectForgeError):
+    """There was a problem rendering a template."""
+
+    pass
