@@ -5,6 +5,7 @@ from pathlib import Path
 
 from jinja2 import Environment
 
+from project_forge.core.exceptions import RenderError
 from project_forge.rendering.expressions import render_expression
 from project_forge.rendering.templates import InheritanceMap
 
@@ -28,7 +29,10 @@ def render_env(env: Environment, path_list: InheritanceMap, context: dict, desti
             logger.debug(f"Writing file {dst_rel_path}")
             full_path.parent.mkdir(parents=True, exist_ok=True)
             if val.is_renderable:
-                template = env.get_template(path)
+                try:
+                    template = env.get_template(path)
+                except (UnicodeDecodeError, FileNotFoundError) as e:
+                    raise RenderError(f"Could not render template {path}: {e}") from e
                 full_path.write_text(template.render(context))
             else:
                 full_path.write_text(val.path.read_text())
