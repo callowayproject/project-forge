@@ -53,7 +53,7 @@ jobs:
               bump-my-version bump --allow-dirty --verbose "$RELEASE_KIND"
               git push
               git push --tags
-              echo "tag_name=${bump-my-version show current_version}" >> $GITHUB_OUTPUT
+              echo "tag_name=$(bump-my-version show current_version)" >> $GITHUB_OUTPUT
               echo "build_package=true" >> $GITHUB_OUTPUT
               ;;
             *)
