@@ -1,5 +1,37 @@
 # Changelog
 
+## 0.6.0 (2025-05-21)
+[Compare the full difference.](https://github.com/callowayproject/project-forge/compare/0.5.1...0.6.0)
+
+### Fixes
+
+- Fix permissions on bump-version.yaml workflow. [5cd391d](https://github.com/callowayproject/project-forge/commit/5cd391d842e424ee7da9f0aab8d1a3eeabe518b6)
+    
+- Fix github release permissions. [ee5098f](https://github.com/callowayproject/project-forge/commit/ee5098f65d296c54dd4cc53a08adf4fd3083e3f8)
+    
+- Fix trusted publishing does not support reusable workflows. [dad426c](https://github.com/callowayproject/project-forge/commit/dad426c204281efddf03cb020b8277d097122a28)
+    
+- Fixed permissions in github release workflow. [9af70bf](https://github.com/callowayproject/project-forge/commit/9af70bf66588ac8cb7302beec1ff02b669ef35a4)
+    
+- Fixed typo in changelog. [cba3d9e](https://github.com/callowayproject/project-forge/commit/cba3d9e297af5675a7cd35c78822681a02d8e197)
+    
+- Fixed bad default param for release-github.yaml. [01cb923](https://github.com/callowayproject/project-forge/commit/01cb923795e7649086c9e022bd7e5381812ffcf0)
+    
+### New
+
+- Add RenderError exception and handle template rendering issues. [ff8f719](https://github.com/callowayproject/project-forge/commit/ff8f719254eb7932a1a1862056fb3b9977b0be13)
+    
+  Introduce a `RenderError` exception to handle problems during template rendering. Update the rendering logic to raise `RenderError` when encountering `UnicodeDecodeError` or `FileNotFoundError`. This improves error handling and makes issues easier to debug.
+- Add always_skip setting to configure globally skipped patterns. [7384424](https://github.com/callowayproject/project-forge/commit/7384424265e03b2b8c8e568fd92d1e00a1451376)
+    
+  Introduced an `always_skip` setting to define patterns that are always skipped during processing. Updated `get_settings` to cache settings and integrated `always_skip` into the `get_process_mode` logic for more flexible path matching.
+### Updates
+
+- Renamed job from release-github to call-release-github. [b1ca996](https://github.com/callowayproject/project-forge/commit/b1ca996092d8b24bf8c18e32ff0d349f9dcd0de6)
+    
+- Removed unused workflow: release-pypi.yaml. [b543406](https://github.com/callowayproject/project-forge/commit/b543406d3ba8ef00e2c2184776bfcc4a1d16030a)
+    
+
 ## 0.5.1 (2025-05-10)
 
 [Compare the full difference.](https://github.com/callowayproject/project-forge/compare/0.5.0...0.5.1)
