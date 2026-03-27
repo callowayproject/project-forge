@@ -7,6 +7,7 @@ import rich_click as click
 from click.core import Context
 
 from project_forge import __version__
+from project_forge.core.indented_logger import setup_logging
 from project_forge.core.io import parse_file
 from project_forge.core.urls import parse_git_url
 from project_forge.ui.defaults import return_defaults
@@ -30,6 +31,14 @@ def cli(ctx: Context) -> None:
 @click.argument(
     "composition",
     type=str,
+)
+@click.option(
+    "-v",
+    "--verbose",
+    count=True,
+    required=False,
+    envvar="PROJECT_FORGE_VERBOSE",
+    help="Print verbose logging to stderr. Can specify several times for more verbosity.",
 )
 @click.option(
     "--use-defaults",
@@ -66,6 +75,7 @@ def cli(ctx: Context) -> None:
 )
 def build(
     composition: str,
+    verbose: int,
     use_defaults: bool,
     output_dir: Path,
     data_file: Optional[Path] = None,
@@ -73,6 +83,8 @@ def build(
 ):
     """Build a project from a composition and render it to a directory."""
     from project_forge.commands.build import build_project
+
+    setup_logging(verbose)
 
     parsed_url = parse_git_url(composition)
     composition_path = Path(parsed_url.full_path)
