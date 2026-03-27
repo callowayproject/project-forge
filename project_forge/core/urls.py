@@ -111,7 +111,14 @@ def parse_internal_path(path: str) -> Dict[str, str]:
 def parse_git_path(path: str) -> PathInfo:
     """Parse the path from a git URL into components."""
     match = PATH_INFO_RE.match(path)
-    default = {"owner": "", "repo_name": "", "raw_internal_path": "", "checkout": "", "groups_path": "", "dot_git": ""}
+    default: PathInfo = {
+        "owner": "",
+        "repo_name": "",
+        "raw_internal_path": "",
+        "checkout": "",
+        "groups_path": "",
+        "dot_git": "",
+    }
     if not match:
         return default
     if not match.group("raw_internal_path"):
