@@ -150,7 +150,7 @@ def comprehensive_merge(left_val: T, right_val: T) -> T:
 
 
 # Strategies merging data.
-MergeMethods = Literal["overwrite", "comprehensive"]
+MergeMethods = Literal["update", "comprehensive"]
 
 UPDATE = "update"
 """Overwrite at the top level like `dict.update()`."""
