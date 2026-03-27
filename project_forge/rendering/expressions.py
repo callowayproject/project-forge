@@ -1,8 +1,17 @@
 """Render template expressions."""
 
+import functools
 from typing import MutableMapping, Optional, Union
 
+from jinja2 import Environment
+
 from project_forge.rendering.environment import load_environment
+
+
+@functools.cache
+def _default_env() -> Environment:
+    """Return a cached Jinja2 environment for expression rendering."""
+    return load_environment()
 
 
 def render_bool_expression(expression: Union[str, bool], context: Optional[MutableMapping] = None) -> bool:
@@ -30,6 +39,6 @@ def render_bool_expression(expression: Union[str, bool], context: Optional[Mutab
 def render_expression(expression: str, context: Optional[MutableMapping] = None) -> str:
     """Render a template expression."""
     context = context or {}
-    env = load_environment()
+    env = _default_env()
     template = env.from_string(str(expression))
     return template.render(**context).strip()
