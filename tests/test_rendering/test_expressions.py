@@ -1,9 +1,25 @@
 """Tests for the `rendering.expressions` module."""
 
+from unittest.mock import patch
+
 import pytest
 from pytest import param
 
-from project_forge.rendering.expressions import render_bool_expression
+from project_forge.rendering.expressions import _default_env, render_bool_expression, render_expression
+from project_forge.rendering.environment import load_environment
+
+
+class TestRenderExpression:
+    """Tests for the `render_expression` function."""
+
+    def test_environment_is_cached_across_calls(self):
+        """load_environment should be called only once regardless of how many times render_expression is called."""
+        _default_env.cache_clear()
+        with patch("project_forge.rendering.expressions.load_environment", wraps=load_environment) as mock_env:
+            render_expression("{{ x }}", {"x": "1"})
+            render_expression("{{ y }}", {"y": "2"})
+            render_expression("{{ z }}", {"z": "3"})
+        assert mock_env.call_count == 1
 
 
 class TestRenderBoolExpression:
