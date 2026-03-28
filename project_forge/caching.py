@@ -1,14 +1,14 @@
 """Caching operations."""
 
-import logging
 from pathlib import Path
 
+from project_forge.core.indented_logger import get_indented_logger
 from project_forge.core.io import make_sure_path_exists, remove_single_path
 from project_forge.core.urls import ParsedURL
 from project_forge.git_commands import clone
 from project_forge.settings import TEMPORARY_CACHE_DIR, get_settings
 
-logger = logging.getLogger(__name__)
+logger = get_indented_logger(__name__)
 
 
 def get_cache_dir() -> Path:
