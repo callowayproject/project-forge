@@ -9,28 +9,28 @@
       
       
       
-        <link rel="prev" href="../caching/">
+        <link rel="prev" href="../exceptions/">
       
       
-        <link rel="next" href="../commands/">
+        <link rel="next" href="../io/">
       
       
         
       
       
-      <link rel="icon" href="../../../../assets/favicon.png">
+      <link rel="icon" href="../../../../../assets/favicon.png">
       <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
     
     
       
-        <title>cli - Project Forge</title>
+        <title>indented_logger - Project Forge</title>
       
     
     
-      <link rel="stylesheet" href="../../../../assets/stylesheets/main.484c7ddc.min.css">
+      <link rel="stylesheet" href="../../../../../assets/stylesheets/main.484c7ddc.min.css">
       
         
-        <link rel="stylesheet" href="../../../../assets/stylesheets/palette.ab4e12ef.min.css">
+        <link rel="stylesheet" href="../../../../../assets/stylesheets/palette.ab4e12ef.min.css">
       
       
 
@@ -49,17 +49,17 @@
       
     
     
-      <link rel="stylesheet" href="../../../../assets/_mkdocstrings.css">
+      <link rel="stylesheet" href="../../../../../assets/_mkdocstrings.css">
     
-      <link rel="stylesheet" href="../../../../assets/css/extra.css">
+      <link rel="stylesheet" href="../../../../../assets/css/extra.css">
     
-      <link rel="stylesheet" href="../../../../assets/css/mkdocstrings.css">
+      <link rel="stylesheet" href="../../../../../assets/css/mkdocstrings.css">
     
-      <link rel="stylesheet" href="../../../../assets/css/cards.css">
+      <link rel="stylesheet" href="../../../../../assets/css/cards.css">
     
-      <link rel="stylesheet" href="../../../../assets/css/field-list.css">
+      <link rel="stylesheet" href="../../../../../assets/css/field-list.css">
     
-    <script>__md_scope=new URL("../../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    <script>__md_scope=new URL("../../../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
 
@@ -84,7 +84,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#project_forge.cli" class="md-skip">
+        <a href="#project_forge.core.indented_logger" class="md-skip">
           Skip to content
         </a>
       
@@ -100,9 +100,9 @@
 
 <header class="md-header md-header--shadow" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="Header">
-    <a href="../../../.." title="Project Forge" class="md-header__button md-logo" aria-label="Project Forge" data-md-component="logo">
+    <a href="../../../../.." title="Project Forge" class="md-header__button md-logo" aria-label="Project Forge" data-md-component="logo">
       
-  <img src="../../../../assets/logo.svg" alt="logo">
+  <img src="../../../../../assets/logo.svg" alt="logo">
 
     </a>
     <label class="md-header__button md-icon" for="__drawer">
@@ -119,7 +119,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              cli
+              indented_logger
             
           </span>
         </div>
@@ -237,9 +237,9 @@
 
 <nav class="md-nav md-nav--primary md-nav--integrated" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href="../../../.." title="Project Forge" class="md-nav__button md-logo" aria-label="Project Forge" data-md-component="logo">
+    <a href="../../../../.." title="Project Forge" class="md-nav__button md-logo" aria-label="Project Forge" data-md-component="logo">
       
-  <img src="../../../../assets/logo.svg" alt="logo">
+  <img src="../../../../../assets/logo.svg" alt="logo">
 
     </a>
     Project Forge
@@ -266,7 +266,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../.." class="md-nav__link">
+      <a href="../../../../.." class="md-nav__link">
         
   
   
@@ -293,7 +293,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../cli/" class="md-nav__link">
+      <a href="../../../../../cli/" class="md-nav__link">
         
   
   
@@ -320,7 +320,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../explanation/" class="md-nav__link">
+      <a href="../../../../../explanation/" class="md-nav__link">
         
   
   
@@ -347,7 +347,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../installation/" class="md-nav__link">
+      <a href="../../../../../installation/" class="md-nav__link">
         
   
   
@@ -397,7 +397,7 @@
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../../../../howtos/" class="md-nav__link ">
+            <a href="../../../../../howtos/" class="md-nav__link ">
               
   
   
@@ -492,7 +492,7 @@
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../../../" class="md-nav__link ">
+            <a href="../../../../" class="md-nav__link ">
               
   
   
@@ -536,7 +536,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../composition/" class="md-nav__link">
+      <a href="../../../../composition/" class="md-nav__link">
         
   
   
@@ -564,7 +564,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../context/" class="md-nav__link">
+      <a href="../../../../context/" class="md-nav__link">
         
   
   
@@ -592,7 +592,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../location/" class="md-nav__link">
+      <a href="../../../../location/" class="md-nav__link">
         
   
   
@@ -620,7 +620,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../migrations/" class="md-nav__link">
+      <a href="../../../../migrations/" class="md-nav__link">
         
   
   
@@ -648,7 +648,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../overlay/" class="md-nav__link">
+      <a href="../../../../overlay/" class="md-nav__link">
         
   
   
@@ -676,7 +676,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../pattern/" class="md-nav__link">
+      <a href="../../../../pattern/" class="md-nav__link">
         
   
   
@@ -704,7 +704,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../question/" class="md-nav__link">
+      <a href="../../../../question/" class="md-nav__link">
         
   
   
@@ -732,7 +732,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../tasks/" class="md-nav__link">
+      <a href="../../../../tasks/" class="md-nav__link">
         
   
   
@@ -760,7 +760,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../template_engine/" class="md-nav__link">
+      <a href="../../../../template_engine/" class="md-nav__link">
         
   
   
@@ -788,7 +788,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../user_interface/" class="md-nav__link">
+      <a href="../../../../user_interface/" class="md-nav__link">
         
   
   
@@ -816,7 +816,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../validations/" class="md-nav__link">
+      <a href="../../../../validations/" class="md-nav__link">
         
   
   
@@ -947,7 +947,7 @@
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../" class="md-nav__link ">
+            <a href="../../" class="md-nav__link ">
               
   
   
@@ -991,7 +991,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../caching/" class="md-nav__link">
+      <a href="../../caching/" class="md-nav__link">
         
   
   
@@ -1016,35 +1016,10 @@
                 
   
   
-    
   
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    cli
-  
-
-    
-  </span>
-  
-  
-
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../../cli/" class="md-nav__link">
         
   
   
@@ -1060,96 +1035,6 @@
   
 
       </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#project_forge.cli" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        <code class="doc-symbol doc-symbol-toc doc-symbol-module"></code>&nbsp;cli
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#project_forge.cli-functions" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Functions
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Functions">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#project_forge.cli.build" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        <code class="doc-symbol doc-symbol-toc doc-symbol-function"></code>&nbsp;build
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#project_forge.cli.cli" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        <code class="doc-symbol doc-symbol-toc doc-symbol-function"></code>&nbsp;cli
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#project_forge.cli.setup_logging" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        <code class="doc-symbol doc-symbol-toc doc-symbol-function"></code>&nbsp;setup_logging
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#project_forge.cli.write_schemas" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        <code class="doc-symbol doc-symbol-toc doc-symbol-function"></code>&nbsp;write_schemas
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -1186,7 +1071,7 @@
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../commands/" class="md-nav__link ">
+            <a href="../../commands/" class="md-nav__link ">
               
   
   
@@ -1230,7 +1115,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../commands/build/" class="md-nav__link">
+      <a href="../../commands/build/" class="md-nav__link">
         
   
   
@@ -1258,7 +1143,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../commands/export_schemas/" class="md-nav__link">
+      <a href="../../commands/export_schemas/" class="md-nav__link">
         
   
   
@@ -1324,7 +1209,7 @@
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../context_builder/" class="md-nav__link ">
+            <a href="../../context_builder/" class="md-nav__link ">
               
   
   
@@ -1368,7 +1253,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../context_builder/context/" class="md-nav__link">
+      <a href="../../context_builder/context/" class="md-nav__link">
         
   
   
@@ -1396,7 +1281,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../context_builder/data_merge/" class="md-nav__link">
+      <a href="../../context_builder/data_merge/" class="md-nav__link">
         
   
   
@@ -1424,7 +1309,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../context_builder/overlays/" class="md-nav__link">
+      <a href="../../context_builder/overlays/" class="md-nav__link">
         
   
   
@@ -1452,7 +1337,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../context_builder/questions/" class="md-nav__link">
+      <a href="../../context_builder/questions/" class="md-nav__link">
         
   
   
@@ -1480,7 +1365,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../context_builder/tasks/" class="md-nav__link">
+      <a href="../../context_builder/tasks/" class="md-nav__link">
         
   
   
@@ -1513,6 +1398,8 @@
                 
   
   
+    
+  
   
   
     
@@ -1540,15 +1427,15 @@
       
     
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6_13_1_6" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6_13_1_6" checked>
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../core/" class="md-nav__link ">
+            <a href="../" class="md-nav__link ">
               
   
   
@@ -1572,7 +1459,7 @@
             
           </div>
         
-        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_6_13_1_6_label" aria-expanded="false">
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_6_13_1_6_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_6_13_1_6">
             <span class="md-nav__icon md-icon"></span>
             
@@ -1592,7 +1479,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../core/exceptions/" class="md-nav__link">
+      <a href="../exceptions/" class="md-nav__link">
         
   
   
@@ -1617,10 +1504,35 @@
                 
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="../core/indented_logger/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    indented_logger
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         
   
   
@@ -1636,6 +1548,197 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#project_forge.core.indented_logger" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        <code class="doc-symbol doc-symbol-toc doc-symbol-module"></code>&nbsp;indented_logger
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#project_forge.core.indented_logger-classes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Classes
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Classes">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#project_forge.core.indented_logger.IndentedLoggerAdapter" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        <code class="doc-symbol doc-symbol-toc doc-symbol-class"></code>&nbsp;IndentedLoggerAdapter
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label=" IndentedLoggerAdapter">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#project_forge.core.indented_logger.IndentedLoggerAdapter-attributes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Attributes
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Attributes">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#project_forge.core.indented_logger.IndentedLoggerAdapter.current_indent" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        <code class="doc-symbol doc-symbol-toc doc-symbol-attribute"></code>&nbsp;current_indent
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#project_forge.core.indented_logger.IndentedLoggerAdapter.indent_str" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        <code class="doc-symbol doc-symbol-toc doc-symbol-attribute"></code>&nbsp;indent_str
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#project_forge.core.indented_logger.IndentedLoggerAdapter-functions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Functions
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Functions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#project_forge.core.indented_logger.IndentedLoggerAdapter.dedent" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        <code class="doc-symbol doc-symbol-toc doc-symbol-method"></code>&nbsp;dedent
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#project_forge.core.indented_logger.IndentedLoggerAdapter.indent" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        <code class="doc-symbol doc-symbol-toc doc-symbol-method"></code>&nbsp;indent
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#project_forge.core.indented_logger.IndentedLoggerAdapter.process" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        <code class="doc-symbol doc-symbol-toc doc-symbol-method"></code>&nbsp;process
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#project_forge.core.indented_logger.IndentedLoggerAdapter.reset" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        <code class="doc-symbol doc-symbol-toc doc-symbol-method"></code>&nbsp;reset
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#project_forge.core.indented_logger-functions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Functions
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Functions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#project_forge.core.indented_logger.get_indented_logger" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        <code class="doc-symbol doc-symbol-toc doc-symbol-function"></code>&nbsp;get_indented_logger
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -1648,7 +1751,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../core/io/" class="md-nav__link">
+      <a href="../io/" class="md-nav__link">
         
   
   
@@ -1676,7 +1779,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../core/types/" class="md-nav__link">
+      <a href="../types/" class="md-nav__link">
         
   
   
@@ -1704,7 +1807,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../core/urls/" class="md-nav__link">
+      <a href="../urls/" class="md-nav__link">
         
   
   
@@ -1732,7 +1835,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../core/validators/" class="md-nav__link">
+      <a href="../validators/" class="md-nav__link">
         
   
   
@@ -1768,7 +1871,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../git_commands/" class="md-nav__link">
+      <a href="../../git_commands/" class="md-nav__link">
         
   
   
@@ -1826,7 +1929,7 @@
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../models/" class="md-nav__link ">
+            <a href="../../models/" class="md-nav__link ">
               
   
   
@@ -1870,7 +1973,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../models/composition/" class="md-nav__link">
+      <a href="../../models/composition/" class="md-nav__link">
         
   
   
@@ -1898,7 +2001,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../models/location/" class="md-nav__link">
+      <a href="../../models/location/" class="md-nav__link">
         
   
   
@@ -1926,7 +2029,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../models/overlay/" class="md-nav__link">
+      <a href="../../models/overlay/" class="md-nav__link">
         
   
   
@@ -1954,7 +2057,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../models/pattern/" class="md-nav__link">
+      <a href="../../models/pattern/" class="md-nav__link">
         
   
   
@@ -1982,7 +2085,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../models/task/" class="md-nav__link">
+      <a href="../../models/task/" class="md-nav__link">
         
   
   
@@ -2018,7 +2121,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../path_matching/" class="md-nav__link">
+      <a href="../../path_matching/" class="md-nav__link">
         
   
   
@@ -2074,7 +2177,7 @@
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../rendering/" class="md-nav__link ">
+            <a href="../../rendering/" class="md-nav__link ">
               
   
   
@@ -2118,7 +2221,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../rendering/environment/" class="md-nav__link">
+      <a href="../../rendering/environment/" class="md-nav__link">
         
   
   
@@ -2146,7 +2249,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../rendering/expressions/" class="md-nav__link">
+      <a href="../../rendering/expressions/" class="md-nav__link">
         
   
   
@@ -2174,7 +2277,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../rendering/render/" class="md-nav__link">
+      <a href="../../rendering/render/" class="md-nav__link">
         
   
   
@@ -2202,7 +2305,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../rendering/templates/" class="md-nav__link">
+      <a href="../../rendering/templates/" class="md-nav__link">
         
   
   
@@ -2238,7 +2341,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../settings/" class="md-nav__link">
+      <a href="../../settings/" class="md-nav__link">
         
   
   
@@ -2288,7 +2391,7 @@
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../testing/" class="md-nav__link ">
+            <a href="../../testing/" class="md-nav__link ">
               
   
   
@@ -2332,7 +2435,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../testing/plugin/" class="md-nav__link">
+      <a href="../../testing/plugin/" class="md-nav__link">
         
   
   
@@ -2392,7 +2495,7 @@
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../ui/" class="md-nav__link ">
+            <a href="../../ui/" class="md-nav__link ">
               
   
   
@@ -2436,7 +2539,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../ui/defaults/" class="md-nav__link">
+      <a href="../../ui/defaults/" class="md-nav__link">
         
   
   
@@ -2464,7 +2567,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../ui/terminal/" class="md-nav__link">
+      <a href="../../ui/terminal/" class="md-nav__link">
         
   
   
@@ -2500,7 +2603,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../utils/" class="md-nav__link">
+      <a href="../../utils/" class="md-nav__link">
         
   
   
@@ -2578,7 +2681,7 @@
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../../../../tutorials/" class="md-nav__link ">
+            <a href="../../../../../tutorials/" class="md-nav__link ">
               
   
   
@@ -2622,7 +2725,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../tutorials/create_a_pattern/" class="md-nav__link">
+      <a href="../../../../../tutorials/create_a_pattern/" class="md-nav__link">
         
   
   
@@ -2650,7 +2753,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../tutorials/quickstart/" class="md-nav__link">
+      <a href="../../../../../tutorials/quickstart/" class="md-nav__link">
         
   
   
@@ -2703,7 +2806,7 @@
   
   
     <li class="md-path__item">
-      <a href="../../../.." class="md-path__link">
+      <a href="../../../../.." class="md-path__link">
         
   <span class="md-ellipsis">
     project-forge
@@ -2721,7 +2824,7 @@
     
     
       <li class="md-path__item">
-        <a href="../../../" class="md-path__link">
+        <a href="../../../../" class="md-path__link">
           
   <span class="md-ellipsis">
     Reference
@@ -2744,7 +2847,7 @@
     
     
       <li class="md-path__item">
-        <a href="../" class="md-path__link">
+        <a href="../../" class="md-path__link">
           
   <span class="md-ellipsis">
     Api
@@ -2765,10 +2868,28 @@
     
     
       <li class="md-path__item">
-        <a href="../" class="md-path__link">
+        <a href="../../" class="md-path__link">
           
   <span class="md-ellipsis">
     project_forge
+  </span>
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+    
+    
+      <li class="md-path__item">
+        <a href="../" class="md-path__link">
+          
+  <span class="md-ellipsis">
+    core
   </span>
 
         </a>
@@ -2787,7 +2908,7 @@
 
 
   
-    <a href="https://github.com/home/runner/work/project-forge/project-forge/project_forge/cli.py" title="Edit this page" class="md-content__button md-icon" rel="edit">
+    <a href="https://github.com/home/runner/work/project-forge/project-forge/project_forge/core/indented_logger.py" title="Edit this page" class="md-content__button md-icon" rel="edit">
       
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4zm10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1z"/></svg>
     </a>
@@ -2796,23 +2917,23 @@
     
       
     
-    <a href="https://github.com/home/runner/work/project-forge/project-forge/project_forge/cli.py" title="View source of this page" class="md-content__button md-icon">
+    <a href="https://github.com/home/runner/work/project-forge/project-forge/project_forge/core/indented_logger.py" title="View source of this page" class="md-content__button md-icon">
       
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 18c.56 0 1 .44 1 1s-.44 1-1 1-1-.44-1-1 .44-1 1-1m0-3c-2.73 0-5.06 1.66-6 4 .94 2.34 3.27 4 6 4s5.06-1.66 6-4c-.94-2.34-3.27-4-6-4m0 6.5a2.5 2.5 0 0 1-2.5-2.5 2.5 2.5 0 0 1 2.5-2.5 2.5 2.5 0 0 1 2.5 2.5 2.5 2.5 0 0 1-2.5 2.5M9.27 20H6V4h7v5h5v4.07c.7.08 1.36.25 2 .49V8l-6-6H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h4.5a8.2 8.2 0 0 1-1.23-2"/></svg>
     </a>
   
 
 
-  <h1>cli</h1>
+  <h1>indented_logger</h1>
 
 <div class="doc doc-object doc-module">
 
 
 
-<a id="project_forge.cli"></a>
+<a id="project_forge.core.indented_logger"></a>
     <div class="doc doc-contents first">
 
-        <p>The command-line interface.</p>
+        <p>A logger adapter that adds an indent to the beginning of each message.</p>
 
 
 
@@ -2831,30 +2952,225 @@
 
 
 
+<h2 id="project_forge.core.indented_logger-classes">Classes<a href="#project_forge.core.indented_logger-classes" class="headerlink" title="Permanent link">&para;</a></h2>
 
-<h2 id="project_forge.cli-functions">Functions<a href="#project_forge.cli-functions" class="headerlink" title="Permanent link">&para;</a></h2>
-
-<div class="doc doc-object doc-function">
-
-
-<h3 id="project_forge.cli.build" class="doc doc-heading">
-<code class="doc-symbol doc-symbol-heading doc-symbol-function"></code>            <span class="doc doc-object-name doc-function-name">build</span>
+<div class="doc doc-object doc-class">
 
 
-<a href="#project_forge.cli.build" class="headerlink" title="Permanent link">&para;</a></h3>
-<div class="doc-signature highlight"><pre><span></span><code><span class="nf">build</span><span class="p">(</span>
-    <span class="n">composition</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
-    <span class="n">verbose</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
-    <span class="n">use_defaults</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
-    <span class="n">output_dir</span><span class="p">:</span> <span class="n">Path</span><span class="p">,</span>
-    <span class="n">data_file</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Path</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-    <span class="n">data</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">tuple</span><span class="p">[</span><span class="nb">tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">],</span> <span class="o">...</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+
+<h3 id="project_forge.core.indented_logger.IndentedLoggerAdapter" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-class"></code>            <span class="doc doc-object-name doc-class-name">IndentedLoggerAdapter</span>
+
+
+<a href="#project_forge.core.indented_logger.IndentedLoggerAdapter" class="headerlink" title="Permanent link">&para;</a></h3>
+<div class="doc-signature highlight"><pre><span></span><code><span class="nf">IndentedLoggerAdapter</span><span class="p">(</span>
+    <span class="n">logger</span><span class="p">:</span> <span class="n">Logger</span><span class="p">,</span>
+    <span class="n">extra</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">dict</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">depth</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">2</span><span class="p">,</span>
+    <span class="n">indent_char</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot; &quot;</span><span class="p">,</span>
+    <span class="n">reset</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
 <span class="p">)</span>
 </code></pre></div>
 
     <div class="doc doc-contents ">
+            <p class="doc doc-class-bases">
+              Bases: <code><span title="logging.LoggerAdapter">LoggerAdapter</span></code></p>
 
-        <p>Build a project from a composition and render it to a directory.</p>
+
+
+        <p>Logger adapter that adds an indent to the beginning of each message.</p>
+
+
+<table>
+      <thead>
+        <tr>
+          <th><span class="doc-section-title">PARAMETER</span></th>
+          <th><span>DESCRIPTION</span></th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                <code>logger</code>
+            </td>
+            <td class="doc-param-details">
+              <div class="doc-md-description">
+                <p>The logger to adapt.</p>
+              </div>
+              <p>
+                  <span class="doc-param-annotation">
+                    <b>TYPE:</b>
+                      <code><span title="logging.Logger">Logger</span></code>
+                  </span>
+              </p>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>extra</code>
+            </td>
+            <td class="doc-param-details">
+              <div class="doc-md-description">
+                <p>Extra values to add to the logging context.</p>
+              </div>
+              <p>
+                  <span class="doc-param-annotation">
+                    <b>TYPE:</b>
+                      <code><span title="typing.Optional">Optional</span>[<span title="dict">dict</span>]</code>
+                  </span>
+                  <span class="doc-param-default">
+                    <b>DEFAULT:</b>
+                      <code>None</code>
+                  </span>
+              </p>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>depth</code>
+            </td>
+            <td class="doc-param-details">
+              <div class="doc-md-description">
+                <p>The number of <code>indent_char</code> to generate for each indent level.</p>
+              </div>
+              <p>
+                  <span class="doc-param-annotation">
+                    <b>TYPE:</b>
+                      <code><span title="int">int</span></code>
+                  </span>
+                  <span class="doc-param-default">
+                    <b>DEFAULT:</b>
+                      <code>2</code>
+                  </span>
+              </p>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>indent_char</code>
+            </td>
+            <td class="doc-param-details">
+              <div class="doc-md-description">
+                <p>The character or string to use for indenting.</p>
+              </div>
+              <p>
+                  <span class="doc-param-annotation">
+                    <b>TYPE:</b>
+                      <code><span title="str">str</span></code>
+                  </span>
+                  <span class="doc-param-default">
+                    <b>DEFAULT:</b>
+                      <code>&#39; &#39;</code>
+                  </span>
+              </p>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>reset</code>
+            </td>
+            <td class="doc-param-details">
+              <div class="doc-md-description">
+                <p><code>True</code> if the indent level should be reset to zero.</p>
+              </div>
+              <p>
+                  <span class="doc-param-annotation">
+                    <b>TYPE:</b>
+                      <code><span title="bool">bool</span></code>
+                  </span>
+                  <span class="doc-param-default">
+                    <b>DEFAULT:</b>
+                      <code>False</code>
+                  </span>
+              </p>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-children">
+
+
+
+
+
+<h4 id="project_forge.core.indented_logger.IndentedLoggerAdapter-attributes">Attributes<a href="#project_forge.core.indented_logger.IndentedLoggerAdapter-attributes" class="headerlink" title="Permanent link">&para;</a></h4>
+
+<div class="doc doc-object doc-attribute">
+
+
+
+<h5 id="project_forge.core.indented_logger.IndentedLoggerAdapter.current_indent" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-attribute"></code>            <span class="doc doc-object-name doc-attribute-name">current_indent</span>
+
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-property"><code>property</code></small>
+  </span>
+
+<a href="#project_forge.core.indented_logger.IndentedLoggerAdapter.current_indent" class="headerlink" title="Permanent link">&para;</a></h5>
+<div class="doc-signature highlight"><pre><span></span><code><span class="n">current_indent</span><span class="p">:</span> <span class="nb">int</span>
+</code></pre></div>
+
+    <div class="doc doc-contents ">
+
+        <p>The current indent level.</p>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-attribute">
+
+
+
+<h5 id="project_forge.core.indented_logger.IndentedLoggerAdapter.indent_str" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-attribute"></code>            <span class="doc doc-object-name doc-attribute-name">indent_str</span>
+
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-property"><code>property</code></small>
+  </span>
+
+<a href="#project_forge.core.indented_logger.IndentedLoggerAdapter.indent_str" class="headerlink" title="Permanent link">&para;</a></h5>
+<div class="doc-signature highlight"><pre><span></span><code><span class="n">indent_str</span><span class="p">:</span> <span class="nb">str</span>
+</code></pre></div>
+
+    <div class="doc doc-contents ">
+
+        <p>The indent string.</p>
+
+    </div>
+
+</div>
+
+
+<h4 id="project_forge.core.indented_logger.IndentedLoggerAdapter-functions">Functions<a href="#project_forge.core.indented_logger.IndentedLoggerAdapter-functions" class="headerlink" title="Permanent link">&para;</a></h4>
+
+<div class="doc doc-object doc-function">
+
+
+<h5 id="project_forge.core.indented_logger.IndentedLoggerAdapter.dedent" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-method"></code>            <span class="doc doc-object-name doc-function-name">dedent</span>
+
+
+<a href="#project_forge.core.indented_logger.IndentedLoggerAdapter.dedent" class="headerlink" title="Permanent link">&para;</a></h5>
+<div class="doc-signature highlight"><pre><span></span><code><span class="nf">dedent</span><span class="p">(</span><span class="n">amount</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span>
+</code></pre></div>
+
+    <div class="doc doc-contents ">
+
+        <p>Decrease the indent level by <code>amount</code>.</p>
 
 
     </div>
@@ -2864,17 +3180,17 @@
 <div class="doc doc-object doc-function">
 
 
-<h3 id="project_forge.cli.cli" class="doc doc-heading">
-<code class="doc-symbol doc-symbol-heading doc-symbol-function"></code>            <span class="doc doc-object-name doc-function-name">cli</span>
+<h5 id="project_forge.core.indented_logger.IndentedLoggerAdapter.indent" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-method"></code>            <span class="doc doc-object-name doc-function-name">indent</span>
 
 
-<a href="#project_forge.cli.cli" class="headerlink" title="Permanent link">&para;</a></h3>
-<div class="doc-signature highlight"><pre><span></span><code><span class="nf">cli</span><span class="p">(</span><span class="n">ctx</span><span class="p">:</span> <span class="n">Context</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span>
+<a href="#project_forge.core.indented_logger.IndentedLoggerAdapter.indent" class="headerlink" title="Permanent link">&para;</a></h5>
+<div class="doc-signature highlight"><pre><span></span><code><span class="nf">indent</span><span class="p">(</span><span class="n">amount</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span>
 </code></pre></div>
 
     <div class="doc doc-contents ">
 
-        <p>Generate projects from compositions and patterns.</p>
+        <p>Increase the indent level by <code>amount</code>.</p>
 
 
     </div>
@@ -2884,17 +3200,87 @@
 <div class="doc doc-object doc-function">
 
 
-<h3 id="project_forge.cli.setup_logging" class="doc doc-heading">
-<code class="doc-symbol doc-symbol-heading doc-symbol-function"></code>            <span class="doc doc-object-name doc-function-name">setup_logging</span>
+<h5 id="project_forge.core.indented_logger.IndentedLoggerAdapter.process" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-method"></code>            <span class="doc doc-object-name doc-function-name">process</span>
 
 
-<a href="#project_forge.cli.setup_logging" class="headerlink" title="Permanent link">&para;</a></h3>
-<div class="doc-signature highlight"><pre><span></span><code><span class="nf">setup_logging</span><span class="p">(</span><span class="n">verbose</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span>
+<a href="#project_forge.core.indented_logger.IndentedLoggerAdapter.process" class="headerlink" title="Permanent link">&para;</a></h5>
+<div class="doc-signature highlight"><pre><span></span><code><span class="nf">process</span><span class="p">(</span>
+    <span class="n">msg</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">kwargs</span><span class="p">:</span> <span class="n">MutableMapping</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">MutableMapping</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]</span>
 </code></pre></div>
 
     <div class="doc doc-contents ">
 
-        <p>Configure the logging.</p>
+        <p>Process the message and add the indent.</p>
+
+
+<table>
+      <thead>
+        <tr>
+          <th><span class="doc-section-title">PARAMETER</span></th>
+          <th><span>DESCRIPTION</span></th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                <code>msg</code>
+            </td>
+            <td class="doc-param-details">
+              <div class="doc-md-description">
+                <p>The logging message.</p>
+              </div>
+              <p>
+                  <span class="doc-param-annotation">
+                    <b>TYPE:</b>
+                      <code><span title="str">str</span></code>
+                  </span>
+              </p>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>kwargs</code>
+            </td>
+            <td class="doc-param-details">
+              <div class="doc-md-description">
+                <p>Keyword arguments passed to the logger.</p>
+              </div>
+              <p>
+                  <span class="doc-param-annotation">
+                    <b>TYPE:</b>
+                      <code><span title="typing.MutableMapping">MutableMapping</span>[<span title="str">str</span>, <span title="typing.Any">Any</span>]</code>
+                  </span>
+              </p>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+<table>
+      <thead>
+        <tr>
+          <th><span class="doc-section-title">RETURNS</span></th>
+          <th><span>DESCRIPTION</span></th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                <span class="doc-returns-annotation">
+                    <code><span title="typing.Tuple">Tuple</span>[<span title="str">str</span>, <span title="typing.MutableMapping">MutableMapping</span>[<span title="str">str</span>, <span title="typing.Any">Any</span>]]</code>
+                </span>
+            </td>
+            <td class="doc-returns-details">
+              <div class="doc-md-description">
+                <p>A tuple containing the message and keyword arguments.</p>
+              </div>
+            </td>
+          </tr>
+      </tbody>
+    </table>
 
 
     </div>
@@ -2904,19 +3290,46 @@
 <div class="doc doc-object doc-function">
 
 
-<h3 id="project_forge.cli.write_schemas" class="doc doc-heading">
-<code class="doc-symbol doc-symbol-heading doc-symbol-function"></code>            <span class="doc doc-object-name doc-function-name">write_schemas</span>
+<h5 id="project_forge.core.indented_logger.IndentedLoggerAdapter.reset" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-method"></code>            <span class="doc doc-object-name doc-function-name">reset</span>
 
 
-<a href="#project_forge.cli.write_schemas" class="headerlink" title="Permanent link">&para;</a></h3>
-<div class="doc-signature highlight"><pre><span></span><code><span class="nf">write_schemas</span><span class="p">(</span><span class="n">output_dir</span><span class="p">:</span> <span class="n">Path</span><span class="p">)</span>
+<a href="#project_forge.core.indented_logger.IndentedLoggerAdapter.reset" class="headerlink" title="Permanent link">&para;</a></h5>
+<div class="doc-signature highlight"><pre><span></span><code><span class="nf">reset</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kc">None</span>
 </code></pre></div>
 
     <div class="doc doc-contents ">
 
-        <p>Write the JSON schemas for compositions and patterns to the specified output directory.</p>
-<p>The JSON schemas are used by IDEs to provide validation and autocompletion.
-The output directory must exist and be writable by the user.</p>
+        <p>Reset the indent level to zero.</p>
+
+
+    </div>
+
+</div>
+
+
+
+  </div>
+
+    </div>
+
+</div>
+<h2 id="project_forge.core.indented_logger-functions">Functions<a href="#project_forge.core.indented_logger-functions" class="headerlink" title="Permanent link">&para;</a></h2>
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="project_forge.core.indented_logger.get_indented_logger" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-function"></code>            <span class="doc doc-object-name doc-function-name">get_indented_logger</span>
+
+
+<a href="#project_forge.core.indented_logger.get_indented_logger" class="headerlink" title="Permanent link">&para;</a></h3>
+<div class="doc-signature highlight"><pre><span></span><code><span class="nf">get_indented_logger</span><span class="p">(</span><span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">IndentedLoggerAdapter</span>
+</code></pre></div>
+
+    <div class="doc doc-contents ">
+
+        <p>Get a logger with indentation.</p>
 
 
     </div>
@@ -3008,10 +3421,10 @@ The output directory must exist and be writable by the user.</p>
     
       
       
-      <script id="__config" type="application/json">{"annotate": null, "base": "../../../..", "features": ["navigation.sections", "navigation.path", "navigation.indexes", "navigation.top", "content.action.edit", "content.action.view", "content.code.annotate", "content.tabs.link", "toc.integrate"], "search": "../../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../../../..", "features": ["navigation.sections", "navigation.path", "navigation.indexes", "navigation.top", "content.action.edit", "content.action.view", "content.code.annotate", "content.tabs.link", "toc.integrate"], "search": "../../../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
     
     
-      <script src="../../../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      <script src="../../../../../assets/javascripts/bundle.79ae519e.min.js"></script>
       
         <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML"></script>
       
