@@ -80,13 +80,13 @@ class Location(BaseModel):
             root_path: The path to use for resolving relative `path`s if there is no `url`.
                 The current working directory is used if None.
 
+        Returns:
+            The path to the location
+
         Raises:
             RepoNotFound: If the URL provided returns a 404 error
             RepoAuthError: If the URL provided returns a 401 or 403 error
             PathNotFound: If the path was not found
-
-        Returns:
-            The path to the location
         """
         if self._resolved_path:
             return self._resolved_path
@@ -149,13 +149,13 @@ def resolve_url_location(location: Location) -> Path:
     Args:
         location: The location object with a parsed URL
 
+    Returns:
+        Path to the template dir
+
     Raises:
         RepoNotFound: If the URL provided returns a 404 error
         RepoAuthError: If the URL provided returns a 401 or 403 error
         PathNotFound: If the path was not found
-
-    Returns:
-        Path to the template dir
     """
     if not location.parsed_url:
         raise RepoNotFoundError("A URL must be provided.")

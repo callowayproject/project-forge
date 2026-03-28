@@ -26,12 +26,12 @@ def get_repo(
         search_parent_directories: if `True`, all parent directories will be searched for a valid repo as well.
         ensure_clean: if `True`, raise an error if the repo is dirty
 
+    Returns:
+        The GitPython Repo object
+
     Raises:
         GitError: If the directory is not a git repo
         GitError: If the directory git repository is dirty
-
-    Returns:
-        The GitPython Repo object
     """
     try:
         repo = Repo(str(project_dir), search_parent_directories=search_parent_directories)
