@@ -4,6 +4,7 @@ import copy
 import logging
 from collections import OrderedDict
 from functools import reduce
+from itertools import chain
 from typing import Any, Iterable, Literal, MutableMapping, TypeVar, overload
 
 from immutabledict import immutabledict
@@ -69,8 +70,6 @@ def merge_iterables(iter1: Iterable, iter2: Iterable) -> set:
     Returns:
         The merged, de-duplicated sequence as a set
     """
-    from itertools import chain
-
     return set(chain(freeze_data(iter1), freeze_data(iter2)))
 
 
@@ -150,7 +149,7 @@ def comprehensive_merge(left_val: T, right_val: T) -> T:
 
 
 # Strategies merging data.
-MergeMethods = Literal["update", "comprehensive"]
+MergeMethods = Literal["update", "comprehensive", "nested-overwrite"]
 
 UPDATE = "update"
 """Overwrite at the top level like `dict.update()`."""
@@ -163,7 +162,11 @@ COMPREHENSIVE = "comprehensive"
 - dicts are recursively merged
 """
 
+NESTED_OVERWRITE = "nested-overwrite"
+"""Deeply merge dicts, overwriting values at each nested level."""
+
 MERGE_FUNCTION = {
     COMPREHENSIVE: comprehensive_merge,
     UPDATE: update,
+    NESTED_OVERWRITE: nested_overwrite,
 }

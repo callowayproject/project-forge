@@ -17,6 +17,11 @@ def test_merge_methods_literal_matches_merge_function_keys():
     assert literal_values == set(MERGE_FUNCTION.keys())
 
 
+def test_nested_overwrite_is_in_merge_function():
+    """nested_overwrite must be reachable via MERGE_FUNCTION."""
+    assert "nested-overwrite" in MERGE_FUNCTION
+
+
 @pytest.mark.parametrize(
     ["dict_list", "expected"],
     [
