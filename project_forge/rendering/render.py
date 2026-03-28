@@ -1,15 +1,15 @@
 """Functions to render a composition using answered questions."""
 
-import logging
 from pathlib import Path
 
 from jinja2 import Environment
 
 from project_forge.core.exceptions import RenderError
+from project_forge.core.indented_logger import get_indented_logger
 from project_forge.rendering.expressions import render_expression
 from project_forge.rendering.templates import InheritanceMap
 
-logger = logging.getLogger(__name__)
+logger = get_indented_logger(__name__)
 
 
 def render_env(env: Environment, path_list: InheritanceMap, context: dict, destination_path: Path) -> Path:

@@ -76,6 +76,39 @@ class TestCatalogTemplates:
             assert value.path.exists()
             assert value.path.is_absolute()
 
+    def test_deeply_nested_files_are_all_cataloged(self, tmp_path: Path):
+        """Files nested more than one level deep are all included with correct relative paths."""
+        # Assemble — three levels deep
+        root_dir = tmp_path / "tmpl"
+        root_dir.mkdir()
+        (root_dir / "a").mkdir()
+        (root_dir / "a" / "b").mkdir()
+        (root_dir / "a" / "b" / "c").mkdir()
+        (root_dir / "top.txt").touch()
+        (root_dir / "a" / "mid.txt").touch()
+        (root_dir / "a" / "b" / "deep.txt").touch()
+        (root_dir / "a" / "b" / "c" / "deeper.txt").touch()
+
+        expected_keys = {
+            "tmpl",
+            "tmpl/top.txt",
+            "tmpl/a",
+            "tmpl/a/mid.txt",
+            "tmpl/a/b",
+            "tmpl/a/b/deep.txt",
+            "tmpl/a/b/c",
+            "tmpl/a/b/c/deeper.txt",
+        }
+
+        # Act
+        result = catalog_templates(root_dir, process_mode_func)
+
+        # Assert
+        assert {x.replace("\\", "/") for x in result.keys()} == expected_keys
+        for value in result.values():
+            assert value.path.exists()
+            assert value.path.is_absolute()
+
 
 class TestCatalogInheritance:
     """Tests for the `catalog_inheritance` function."""

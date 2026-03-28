@@ -4,6 +4,7 @@ import copy
 import logging
 from collections import OrderedDict
 from functools import reduce
+from itertools import chain
 from typing import Any, Iterable, Literal, MutableMapping, TypeVar, overload
 
 from immutabledict import immutabledict
@@ -69,8 +70,6 @@ def merge_iterables(iter1: Iterable, iter2: Iterable) -> set:
     Returns:
         The merged, de-duplicated sequence as a set
     """
-    from itertools import chain
-
     return set(chain(freeze_data(iter1), freeze_data(iter2)))
 
 
@@ -83,15 +82,16 @@ def update(left_val: T, right_val: T) -> T:
             return right_val
 
 
-def nested_overwrite(*dicts: dict) -> dict:
+def nested_overwrite(left_val: T, right_val: T) -> T:
     """
     Merges dicts deeply.
 
     Args:
-        *dicts: List of dicts to merge with the first one as the base
+        left_val: The item to merge into
+        right_val: The item to merge from
 
     Returns:
-        dict: The merged dict
+        The merged item
     """
 
     def merge_into(d1: dict, d2: dict) -> dict:
@@ -102,7 +102,11 @@ def nested_overwrite(*dicts: dict) -> dict:
                 d1[key] = merge_into(d1[key], value)
         return d1
 
-    return reduce(merge_into, dicts, {})
+    match left_val, right_val:
+        case (dict(), dict()):
+            return reduce(merge_into, (left_val, right_val), {})  # type: ignore[return-value]
+        case _:
+            return right_val
 
 
 def comprehensive_merge(left_val: T, right_val: T) -> T:
@@ -150,7 +154,7 @@ def comprehensive_merge(left_val: T, right_val: T) -> T:
 
 
 # Strategies merging data.
-MergeMethods = Literal["overwrite", "comprehensive"]
+MergeMethods = Literal["update", "comprehensive", "nested-overwrite"]
 
 UPDATE = "update"
 """Overwrite at the top level like `dict.update()`."""
@@ -163,7 +167,11 @@ COMPREHENSIVE = "comprehensive"
 - dicts are recursively merged
 """
 
+NESTED_OVERWRITE = "nested-overwrite"
+"""Deeply merge dicts, overwriting values at each nested level."""
+
 MERGE_FUNCTION = {
     COMPREHENSIVE: comprehensive_merge,
     UPDATE: update,
+    NESTED_OVERWRITE: nested_overwrite,
 }

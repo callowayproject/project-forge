@@ -1,13 +1,25 @@
 """Test the merge_files.helpers functions."""
 
 from collections import OrderedDict
-from typing import Any
+from typing import Any, get_args
 
 import pytest
 from immutabledict import immutabledict
 from pytest import param
 
 from project_forge.context_builder import data_merge
+from project_forge.context_builder.data_merge import MERGE_FUNCTION, MergeMethods
+
+
+def test_merge_methods_literal_matches_merge_function_keys():
+    """MergeMethods Literal values must exactly match the keys in MERGE_FUNCTION."""
+    literal_values = set(get_args(MergeMethods))
+    assert literal_values == set(MERGE_FUNCTION.keys())
+
+
+def test_nested_overwrite_is_in_merge_function():
+    """nested_overwrite must be reachable via MERGE_FUNCTION."""
+    assert "nested-overwrite" in MERGE_FUNCTION
 
 
 @pytest.mark.parametrize(

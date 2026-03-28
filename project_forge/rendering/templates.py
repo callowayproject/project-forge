@@ -93,14 +93,14 @@ def catalog_templates(template_path: Path, process_mode_func: ProcessModeFn) -> 
     templates = {template_path.name: TemplateFile(template_path, ProcessMode.render | ProcessMode.write)}
     for root, dirs, files in template_path.walk():
         for file in files:
-            template_path = root / file
-            process_mode = process_mode_func(template_path)
-            templates[str(template_path.relative_to(root_dir).as_posix())] = TemplateFile(template_path, process_mode)
+            file_path = root / file
+            process_mode = process_mode_func(file_path)
+            templates[str(file_path.relative_to(root_dir).as_posix())] = TemplateFile(file_path, process_mode)
         for dir_ in dirs:
             # TODO: Handle directory inheritance of ProcessModes
-            template_path = root / dir_
-            process_mode = process_mode_func(template_path)
-            templates[str(template_path.relative_to(root_dir).as_posix())] = TemplateFile(template_path, process_mode)
+            dir_path = root / dir_
+            process_mode = process_mode_func(dir_path)
+            templates[str(dir_path.relative_to(root_dir).as_posix())] = TemplateFile(dir_path, process_mode)
     return {key: templates[key] for key in sorted(templates)}
 
 

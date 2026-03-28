@@ -12,21 +12,20 @@ class TestGetCacheDir:
     """Tests for the `get_cache_dir` function."""
 
     @patch("project_forge.caching.get_settings")
-    @patch("project_forge.caching.TemporaryDirectory")
-    def test_returns_temporary_directory_if_cache_disabled(self, mock_temp_dir, mock_get_settings):
+    def test_returns_temporary_directory_if_cache_disabled(self, mock_get_settings):
         """When caching is disabled, the function returns a temporary directory path."""
         # Assemble
+        from project_forge.settings import TEMPORARY_CACHE_DIR
+
         mock_settings = MagicMock()
         mock_settings.disable_cache = True
-        mock_temp_dir.return_value.__enter__.return_value = "/temporary"
         mock_get_settings.return_value = mock_settings
 
         # Act
         cache_dir = get_cache_dir()
 
         # Assert
-        mock_temp_dir.assert_called_once()
-        assert cache_dir == Path("/temporary")
+        assert cache_dir == TEMPORARY_CACHE_DIR
 
     @patch("project_forge.caching.get_settings")
     @patch("project_forge.caching.make_sure_path_exists")

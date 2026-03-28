@@ -1,15 +1,14 @@
 """Caching operations."""
 
-import logging
 from pathlib import Path
-from tempfile import TemporaryDirectory
 
+from project_forge.core.indented_logger import get_indented_logger
 from project_forge.core.io import make_sure_path_exists, remove_single_path
 from project_forge.core.urls import ParsedURL
 from project_forge.git_commands import clone
-from project_forge.settings import get_settings
+from project_forge.settings import TEMPORARY_CACHE_DIR, get_settings
 
-logger = logging.getLogger(__name__)
+logger = get_indented_logger(__name__)
 
 
 def get_cache_dir() -> Path:
@@ -21,8 +20,7 @@ def get_cache_dir() -> Path:
     """
     settings = get_settings()
     if settings.disable_cache:
-        with TemporaryDirectory() as temp_dir:
-            return Path(temp_dir)
+        return TEMPORARY_CACHE_DIR
     else:
         make_sure_path_exists(settings.cache_dir)
         return settings.cache_dir

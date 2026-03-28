@@ -4,9 +4,25 @@ from unittest.mock import patch
 import pytest
 from click.testing import CliRunner
 
-from project_forge.cli import build
+from project_forge.cli import build, setup_logging
 from project_forge.ui.defaults import return_defaults
 from project_forge.ui.terminal import ask_question
+
+
+@pytest.mark.parametrize("verbose", [0, 1, 2, 3])
+def test_setup_logging_accepts_verbosity_levels(verbose):
+    """setup_logging should not crash at any valid verbosity level."""
+    setup_logging(verbose)  # should not raise
+
+
+def test_setup_logging_does_not_double_set_level():
+    """setup_logging must not call setLevel after basicConfig — basicConfig already sets it."""
+    import logging
+
+    with patch("logging.basicConfig"):
+        with patch.object(logging.Logger, "setLevel") as mock_set_level:
+            setup_logging(1)
+    mock_set_level.assert_not_called()
 
 
 @pytest.fixture

@@ -1,5 +1,6 @@
 """The command-line interface."""
 
+import logging
 from pathlib import Path
 from typing import Any, Optional
 
@@ -7,6 +8,7 @@ import rich_click as click
 from click.core import Context
 
 from project_forge import __version__
+from project_forge.core.indented_logger import VERBOSITY
 from project_forge.core.io import parse_file
 from project_forge.core.urls import parse_git_url
 from project_forge.ui.defaults import return_defaults
@@ -32,6 +34,14 @@ def cli(ctx: Context) -> None:
     type=str,
 )
 @click.option(
+    "-v",
+    "--verbose",
+    count=True,
+    required=False,
+    envvar="PROJECT_FORGE_VERBOSE",
+    help="Print verbose logging to stderr. Can specify several times for more verbosity.",
+)
+@click.option(
     "--use-defaults",
     is_flag=True,
     help="Do not prompt for input and use the defaults specified in the composition.",
@@ -40,7 +50,7 @@ def cli(ctx: Context) -> None:
     "--output-dir",
     "-o",
     required=False,
-    default=lambda: Path.cwd(),  # NOQA: PLW0108
+    default=Path.cwd,
     type=click.Path(exists=True, dir_okay=True, file_okay=False, resolve_path=True, path_type=Path),
     help="The directory to render the composition to. Defaults to the current working directory.",
 )
@@ -66,6 +76,7 @@ def cli(ctx: Context) -> None:
 )
 def build(
     composition: str,
+    verbose: int,
     use_defaults: bool,
     output_dir: Path,
     data_file: Optional[Path] = None,
@@ -73,6 +84,8 @@ def build(
 ):
     """Build a project from a composition and render it to a directory."""
     from project_forge.commands.build import build_project
+
+    setup_logging(verbose)
 
     parsed_url = parse_git_url(composition)
     composition_path = Path(parsed_url.full_path)
@@ -123,3 +136,20 @@ def write_schemas(output_dir: Path):
 
     pattern_path = output_dir / "pattern.schema.json"
     pattern_path.write_text(result.pattern_schema)
+
+
+def setup_logging(verbose: int = 0) -> None:
+    """Configure the logging."""
+    import click
+    from rich.logging import RichHandler
+
+    verbosity = VERBOSITY.get(verbose, VERBOSITY[3])
+    logging.basicConfig(
+        level=verbosity,
+        datefmt="[%X]",
+        handlers=[
+            RichHandler(
+                rich_tracebacks=True, show_level=False, show_path=False, show_time=False, tracebacks_suppress=[click]
+            )
+        ],
+    )
