@@ -82,15 +82,16 @@ def update(left_val: T, right_val: T) -> T:
             return right_val
 
 
-def nested_overwrite(*dicts: dict) -> dict:
+def nested_overwrite(left_val: T, right_val: T) -> T:
     """
     Merges dicts deeply.
 
     Args:
-        *dicts: List of dicts to merge with the first one as the base
+        left_val: The item to merge into
+        right_val: The item to merge from
 
     Returns:
-        dict: The merged dict
+        The merged item
     """
 
     def merge_into(d1: dict, d2: dict) -> dict:
@@ -101,7 +102,11 @@ def nested_overwrite(*dicts: dict) -> dict:
                 d1[key] = merge_into(d1[key], value)
         return d1
 
-    return reduce(merge_into, dicts, {})
+    match left_val, right_val:
+        case (dict(), dict()):
+            return reduce(merge_into, (left_val, right_val), {})  # type: ignore[return-value]
+        case _:
+            return right_val
 
 
 def comprehensive_merge(left_val: T, right_val: T) -> T:

@@ -1,5 +1,6 @@
 """The command-line interface."""
 
+import logging
 from pathlib import Path
 from typing import Any, Optional
 
@@ -7,7 +8,7 @@ import rich_click as click
 from click.core import Context
 
 from project_forge import __version__
-from project_forge.core.indented_logger import setup_logging
+from project_forge.core.indented_logger import VERBOSITY
 from project_forge.core.io import parse_file
 from project_forge.core.urls import parse_git_url
 from project_forge.ui.defaults import return_defaults
@@ -49,7 +50,7 @@ def cli(ctx: Context) -> None:
     "--output-dir",
     "-o",
     required=False,
-    default=lambda: Path.cwd(),  # NOQA: PLW0108
+    default=Path.cwd,
     type=click.Path(exists=True, dir_okay=True, file_okay=False, resolve_path=True, path_type=Path),
     help="The directory to render the composition to. Defaults to the current working directory.",
 )
@@ -135,3 +136,20 @@ def write_schemas(output_dir: Path):
 
     pattern_path = output_dir / "pattern.schema.json"
     pattern_path.write_text(result.pattern_schema)
+
+
+def setup_logging(verbose: int = 0) -> None:
+    """Configure the logging."""
+    import click
+    from rich.logging import RichHandler
+
+    verbosity = VERBOSITY.get(verbose, VERBOSITY[3])
+    logging.basicConfig(
+        level=verbosity,
+        datefmt="[%X]",
+        handlers=[
+            RichHandler(
+                rich_tracebacks=True, show_level=False, show_path=False, show_time=False, tracebacks_suppress=[click]
+            )
+        ],
+    )

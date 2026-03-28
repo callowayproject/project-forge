@@ -11,7 +11,8 @@ from pydantic_settings import BaseSettings, SettingsConfigDict
 APP_NAME = "project_forge"
 
 DEFAULT_CACHE_DIR = user_cache_path(APP_NAME, appauthor=False)
-TEMPORARY_CACHE_DIR = Path(TemporaryDirectory().name)
+_TEMP_DIR = TemporaryDirectory()
+TEMPORARY_CACHE_DIR = Path(_TEMP_DIR.name)
 CONFIG_DIR = user_config_path(APP_NAME, appauthor=False, roaming=True)
 DEFAULT_CONFIG_FILE = CONFIG_DIR / "project_forge.toml"
 DEFAULT_ALWAYS_SKIP = [
