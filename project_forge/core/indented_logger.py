@@ -4,16 +4,13 @@ import logging
 from contextvars import ContextVar
 from typing import Any, MutableMapping, Optional, Tuple
 
-import click
-from rich.logging import RichHandler
-
 CURRENT_INDENT = ContextVar("current_indent", default=0)
 
 VERBOSITY = {
-    0: (logging.WARNING, "%(message)s"),
-    1: (logging.INFO, "%(message)s"),
-    2: (logging.DEBUG, "%(message)s"),
-    3: (logging.DEBUG, "%(message)s %(pathname)s:%(lineno)d"),
+    0: logging.WARNING,
+    1: logging.INFO,
+    2: logging.DEBUG,
+    3: logging.DEBUG,
 }
 
 
@@ -75,7 +72,7 @@ class IndentedLoggerAdapter(logging.LoggerAdapter):
         """
         return (self._indent_char * self._depth) * CURRENT_INDENT.get()
 
-    def process(self, msg: str, kwargs: Optional[MutableMapping[str, Any]]) -> Tuple[str, MutableMapping[str, Any]]:
+    def process(self, msg: str, kwargs: MutableMapping[str, Any]) -> Tuple[str, MutableMapping[str, Any]]:
         """
         Process the message and add the indent.
 
@@ -94,20 +91,3 @@ class IndentedLoggerAdapter(logging.LoggerAdapter):
 def get_indented_logger(name: str) -> IndentedLoggerAdapter:
     """Get a logger with indentation."""
     return IndentedLoggerAdapter(logging.getLogger(name))
-
-
-def setup_logging(verbose: int = 0) -> None:
-    """Configure the logging."""
-    verbosity, log_format = VERBOSITY.get(verbose, VERBOSITY[3])
-    logging.basicConfig(
-        level=verbosity,
-        format=log_format,
-        datefmt="[%X]",
-        handlers=[
-            RichHandler(
-                rich_tracebacks=True, show_level=False, show_path=False, show_time=False, tracebacks_suppress=[click]
-            )
-        ],
-    )
-    root_logger = get_indented_logger("")
-    root_logger.setLevel(verbosity)

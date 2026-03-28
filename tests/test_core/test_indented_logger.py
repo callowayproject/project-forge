@@ -1,9 +1,19 @@
 """Tests for the `project_forge.core.indented_logger` module."""
 
 import logging
+from collections.abc import MutableMapping
 
 import pytest
+
 from project_forge.core.indented_logger import IndentedLoggerAdapter
+
+
+def test_process_returns_non_none_kwargs():
+    """process() must always return a non-None MutableMapping for kwargs."""
+    logger = IndentedLoggerAdapter(logging.getLogger("test"))
+    _, kwargs = logger.process("hello", {})
+    assert kwargs is not None
+    assert isinstance(kwargs, MutableMapping)
 
 
 def test_does_not_indent_without_intent(caplog: pytest.LogCaptureFixture):
