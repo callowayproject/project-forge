@@ -1,5 +1,21 @@
 # Changelog
 
+## 0.8.0 (2026-03-29)
+
+[Compare the full difference.](https://github.com/callowayproject/project-forge/compare/0.7.0...0.8.0)
+
+### Fixes
+
+- Refactor template dictionary sorting for readability and performance. [bfa7d90](https://github.com/callowayproject/project-forge/commit/bfa7d906233791ef2c9cbbb1a3b1b4dddf5e227b)
+
+### New
+
+- Add `nested-overwrite` to valid merge methods in `composition.py`. [904b253](https://github.com/callowayproject/project-forge/commit/904b253804a1870072369a2890a6f3ab5c0a25de)
+
+### Other
+
+- Replace `reduce` with `copy.deepcopy` in `merge_into`. [1fa2bc8](https://github.com/callowayproject/project-forge/commit/1fa2bc8efea82a16168e2bb31597e6bfa9fb58dc)
+
 ## 0.7.0 (2026-03-28)
 
 [Compare the full difference.](https://github.com/callowayproject/project-forge/compare/0.6.0...0.7.0)
