@@ -3,7 +3,6 @@
 import copy
 import logging
 from collections import OrderedDict
-from functools import reduce
 from itertools import chain
 from typing import Any, Iterable, Literal, MutableMapping, TypeVar, overload
 
@@ -104,7 +103,7 @@ def nested_overwrite(left_val: T, right_val: T) -> T:
 
     match left_val, right_val:
         case (dict(), dict()):
-            return reduce(merge_into, (left_val, right_val), {})  # type: ignore[return-value]
+            return merge_into(copy.deepcopy(left_val), right_val)  # type: ignore[return-value]
         case _:
             return right_val
 
