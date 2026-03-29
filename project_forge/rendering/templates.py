@@ -101,7 +101,7 @@ def catalog_templates(template_path: Path, process_mode_func: ProcessModeFn) -> 
             dir_path = root / dir_
             process_mode = process_mode_func(dir_path)
             templates[str(dir_path.relative_to(root_dir).as_posix())] = TemplateFile(dir_path, process_mode)
-    return {key: templates[key] for key in sorted(templates)}
+    return dict(sorted(templates.items()))
 
 
 class InheritanceMap(ChainMap[str, TemplateFile]):
