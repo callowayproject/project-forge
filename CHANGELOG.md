@@ -1,5 +1,45 @@
 # Changelog
 
+## 0.9.4 (2026-09-27)
+
+[Compare the full difference.](https://github.com/callowayproject/project-forge/compare/0.9.3...0.9.4)
+
+### Fixes
+
+- Fix dead test collection: rename initial_context_merges_with_extra_context. [a0acb19](https://github.com/callowayproject/project-forge/commit/a0acb190d300a146fffa926c002bcfdf0dc8714d)
+
+  Missing test\_ prefix meant pytest never collected the test. Once
+  collected, it failed: initial_context values are passed through
+  render_expression like extra_context, so the mocked expectation of
+  "initial_value" was wrong — fixed to "rendered_value".
+
+  Fixes #49
+
+### Other
+
+- Wire merge_keys dotted paths into update_context, docs, and tests (#45). [a9782bb](https://github.com/callowayproject/project-forge/commit/a9782bb0ebba0e61ae4684130215e8d97819d11d)
+
+  Completes the fix in the previous commit: update_context now passes
+  merge_keys through to comprehensive_merge so top-level context updates
+  honor nested-key strategies, docs/schema description explain the dotted
+  path syntax, and tests cover both comprehensive_merge and update_context.
+
+  **co-authored-by:** Claude <noreply@anthropic.com>
+
+- Support nested merge_keys strategies via dotted paths (#45). [2320da7](https://github.com/callowayproject/project-forge/commit/2320da7dde2dd3e4462b31ba31af35837044afc8)
+
+  comprehensive_merge previously recursed into nested dicts unconditionally,
+  ignoring the composition's merge_keys strategy below the top level. A dotted
+  key path (e.g. "requirements.dev") in merge_keys now selects its own merge
+  strategy for that nested key while the rest of the structure still merges
+  comprehensively.
+
+  Also set interrogate's ignore-overloaded-functions, since it and ruff's
+  overload-with-docstring rule otherwise contradict each other on the
+  freeze_data overload stubs in the touched file.
+
+  **co-authored-by:** Claude <noreply@anthropic.com>
+
 ## 0.9.3 (2026-09-27)
 
 [Compare the full difference.](https://github.com/callowayproject/project-forge/compare/0.9.2...0.9.3)
