@@ -2,7 +2,7 @@
 
 import logging
 import re
-from dataclasses import dataclass, replace
+from dataclasses import dataclass
 from typing import Any, Callable, Optional
 
 from jinja2 import BaseLoader, Environment, TemplateNotFound, Undefined
@@ -30,10 +30,6 @@ class InheritanceRef:
         if len(bits) == 2 and bits[0].isdigit():
             return cls(name=bits[1], index=int(bits[0]))
         return cls(name=template)
-
-    def next(self) -> "InheritanceRef":
-        """Return the reference to the next rung up the inheritance chain."""
-        return replace(self, index=self.index + 1)
 
     def format(self) -> str:
         """Render this reference back into the loader's `"{index}/{name}"` string form."""
@@ -98,7 +94,8 @@ class InheritanceLoader(BaseLoader):
                 source = source.replace(match[0], "")
             else:
                 # rewrite the `extends` tag to reference the next item in the inheritance
-                source = source.replace(match[1], ref.next().format())
+                extended_ref = InheritanceRef(name=match[1], index=ref.index + 1)
+                source = source.replace(match[1], extended_ref.format())
 
         return source, None, lambda: True
 
