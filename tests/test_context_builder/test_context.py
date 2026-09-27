@@ -6,6 +6,7 @@ from unittest.mock import MagicMock, Mock, patch
 from project_forge.context_builder.context import build_context, get_starting_context, update_context
 from project_forge.models.composition import Composition
 from project_forge.models.overlay import Overlay
+from project_forge.models.pattern import Pattern
 from project_forge.models.task import Task
 
 
@@ -116,6 +117,41 @@ class TestBuildContext:
                 mock_get_starting_context,
                 mock_execute_task,
             )
+
+    def test_interleaved_steps_apply_mixed_case_merge_key_strategy(self, tmp_path):
+        """A mixed-case merge key must use its configured strategy, not fall back to comprehensive merge.
+
+        Two overlays (not composition.extra_context, which stringifies values via render_expression) are used
+        so `myKey` stays a real list on both sides of the conflicting merge, with a real Task interleaved
+        between them.
+        """
+        # Assemble
+        template_dir = tmp_path / "templates"
+        template_dir.mkdir()
+        pattern_file1 = tmp_path / "pattern1.yaml"
+        pattern_file1.write_text("")
+        pattern_file2 = tmp_path / "pattern2.yaml"
+        pattern_file2.write_text("")
+
+        overlay1 = Overlay(pattern_location=str(pattern_file1))
+        overlay1._pattern = Pattern(template_location=str(template_dir), extra_context={"myKey": [1, 2, 3]})
+
+        task = Task(command=["echo", "ok"], context_variable_name="task_output")
+
+        overlay2 = Overlay(pattern_location=str(pattern_file2))
+        overlay2._pattern = Pattern(template_location=str(template_dir), extra_context={"myKey": [4, 5, 6]})
+
+        composition = Composition(
+            steps=[overlay1, task, overlay2],
+            merge_keys={"myKey": "update"},
+        )
+
+        # Act
+        context = build_context(composition, ui=Mock())
+
+        # Assert: "update" replaces the list instead of comprehensive's concatenation.
+        assert context["myKey"] == [4, 5, 6]
+        assert context["task_output"] == "ok"
 
     def create_mock_composition(self, extra_context=None):
         """Create a mock composition."""
