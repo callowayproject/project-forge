@@ -1,5 +1,29 @@
 # Changelog
 
+## 0.9.1 (2026-09-27)
+
+[Compare the full difference.](https://github.com/callowayproject/project-forge/compare/0.9.0...0.9.1)
+
+### Fixes
+
+- Fix merge_keys case-sensitivity bug and add interleaved-steps integration test. [ffcf862](https://github.com/callowayproject/project-forge/commit/ffcf86224d22cf44cb8c6f5dd6ff4bc3c359802f)
+
+  update_context lowercased the context key before looking it up in
+  composition.merge_keys, but merge_keys is a user-authored dict with no case
+  normalization, so a mixed-case key like myKey with merge_keys = {"myKey":
+  "update"} silently fell back to the comprehensive strategy. Drop the
+  .lower() call and document that merge key matching is case-sensitive.
+
+  Also adds a real (non-mocked) build_context test that interleaves two
+  overlays and a task with a conflicting mixed-case merge key, closing the
+  mock-only coverage gap called out in #44.
+
+  Fixes #44
+
+### Other
+
+- Ignore noqa comments and update dependencies. [2f30338](https://github.com/callowayproject/project-forge/commit/2f30338f032c16e079c6e2065b96e8a9e3cc5bce)
+
 ## 0.9.0 (2026-09-27)
 
 [Compare the full difference.](https://github.com/callowayproject/project-forge/compare/0.8.0...0.9.0)
