@@ -1,5 +1,23 @@
 # Changelog
 
+## 0.9.3 (2026-09-27)
+
+[Compare the full difference.](https://github.com/callowayproject/project-forge/compare/0.9.2...0.9.3)
+
+### Fixes
+
+- Fix terminal UI validator stub so interactive prompts actually validate input. [dd17617](https://github.com/callowayproject/project-forge/commit/dd1761773f8628a819c8d5185900aba59353db00)
+
+  make_validator returned None unconditionally, so a Question's validator
+  expression was silently ignored in the interactive terminal UI. It now
+  wraps the validator callable into questionary's True/error-string
+  contract. Also fixes ask_multiselect passing the wrong kwarg
+  (`validator=` instead of `validate=`, which questionary.checkbox
+  ignores), and gives ask_select a manual validate-and-reprompt loop
+  since questionary.select() has no validation hook of its own.
+
+  Closes #48
+
 ## 0.9.2 (2026-09-27)
 
 [Compare the full difference.](https://github.com/callowayproject/project-forge/compare/0.9.1...0.9.2)
