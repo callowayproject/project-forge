@@ -1,5 +1,31 @@
 # Changelog
 
+## 0.9.5 (2026-09-27)
+
+[Compare the full difference.](https://github.com/callowayproject/project-forge/compare/0.9.4...0.9.5)
+
+### Fixes
+
+- Fix InheritanceRef rewrite to reuse the captured extends text. [61ef8a3](https://github.com/callowayproject/project-forge/commit/61ef8a39b8a625fd878d12fbbf149d2a44a509a8)
+
+  Code review of the prior commit found that ref.next().format() rewrote
+  the extends tag using the loader's map key instead of the text actually
+  captured from the {% extends %} tag, diverging from pre-refactor
+  behavior whenever they don't match. Also drops the now-unused
+  InheritanceRef.next(), since name always comes from the captured text.
+
+  Refs #47
+
+### Other
+
+- Extract InheritanceRef value object out of InheritanceLoader.get_source. [3fe2175](https://github.com/callowayproject/project-forge/commit/3fe21754823f4c5d14f92a06611e20b7563c854f)
+
+  Replaces the ad hoc "N/name" string splitting/f-string rewriting in
+  InheritanceLoader.get_source with a small parse/format value object,
+  per issue #47's deepening review.
+
+  Refs #47
+
 ## 0.9.4 (2026-09-27)
 
 [Compare the full difference.](https://github.com/callowayproject/project-forge/compare/0.9.3...0.9.4)

@@ -255,7 +255,7 @@ skip-checking-raises = true
 quiet = true
 
 [tool.bumpversion]
-current_version = "0.9.4"
+current_version = "0.9.5"
 commit = true
 commit_args = "--no-verify"
 tag = true
