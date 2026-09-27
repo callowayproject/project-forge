@@ -1,9 +1,12 @@
 from typing import Any
 
 import pytest
+from prompt_toolkit.document import Document
 from prompt_toolkit.input import create_pipe_input
 from prompt_toolkit.output import DummyOutput
+from prompt_toolkit.validation import ValidationError
 from pytest import param
+from questionary.prompts.common import build_validator
 
 from project_forge.ui import terminal
 
@@ -28,6 +31,29 @@ class KeyInputs:
     BACK = "\x7f"
     SPACE = " "
     TAB = "\x09"
+
+
+class TestMakeValidator:
+    """Tests for the make_validator function."""
+
+    def test_none_validator_func_always_returns_true(self):
+        """When there is no validator function, the resulting validator accepts anything."""
+        validate = terminal.make_validator(None)
+        assert validate("anything") is True
+
+    def test_valid_input_returns_true(self):
+        """When the validator function does not raise, the value is valid."""
+        validate = terminal.make_validator(lambda value: value)
+        assert validate("ok") is True
+
+    def test_invalid_input_returns_error_message(self):
+        """When the validator function raises ValueError, its message is returned."""
+
+        def validator_func(value):
+            raise ValueError("nope")
+
+        validate = terminal.make_validator(validator_func)
+        assert validate("bad") == "nope"
 
 
 class TestAskQuestion:
@@ -128,6 +154,40 @@ class TestAskQuestion:
             output=DummyOutput(),
         )
         assert response == expected
+
+    def test_select_reprompts_when_validator_rejects_first_choice(self, input_pipe):
+        """ask_question with choices re-prompts if the validator rejects the chosen value."""
+
+        def validator_func(value):
+            if value == "two":
+                raise ValueError("two is not allowed")
+            return value
+
+        # first attempt selects "two" (rejected), second attempt selects "three"
+        input_pipe.send_text(KeyInputs.DOWN + KeyInputs.ENTER + KeyInputs.DOWN + KeyInputs.DOWN + KeyInputs.ENTER)
+        response = terminal.ask_question(
+            "What is the answer?",
+            choices={"one": "one", "two": "two", "three": "three"},
+            validator_func=validator_func,
+            input=input_pipe,
+            output=DummyOutput(),
+        )
+        assert response == "three"
+
+    def test_invalid_input_is_rejected_by_the_questionary_validator(self):
+        """A validator_func that raises ValueError rejects bad input at the real questionary prompt."""
+
+        def validator_func(value):
+            if value != "valid":
+                raise ValueError("must be 'valid'")
+            return value
+
+        validator = build_validator(terminal.make_validator(validator_func))
+
+        with pytest.raises(ValidationError):
+            validator.validate(Document("bad"))
+
+        validator.validate(Document("valid"))  # does not raise
 
     def test_secret_returns_a_string(self, input_pipe):
         """The secret type should return a string."""
