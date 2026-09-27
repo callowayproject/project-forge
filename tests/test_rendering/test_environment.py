@@ -6,10 +6,26 @@ import pytest
 from jinja2 import Environment, TemplateNotFound
 from jinja2.exceptions import UndefinedError
 
-from project_forge.rendering.environment import InheritanceLoader, SuperUndefined
+from project_forge.rendering.environment import InheritanceLoader, InheritanceRef, SuperUndefined
 from project_forge.rendering.templates import InheritanceMap, ProcessMode, TemplateFile
 
 RW_MODE = ProcessMode.render | ProcessMode.write
+
+
+class TestInheritanceRef:
+    """Tests for InheritanceRef."""
+
+    def test_parse_unprefixed_name_defaults_to_index_zero(self):
+        """Parsing a plain template name yields index 0."""
+        assert InheritanceRef.parse("a.txt") == InheritanceRef(name="a.txt", index=0)
+
+    def test_parse_prefixed_name_extracts_index(self):
+        """Parsing a `"N/name"` string extracts the index and name."""
+        assert InheritanceRef.parse("2/a.txt") == InheritanceRef(name="a.txt", index=2)
+
+    def test_format_renders_prefixed_string(self):
+        """`format()` renders the `"N/name"` string form."""
+        assert InheritanceRef(name="a.txt", index=2).format() == "2/a.txt"
 
 
 @pytest.fixture
@@ -124,3 +140,25 @@ class TestInheritanceLoader:
 
         source = env.loader.get_source(env, f"2/{template_name}")
         assert source[0] == ""
+
+    def test_get_source_rewrites_extends_using_the_captured_tag_text(self, tmp_path: Path):
+        """The rewritten `extends` reference must reuse the text actually written in the tag.
+
+        A template's `{% extends %}` string need not match the key it was cataloged under
+        (e.g. it may reference a path prefix); the rewrite must not substitute the map key instead.
+        """
+        p1 = tmp_path / "dir1" / "a.txt"
+        p1.parent.mkdir(parents=True, exist_ok=True)
+        p1.write_text("{% extends 'templates/a.txt' %}")
+        p2 = tmp_path / "dir2" / "a.txt"
+        p2.parent.mkdir(parents=True, exist_ok=True)
+        p2.write_text("done")
+        inheritance_map = InheritanceMap(
+            {"a.txt": TemplateFile(p2, RW_MODE)},
+            {"a.txt": TemplateFile(p1, RW_MODE)},
+        )
+        loader = InheritanceLoader(inheritance_map)
+        env = Environment(loader=loader)
+
+        source, _, _ = env.loader.get_source(env, "a.txt")
+        assert "1/templates/a.txt" in source
