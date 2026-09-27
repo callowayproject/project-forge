@@ -229,3 +229,17 @@ class TestUpdateContext:
 
         # Assert
         assert result == expected_result, f"Expected {expected_result}, but got {result}"
+
+    def test_nested_key_uses_dotted_path_strategy(self):
+        """A nested key can use its own merge strategy via a dotted path in merge_keys."""
+        # Assemble
+        merge_keys = {"requirements.dev": "update"}
+        left = {"requirements": {"dev": [1, 2], "prod": [1]}}
+        right = {"requirements": {"dev": [3, 4], "prod": [2]}}
+
+        # Act
+        result = update_context(merge_keys, left, right)
+
+        # Assert
+        assert result["requirements"]["dev"] == [3, 4]
+        assert set(result["requirements"]["prod"]) == {1, 2}

@@ -19,3 +19,5 @@ The default answer of a question to be the answer to a previous question.
 Patterns may have keys that whose answers should be the same, but their keys are different. For example, one pattern might use `project_name` and another might use `library_name`. The overlay's `answer_map` allows you to map the answer of `project_name` to answer of `library_name`.
 
 Patterns that define complex data structures, such as `list`s or `dict`s, may be merged between patterns using the composition's `merge_keys` attribute. For example, if several patterns define a `requirements` dict as in their `extra_context`, you can have the composition merge all the values of `requirements`.
+
+`merge_keys` normally only affects top-level context keys; a key nested inside a `comprehensive`-merged structure otherwise always merges comprehensively. To give a nested key its own strategy, use its dotted path as the `merge_keys` key, e.g. `requirements.dev: update`.
