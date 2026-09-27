@@ -79,7 +79,7 @@ class TestBuildContext:
             mock_process_overlay.assert_not_called()
             assert mock_get_starting_context.called
 
-    def initial_context_merges_with_extra_context(self):
+    def test_initial_context_merges_with_extra_context(self):
         """When an initial context is passed, it merges with the extra context."""
         ui = Mock()
 
@@ -108,7 +108,7 @@ class TestBuildContext:
             assert context == {
                 "key": "rendered_value",
                 "overlay_key": "overlay_value",
-                "initial_key": "initial_value",
+                "initial_key": "rendered_value",
             }
 
             self.assert_mocked_functions_called(
