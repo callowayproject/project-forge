@@ -28,7 +28,7 @@ class ParsedURL:
 
     @property
     def url(self) -> str:
-        """Return the normalized URL string."""
+        """The normalized URL string."""
         netloc = self.host
         if self.port:
             netloc += f":{self.port}"
