@@ -75,7 +75,7 @@ def execute_task(task: Task, context: dict) -> dict:
 
     working_dir = context.get("working_dir", Path.cwd())
     with inside_dir(working_dir):
-        result = subprocess.run(  # noqa: S603
+        result = subprocess.run(  # ruff: ignore[subprocess-without-shell-equals-true]
             command,
             shell=task.use_shell,
             env=env,

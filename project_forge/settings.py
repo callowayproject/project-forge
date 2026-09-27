@@ -40,7 +40,7 @@ _APP_SETTINGS = None
 def get_settings(config_file: Path = DEFAULT_CONFIG_FILE) -> Settings:
     """Return the settings."""
     # TODO[#3]: Implement settings management
-    global _APP_SETTINGS  # noqa: PLW0603
+    global _APP_SETTINGS  # ruff: ignore[global-statement]
 
     if _APP_SETTINGS is None:
         _APP_SETTINGS = Settings()

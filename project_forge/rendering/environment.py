@@ -94,6 +94,6 @@ def load_environment(template_map: Optional[InheritanceMap] = None, extensions: 
     """
     template_map = template_map or InheritanceMap()
     extensions = extensions or []
-    return Environment(  # NOQA: S701
+    return Environment(  # ruff: ignore[jinja2-autoescape-false]
         loader=InheritanceLoader(template_map), extensions=extensions, undefined=SuperUndefined
     )

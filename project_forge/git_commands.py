@@ -141,7 +141,7 @@ def _apply_patch_with_reject(repo: Repo, diff: str) -> None:
     reject_command = ["git", "apply", "--reject"]
     try:
         logger.info("Attempting to apply patch with rejections.")
-        subprocess.run(  # NOQA: S603
+        subprocess.run(  # ruff: ignore[subprocess-without-shell-equals-true]
             reject_command,
             input=diff.encode(),
             stderr=subprocess.PIPE,
@@ -177,7 +177,7 @@ def apply_patch(repo: Repo, diff: str) -> None:
 
     try:
         logger.info("Attempting to apply patch with 3-way merge.")
-        subprocess.run(  # NOQA: S603
+        subprocess.run(  # ruff: ignore[subprocess-without-shell-equals-true]
             three_way_command,
             input=diff.encode(),
             stderr=subprocess.PIPE,
