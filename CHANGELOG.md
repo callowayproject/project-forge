@@ -1,5 +1,56 @@
 # Changelog
 
+## 0.9.0 (2026-09-27)
+
+[Compare the full difference.](https://github.com/callowayproject/project-forge/compare/0.8.0...0.9.0)
+
+### Other
+
+- [pre-commit.ci] pre-commit autoupdate. [f479312](https://github.com/callowayproject/project-forge/commit/f479312592133b0d034aef8e7b5ec4d1efebf1e4)
+
+  **updates:** - [github.com/astral-sh/ruff-pre-commit: v0.15.8 → v0.16.8](https://github.com/astral-sh/ruff-pre-commit/compare/v0.15.8...v0.16.8)
+
+- Bump the github-actions group across 1 directory with 3 updates. [933f783](https://github.com/callowayproject/project-forge/commit/933f783a3ebe2a214e0b274021de7eb40d92c89c)
+
+  Bumps the github-actions group with 3 updates in the / directory: [actions/checkout](https://github.com/actions/checkout), [actions/download-artifact](https://github.com/actions/download-artifact) and [softprops/action-gh-release](https://github.com/softprops/action-gh-release).
+
+  Updates `actions/checkout` from 5 to 6
+
+  - [Release notes](https://github.com/actions/checkout/releases)
+  - [Changelog](https://github.com/actions/checkout/blob/main/CHANGELOG.md)
+  - [Commits](https://github.com/actions/checkout/compare/v5...v6)
+
+  Updates `actions/download-artifact` from 5 to 8
+
+  - [Release notes](https://github.com/actions/download-artifact/releases)
+  - [Commits](https://github.com/actions/download-artifact/compare/v5...v8)
+
+  Updates `softprops/action-gh-release` from 2 to 3
+
+  - [Release notes](https://github.com/softprops/action-gh-release/releases)
+  - [Changelog](https://github.com/softprops/action-gh-release/blob/master/CHANGELOG.md)
+  - [Commits](https://github.com/softprops/action-gh-release/compare/v2...v3)
+
+  ______________________________________________________________________
+
+  **updated-dependencies:** - dependency-name: actions/checkout
+  dependency-version: '6'
+  dependency-type: direct:production
+  update-type: version-update:semver-major
+  dependency-group: github-actions
+
+  **signed-off-by:** dependabot[bot] <support@github.com>
+
+- Simplify URL property docstring for clarity. [e5b8d70](https://github.com/callowayproject/project-forge/commit/e5b8d706c883abf2c675684c9c0e8ec7e0f09e52)
+
+### Updates
+
+- Delete process_task pass-through wrapper (#43). [5528894](https://github.com/callowayproject/project-forge/commit/5528894e231255061acb064be7d8709e8618ee9b)
+
+  process_task added no behavior over execute_task; build_context now
+  calls execute_task directly, matching the pattern of the deletion
+  test in the issue.
+
 ## 0.8.0 (2026-03-29)
 
 [Compare the full difference.](https://github.com/callowayproject/project-forge/compare/0.7.0...0.8.0)
