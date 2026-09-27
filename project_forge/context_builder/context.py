@@ -5,10 +5,9 @@ from typing import Callable, Mapping, Optional
 
 from project_forge.context_builder.data_merge import MERGE_FUNCTION, MergeMethods
 from project_forge.context_builder.overlays import process_overlay
-from project_forge.context_builder.tasks import process_task
 from project_forge.models.composition import Composition
 from project_forge.models.overlay import Overlay
-from project_forge.models.task import Task
+from project_forge.models.task import Task, execute_task
 from project_forge.rendering.expressions import render_expression
 
 
@@ -46,7 +45,7 @@ def build_context(composition: Composition, ui: Callable, initial_context: Optio
             case Overlay():
                 updated_context = process_overlay(step, running_context, ui)
             case Task():
-                updated_context = process_task(step, running_context)
+                updated_context = execute_task(step, running_context)
             case _:
                 updated_context = {}
         running_context = update_context(composition.merge_keys or {}, running_context, updated_context)
