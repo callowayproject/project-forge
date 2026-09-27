@@ -4,7 +4,7 @@ import copy
 import logging
 from collections import OrderedDict
 from itertools import chain
-from typing import Any, Iterable, Literal, MutableMapping, TypeVar, overload
+from typing import Any, Iterable, Literal, Mapping, MutableMapping, Optional, TypeVar, overload
 
 from immutabledict import immutabledict
 
@@ -108,7 +108,12 @@ def nested_overwrite(left_val: T, right_val: T) -> T:
             return right_val
 
 
-def comprehensive_merge(left_val: T, right_val: T) -> T:
+def comprehensive_merge(
+    left_val: T,
+    right_val: T,
+    merge_keys: Optional[Mapping[str, "MergeMethods"]] = None,
+    _path: str = "",
+) -> T:
     """
     Merges data comprehensively.
 
@@ -118,17 +123,25 @@ def comprehensive_merge(left_val: T, right_val: T) -> T:
     - lists are merged and de-duplicated
     - dicts are recursively merged
 
+    A nested dict key can use its own merge strategy instead of the comprehensive
+    default by giving its dotted path (e.g. ``"requirements.dev"``) in `merge_keys`.
+
     Args:
         left_val: The item to merge into
         right_val: The item to merge from
+        merge_keys: A mapping of dotted key paths to merge strategy names, used to
+            override the comprehensive default for specific nested keys.
+        _path: The dotted path of `left_val`/`right_val` within the overall structure.
+            Used internally for recursion; callers should not need to set this.
 
     Returns:
         The merged data
     """
     dict_types = (dict, OrderedDict, immutabledict)
     iterable_types = (list, set, tuple)
+    merge_keys = merge_keys or {}
 
-    def merge_into(d1: Any, d2: Any) -> Any:
+    def merge_into(d1: Any, d2: Any, path: str) -> Any:
         if isinstance(d1, dict_types) and isinstance(d2, dict_types):
             if isinstance(d1, OrderedDict) or isinstance(d2, OrderedDict):
                 od1: MutableMapping[Any, Any] = OrderedDict(d1)
@@ -138,7 +151,14 @@ def comprehensive_merge(left_val: T, right_val: T) -> T:
                 od2 = dict(d2)
 
             for key in od2:
-                od1[key] = merge_into(od1[key], od2[key]) if key in od1 else copy.deepcopy(od2[key])
+                key_path = f"{path}.{key}" if path else str(key)
+                strategy = merge_keys.get(key_path)
+                if key not in od1:
+                    od1[key] = copy.deepcopy(od2[key])
+                elif strategy and strategy != COMPREHENSIVE:
+                    od1[key] = MERGE_FUNCTION[strategy](od1[key], od2[key])
+                else:
+                    od1[key] = merge_into(od1[key], od2[key], key_path)
             return od1  # type: ignore[return-value]
         elif isinstance(d1, list) and isinstance(d2, iterable_types):
             return list(merge_iterables(d1, d2))
@@ -149,7 +169,7 @@ def comprehensive_merge(left_val: T, right_val: T) -> T:
         else:
             return copy.deepcopy(d2)
 
-    return merge_into(left_val, right_val)
+    return merge_into(left_val, right_val, _path)
 
 
 # Strategies merging data.
