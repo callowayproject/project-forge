@@ -1,0 +1,12 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(xargs ls:*)",
+      "Bash(grep:*)",
+      "Bash(uv run:*)",
+      "Bash(wc -l project_forge/**/*.py project_forge/*.py)",
+      "Bash(git stash:*)",
+      "Bash(git diff:*)"
+    ]
+  }
+}

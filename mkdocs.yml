@@ -33,7 +33,6 @@ markdown_extensions:
   - abbr
   - admonition
   - attr_list
-  - customblocks
   - def_list
   - footnotes
   - md_in_html
