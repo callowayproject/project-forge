@@ -62,7 +62,7 @@ def update_context(merge_keys: Mapping[str, MergeMethods], left: dict, right: di
 
     for key, value in left.items():
         if key in right:
-            merge_func = MERGE_FUNCTION[merge_keys.get(key.lower(), "comprehensive")]
+            merge_func = MERGE_FUNCTION[merge_keys.get(key, "comprehensive")]
             result[key] = merge_func(value, right[key])
         else:
             result[key] = value

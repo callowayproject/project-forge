@@ -22,7 +22,8 @@ class Composition(BaseModel):
         default_factory=dict,
         description=(
             "Merge the values of one or more keys in a specific way. This is useful for `yaml` or `json` values. "
-            "Valid merge methods are `update`, `nested-overwrite`, and `comprehensive`."
+            "Valid merge methods are `update`, `nested-overwrite`, and `comprehensive`. "
+            "Keys are matched case-sensitively against the context variable names."
         ),
     )
     extra_context: dict = Field(
