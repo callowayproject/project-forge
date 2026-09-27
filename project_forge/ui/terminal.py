@@ -1,15 +1,25 @@
 """A terminal user interface."""
 
-from typing import Any, Callable, Optional
+from typing import Any, Callable, Optional, Union
 
 import questionary
 
 from project_forge.core.types import QUESTION_TYPE_CAST, QuestionType
 
 
-def make_validator(validator_func: Callable) -> Optional[Callable]:
-    """Make a questionary validator from a callable."""
-    return None
+def make_validator(validator_func: Optional[Callable]) -> Callable:
+    """Make a questionary validator from a callable that raises ValueError on invalid input."""
+    if validator_func is None:
+        return lambda value: True
+
+    def validate(value: Any) -> Union[bool, str]:
+        try:
+            validator_func(value)
+        except Exception as e:  # ruff: ignore[blind-except] -- any failure becomes a validation message, not a crash
+            return str(e)
+        return True
+
+    return validate
 
 
 def ask_multiselect(
@@ -26,7 +36,7 @@ def ask_multiselect(
         choices=choices,
         default=default,
         instruction=help,
-        validator=make_validator(validator_func),
+        validate=make_validator(validator_func),
         **kwargs,
     )
     responses = question.ask()
@@ -42,16 +52,23 @@ def ask_select(
     **kwargs,
 ) -> Any:
     """Ask a question with multiple choices."""
-    question = questionary.select(
-        message=prompt,
-        choices=choices,
-        default=default,
-        instruction=help,
-        validator=make_validator(validator_func),
-        **kwargs,
-    )
-    response = question.ask()
-    return choices.get(response, response)
+    # questionary.select() has no `validate` hook (an already-listed choice needs no
+    # per-keystroke validation), so a value-level validator is applied by re-asking on failure.
+    validate = make_validator(validator_func)
+    while True:
+        question = questionary.select(
+            message=prompt,
+            choices=choices,
+            default=default,
+            instruction=help,
+            **kwargs,
+        )
+        answer = question.ask()
+        response = choices.get(answer, answer)
+        result = validate(response)
+        if result is True:
+            return response
+        questionary.print(str(result), style="fg:ansired")
 
 
 def ask_question(
