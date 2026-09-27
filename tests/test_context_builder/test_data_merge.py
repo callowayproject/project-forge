@@ -89,6 +89,30 @@ def test_comprehensive_merge(args: list, expected: Any):
     assert data_merge.comprehensive_merge(*args) == expected
 
 
+def test_comprehensive_merge_nested_key_uses_own_strategy():
+    """A nested key given a dotted path in merge_keys uses that strategy instead of comprehensive."""
+    left = {"requirements": {"dev": [1, 2, 3], "prod": [1]}}
+    right = {"requirements": {"dev": [4, 5], "prod": [2]}}
+    merge_keys = {"requirements.dev": "update"}
+
+    result = data_merge.comprehensive_merge(left, right, merge_keys=merge_keys)
+
+    assert result["requirements"]["dev"] == [4, 5]
+    assert set(result["requirements"]["prod"]) == {1, 2}
+
+
+def test_comprehensive_merge_nested_key_strategy_only_applies_at_its_path():
+    """A dotted-path strategy must not affect a same-named key at a different nesting level."""
+    left = {"a": {"dev": [1, 2]}, "dev": [1, 2]}
+    right = {"a": {"dev": [3, 4]}, "dev": [3, 4]}
+    merge_keys = {"a.dev": "update"}
+
+    result = data_merge.comprehensive_merge(left, right, merge_keys=merge_keys)
+
+    assert result["a"]["dev"] == [3, 4]
+    assert set(result["dev"]) == {1, 2, 3, 4}
+
+
 def test_comprehensive_merge_list_of_dicts():
     """A list of dicts should resolve into a list of immutabledicts in random order."""
     result = data_merge.comprehensive_merge([{"a": 1}, {"b": 2}], [{"c": 3}, {"d": 4}])

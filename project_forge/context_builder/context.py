@@ -3,7 +3,7 @@
 import datetime
 from typing import Callable, Mapping, Optional
 
-from project_forge.context_builder.data_merge import MERGE_FUNCTION, MergeMethods
+from project_forge.context_builder.data_merge import COMPREHENSIVE, MERGE_FUNCTION, MergeMethods, comprehensive_merge
 from project_forge.context_builder.overlays import process_overlay
 from project_forge.models.composition import Composition
 from project_forge.models.overlay import Overlay
@@ -62,8 +62,11 @@ def update_context(merge_keys: Mapping[str, MergeMethods], left: dict, right: di
 
     for key, value in left.items():
         if key in right:
-            merge_func = MERGE_FUNCTION[merge_keys.get(key, "comprehensive")]
-            result[key] = merge_func(value, right[key])
+            strategy = merge_keys.get(key, COMPREHENSIVE)
+            if strategy == COMPREHENSIVE:
+                result[key] = comprehensive_merge(value, right[key], merge_keys=merge_keys, _path=key)
+            else:
+                result[key] = MERGE_FUNCTION[strategy](value, right[key])
         else:
             result[key] = value
 

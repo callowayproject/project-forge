@@ -136,6 +136,7 @@ ignore-property-decorators = false
 ignore-module = false
 ignore-nested-functions = true
 ignore-nested-classes = true
+ignore-overloaded-functions = true
 ignore-setters = false
 fail-under = 90
 exclude = ["setup.py", "docs", "build"]

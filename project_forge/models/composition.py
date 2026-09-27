@@ -23,7 +23,9 @@ class Composition(BaseModel):
         description=(
             "Merge the values of one or more keys in a specific way. This is useful for `yaml` or `json` values. "
             "Valid merge methods are `update`, `nested-overwrite`, and `comprehensive`. "
-            "Keys are matched case-sensitively against the context variable names."
+            "Keys are matched case-sensitively against the context variable names. "
+            "A nested key inside a `comprehensive`-merged value can be given its own strategy using its "
+            "dotted path, e.g. `requirements.dev`."
         ),
     )
     extra_context: dict = Field(
