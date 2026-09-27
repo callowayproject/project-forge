@@ -19,7 +19,7 @@
       
       
       <link rel="icon" href="../../../../../assets/favicon.png">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
     
     
       
@@ -27,7 +27,7 @@
       
     
     
-      <link rel="stylesheet" href="../../../../../assets/stylesheets/main.484c7ddc.min.css">
+      <link rel="stylesheet" href="../../../../../assets/stylesheets/main.ec1eaa64.min.css">
       
         
         <link rel="stylesheet" href="../../../../../assets/stylesheets/palette.ab4e12ef.min.css">
@@ -2181,12 +2181,12 @@
   <a href="#project_forge.rendering.templates.InheritanceMap-functions" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Functions
+        Methods:
       
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Functions">
+    <nav class="md-nav" aria-label="Methods:">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -2364,12 +2364,12 @@
   <a href="#project_forge.rendering.templates-functions" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Functions
+        Functions:
       
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Functions">
+    <nav class="md-nav" aria-label="Functions:">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -3103,7 +3103,7 @@
 </div>
 
 
-<h4 id="project_forge.rendering.templates.InheritanceMap-functions">Functions<a href="#project_forge.rendering.templates.InheritanceMap-functions" class="headerlink" title="Permanent link">&para;</a></h4>
+<h4 id="project_forge.rendering.templates.InheritanceMap-functions">Methods:<a href="#project_forge.rendering.templates.InheritanceMap-functions" class="headerlink" title="Permanent link">&para;</a></h4>
 
 <div class="doc doc-object doc-function">
 
@@ -3446,7 +3446,9 @@ The output for <code>inheritance("a")</code> would be <code>[Path("3"), Path("2"
   </span>
 
 <a href="#project_forge.rendering.templates.TemplateFile.process_mode" class="headerlink" title="Permanent link">&para;</a></h5>
-<div class="doc-signature highlight"><pre><span></span><code><span class="n">process_mode</span><span class="p">:</span> <span class="n">ProcessMode</span> <span class="o">=</span> <span class="n">render</span> <span class="o">|</span> <span class="n">write</span>
+<div class="doc-signature highlight"><pre><span></span><code><span class="n">process_mode</span><span class="p">:</span> <span class="n">ProcessMode</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="n">ProcessMode</span><span class="o">.</span><span class="n">render</span> <span class="o">|</span> <span class="n">ProcessMode</span><span class="o">.</span><span class="n">write</span>
+<span class="p">)</span>
 </code></pre></div>
 
     <div class="doc doc-contents ">
@@ -3467,7 +3469,7 @@ The output for <code>inheritance("a")</code> would be <code>[Path("3"), Path("2"
     </div>
 
 </div>
-<h2 id="project_forge.rendering.templates-functions">Functions<a href="#project_forge.rendering.templates-functions" class="headerlink" title="Permanent link">&para;</a></h2>
+<h2 id="project_forge.rendering.templates-functions">Functions:<a href="#project_forge.rendering.templates-functions" class="headerlink" title="Permanent link">&para;</a></h2>
 
 <div class="doc doc-object doc-function">
 
@@ -3517,20 +3519,20 @@ The output for <code>inheritance("a")</code> would be <code>[Path("3"), Path("2"
 </code></pre></div>
 <p>A call to <code>catalog_templates(Path("/path-to-templates/{{ repo_name }}/"), process_mode_fn)</code> would return:</p>
 <div class="highlight"><pre><span></span><code>{
-    &quot;{{ repo_name }}&quot;: TemplateFile(
-        Path(&quot;/path-to-templates/{{ repo_name }}&quot;), &lt;ProcessMode.render|write: 3&gt;
+    "{{ repo_name }}": TemplateFile(
+        Path("/path-to-templates/{{ repo_name }}"), &lt;ProcessMode.render|write: 3&gt;
     ),
-    &quot;{{ repo_name }}/file1.txt&quot;: TemplateFile(
-        Path(&quot;/path-to-templates/{{ repo_name }}/file1.txt&quot;), &lt;ProcessMode.render|write: 3&gt;
+    "{{ repo_name }}/file1.txt": TemplateFile(
+        Path("/path-to-templates/{{ repo_name }}/file1.txt"), &lt;ProcessMode.render|write: 3&gt;
     ),
-    &quot;{{ repo_name }}/subdir&quot;: TemplateFile(
-        Path(&quot;/path-to-templates/{{ repo_name }}/subdir&quot;), &lt;ProcessMode.render|write: 3&gt;
+    "{{ repo_name }}/subdir": TemplateFile(
+        Path("/path-to-templates/{{ repo_name }}/subdir"), &lt;ProcessMode.render|write: 3&gt;
     ),
-    &quot;{{ repo_name }}/subdir/file2.txt&quot;: TemplateFile(
-        Path(&quot;/path-to-templates/{{ repo_name }}/subdir/file2.txt&quot;), &lt;ProcessMode.render|write: 3&gt;
+    "{{ repo_name }}/subdir/file2.txt": TemplateFile(
+        Path("/path-to-templates/{{ repo_name }}/subdir/file2.txt"), &lt;ProcessMode.render|write: 3&gt;
     ),
-    &quot;{{ repo_name }}/empty-subdir&quot;: TemplateFile(
-        Path(&quot;/path-to-templates/{{ repo_name }}/empty-subdir&quot;), &lt;ProcessMode.render|write: 3&gt;
+    "{{ repo_name }}/empty-subdir": TemplateFile(
+        Path("/path-to-templates/{{ repo_name }}/empty-subdir"), &lt;ProcessMode.render|write: 3&gt;
     ),
 }
 </code></pre></div>
@@ -3640,7 +3642,7 @@ The output for <code>inheritance("a")</code> would be <code>[Path("3"), Path("2"
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="September 27, 2026 11:49:08 UTC">September 27, 2026</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="September 27, 2026 12:11:59 UTC">September 27, 2026</span>
   </span>
 
     
@@ -3701,7 +3703,7 @@ The output for <code>inheritance("a")</code> would be <code>[Path("3"), Path("2"
       <script id="__config" type="application/json">{"annotate": null, "base": "../../../../..", "features": ["navigation.sections", "navigation.path", "navigation.indexes", "navigation.top", "content.action.edit", "content.action.view", "content.code.annotate", "content.tabs.link", "toc.integrate"], "search": "../../../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
     
     
-      <script src="../../../../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      <script src="../../../../../assets/javascripts/bundle.d7400e89.min.js"></script>
       
         <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML"></script>
       

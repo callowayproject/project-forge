@@ -21,7 +21,7 @@
       
       
       <link rel="icon" href="../../assets/favicon.png">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
     
     
       
@@ -29,7 +29,7 @@
       
     
     
-      <link rel="stylesheet" href="../../assets/stylesheets/main.484c7ddc.min.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/main.ec1eaa64.min.css">
       
         
         <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
@@ -2785,10 +2785,10 @@ Is this one variable with three permutations that only require one question?</p>
 <p>Let&rsquo;s start with the title of the <code>README.md</code> file. We&rsquo;ll call this the <code>project_name</code>.
 We want to use this wherever we need a human-friendly name. Add a question to <code>core_pattern.toml</code></p>
 <div class="highlight"><span class="filename">patterns/core_pattern.toml</span><pre><span></span><code><span class="k">[[questions]]</span>
-<span class="n">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;project_name&quot;</span>
-<span class="n">prompt</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;What is the human-friendly name of the project?&quot;</span>
-<span class="n">type</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;str&quot;</span>
-<span class="n">default</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;My Project&quot;</span>
+<span class="n">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"project_name"</span>
+<span class="n">prompt</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"What is the human-friendly name of the project?"</span>
+<span class="n">type</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"str"</span>
+<span class="n">default</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"My Project"</span>
 </code></pre></div>
 <h3 id="package-name">Package name<a class="headerlink" href="#package-name" title="Permanent link">&para;</a></h3>
 <p>Now, let&rsquo;s deal with the outer folder name and the code folder.
@@ -2799,10 +2799,10 @@ However, hyphens are not allowed in <a href="https://docs.python.org/3.12/refere
 <div class="highlight"><span class="filename">patterns/core_pattern.toml</span><pre><span></span><code><span class="c1"># ... previous question</span>
 
 <span class="k">[[questions]]</span>
-<span class="n">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;package_name&quot;</span>
-<span class="n">promp</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;What is the name of the Python package?&quot;</span>
-<span class="n">type</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;str&quot;</span>
-<span class="n">default</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;{{ project_name|lower|replace(&#39; &#39;, &#39;_&#39;) }}&quot;</span>
+<span class="n">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"package_name"</span>
+<span class="n">promp</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"What is the name of the Python package?"</span>
+<span class="n">type</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"str"</span>
+<span class="n">default</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"{{ project_name|lower|replace(' ', '_') }}"</span>
 </code></pre></div>
 <p>This sets the default answer to a modification of the previous question&rsquo;s answer.
 It converts the answer to lowercase and replaces all spaces with underscores.
@@ -2812,10 +2812,10 @@ This is likely what the user wants, and if so, they can accept the default witho
 <div class="highlight"><span class="filename">patterns/core_pattern.toml</span><pre><span></span><code><span class="c1"># ... previous questions</span>
 
 <span class="k">[[questions]]</span>
-<span class="n">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;repo_name&quot;</span>
-<span class="n">prompt</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;What is the name of the project repository?&quot;</span>
-<span class="n">type</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;str&quot;</span>
-<span class="n">default</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;{{ package_name|replace(&#39;_&#39;, &#39;-&#39;) }}&quot;</span>
+<span class="n">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"repo_name"</span>
+<span class="n">prompt</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"What is the name of the project repository?"</span>
+<span class="n">type</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"str"</span>
+<span class="n">default</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"{{ package_name|replace('_', '-') }}"</span>
 </code></pre></div>
 <p>This question modifies the answer from <code>package_name</code>, replacing the underscores with hyphens.</p>
 <h3 id="set-the-placeholders-in-files">Set the placeholders in files<a class="headerlink" href="#set-the-placeholders-in-files" title="Permanent link">&para;</a></h3>
@@ -2960,7 +2960,7 @@ This is likely what the user wants, and if so, they can accept the default witho
       <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.sections", "navigation.path", "navigation.indexes", "navigation.top", "content.action.edit", "content.action.view", "content.code.annotate", "content.tabs.link", "toc.integrate"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
     
     
-      <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      <script src="../../assets/javascripts/bundle.d7400e89.min.js"></script>
       
         <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML"></script>
       
