@@ -6,10 +6,30 @@ import pytest
 from jinja2 import Environment, TemplateNotFound
 from jinja2.exceptions import UndefinedError
 
-from project_forge.rendering.environment import InheritanceLoader, SuperUndefined
+from project_forge.rendering.environment import InheritanceLoader, InheritanceRef, SuperUndefined
 from project_forge.rendering.templates import InheritanceMap, ProcessMode, TemplateFile
 
 RW_MODE = ProcessMode.render | ProcessMode.write
+
+
+class TestInheritanceRef:
+    """Tests for InheritanceRef."""
+
+    def test_parse_unprefixed_name_defaults_to_index_zero(self):
+        """Parsing a plain template name yields index 0."""
+        assert InheritanceRef.parse("a.txt") == InheritanceRef(name="a.txt", index=0)
+
+    def test_parse_prefixed_name_extracts_index(self):
+        """Parsing a `"N/name"` string extracts the index and name."""
+        assert InheritanceRef.parse("2/a.txt") == InheritanceRef(name="a.txt", index=2)
+
+    def test_next_increments_index(self):
+        """`next()` returns a reference one rung further up the chain."""
+        assert InheritanceRef(name="a.txt", index=1).next() == InheritanceRef(name="a.txt", index=2)
+
+    def test_format_renders_prefixed_string(self):
+        """`format()` renders the `"N/name"` string form."""
+        assert InheritanceRef(name="a.txt", index=2).format() == "2/a.txt"
 
 
 @pytest.fixture

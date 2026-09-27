@@ -2,6 +2,7 @@
 
 import logging
 import re
+from dataclasses import dataclass, replace
 from typing import Any, Callable, Optional
 
 from jinja2 import BaseLoader, Environment, TemplateNotFound, Undefined
@@ -9,6 +10,34 @@ from jinja2 import BaseLoader, Environment, TemplateNotFound, Undefined
 from project_forge.rendering.templates import InheritanceMap
 
 logger = logging.getLogger(__name__)
+
+
+@dataclass(frozen=True)
+class InheritanceRef:
+    """A parsed reference to one rung of a template's inheritance chain.
+
+    `InheritanceLoader` addresses a specific ancestor of a template with an
+    `"{index}/{name}"` string (e.g. `"2/a.txt"`); this is the value object for that string.
+    """
+
+    name: str
+    index: int = 0
+
+    @classmethod
+    def parse(cls, template: str) -> "InheritanceRef":
+        """Parse a loader template name, e.g. `"2/a.txt"` or the un-prefixed `"a.txt"`."""
+        bits = template.split("/", maxsplit=1)
+        if len(bits) == 2 and bits[0].isdigit():
+            return cls(name=bits[1], index=int(bits[0]))
+        return cls(name=template)
+
+    def next(self) -> "InheritanceRef":
+        """Return the reference to the next rung up the inheritance chain."""
+        return replace(self, index=self.index + 1)
+
+    def format(self) -> str:
+        """Render this reference back into the loader's `"{index}/{name}"` string form."""
+        return f"{self.index}/{self.name}"
 
 
 class SuperUndefined(Undefined):
@@ -35,33 +64,26 @@ class InheritanceLoader(BaseLoader):
 
     def get_source(self, environment: Environment, template: str) -> tuple[str, str | None, Callable[[], bool] | None]:
         """Load the template."""
-        # Parse the name of the template
-        bits = template.split("/", maxsplit=1)
-        index = 0
-        if len(bits) == 2 and bits[0].isdigit():
-            index = int(bits[0])
-            template_name = bits[1]
-        else:
-            template_name = template
+        ref = InheritanceRef.parse(template)
 
         # Get template inheritance
-        inheritance = self.templates.inheritance(template_name)
+        inheritance = self.templates.inheritance(ref.name)
         inheritance_len = len(inheritance)
 
         if not inheritance:
-            raise TemplateNotFound(template_name)
+            raise TemplateNotFound(ref.name)
 
         # Load the template from the index
-        if index >= inheritance_len:
+        if ref.index >= inheritance_len:
             raise TemplateNotFound(template)  # Maybe this wasn't one of our customized extended paths
 
-        template_file = inheritance[index]
+        template_file = inheritance[ref.index]
 
         if not template_file.is_renderable:
             raise TemplateNotFound(template)
 
         path = template_file.path
-        logger.debug(f"Loading template {template_name} from: {path}")
+        logger.debug(f"Loading template {ref.name} from: {path}")
         source = path.read_text()
 
         # look for an `extends` tag
@@ -71,12 +93,12 @@ class InheritanceLoader(BaseLoader):
             self.extends_re.format(block_start_string=block_start_string, block_end_string=block_end_string)
         )
         if match := regex.search(source):
-            if index == len(inheritance) - 1:
+            if ref.index == inheritance_len - 1:
                 # we've reached our last template, so we must remove the `extends` tag completely
                 source = source.replace(match[0], "")
             else:
                 # rewrite the `extends` tag to reference the next item in the inheritance
-                source = source.replace(match[1], f"{index + 1}/{match[1]}")
+                source = source.replace(match[1], ref.next().format())
 
         return source, None, lambda: True
 
