@@ -18,6 +18,11 @@ def process_overlay(overlay: Overlay, running_context: dict[str, Any], question_
     - for each question in pattern
         - set response to the result of answer_question
         - update running context with response
+    - re-render the pattern's extra_context, now that questions are answered
+
+    Contract: overlay ``extra_context`` values are rendered once, before questions are asked, so
+    they must not reference question answers. Pattern ``extra_context`` values are rendered twice
+    (before and after questions) so that they may reference question answers.
 
     Args:
         overlay: The overlay configuration.
@@ -46,8 +51,27 @@ def process_overlay(overlay: Overlay, running_context: dict[str, Any], question_
             )
         )
 
-    # Re-merge the pattern context to render any pattern extra context that requires answers
-    return merge_contexts(current_context, {}, pattern.extra_context)
+    return render_pattern_context_after_questions(current_context, pattern.extra_context)
+
+
+def render_pattern_context_after_questions(context: MutableMapping, pattern_context: MutableMapping) -> dict:
+    """
+    Re-render the pattern's extra_context now that questions have been answered.
+
+    Pattern extra_context values may be Jinja expressions referencing question answers (e.g.
+    ``package_path = "{{ repo_name }}/{{ package_name }}"``), which don't exist yet when
+    `merge_contexts` first renders them in `process_overlay`. This re-render pass makes those
+    values resolve correctly. Overlay extra_context is intentionally excluded here: it is rendered
+    only once, before questions, and must not depend on answers.
+
+    Args:
+        context: The running context, including question answers, to render against and update.
+        pattern_context: The pattern's extra_context mapping.
+
+    Returns:
+        The context with pattern extra_context re-rendered.
+    """
+    return merge_contexts(context, {}, pattern_context)
 
 
 def merge_contexts(

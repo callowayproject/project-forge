@@ -35,7 +35,13 @@ class TestProcessOverlay:
         assert result == running_context
 
     def test_uses_answers_from_ui(self, fixtures_dir: Path):
-        """It uses the UI answers to update the running context."""
+        """It uses the UI answers to update the running context.
+
+        This also covers the pattern extra_context re-render invariant: `package_path` is a
+        pattern extra_context value (`"{{ repo_name }}/{{ package_name }}"`) that references
+        question answers, so it can only resolve correctly if `process_overlay` re-renders
+        the pattern's extra_context after the questions are answered.
+        """
         overlay = Overlay.model_validate(
             {"pattern_location": "python-package/pattern.toml"},
             context={"composition_path": fixtures_dir.joinpath("composition1.toml")},
