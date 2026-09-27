@@ -1,5 +1,30 @@
 # Changelog
 
+## 0.9.2 (2026-09-27)
+
+[Compare the full difference.](https://github.com/callowayproject/project-forge/compare/0.9.1...0.9.2)
+
+### New
+
+- Add local debug configuration, domain docs, and update draw.io diagram. [bff98ae](https://github.com/callowayproject/project-forge/commit/bff98aef90096dba87a4a76dc47ec5597d281252)
+
+  - Introduced `.claude/settings.local.json` for local debug permissions.
+  - Added `docs/agents/domain.md` to guide domain modeling and ADR usage.
+  - Included `docs/assets/images/project-forge.drawio` diagram for enhanced documentation.
+  - Removed custom Markdown block support from `mkdocs.yml`.
+
+### Other
+
+- Document and name the overlay/pattern extra_context merge contract. [1a153b4](https://github.com/callowayproject/project-forge/commit/1a153b4631bb06b8f96c07f075f9e05de06ea8d3)
+
+  process_overlay merged pattern extra_context twice (before and after
+  questions) with only a one-line comment explaining why. Extract the
+  second pass into render_pattern_context_after_questions with a
+  docstring stating the real contract: pattern extra_context may
+  reference question answers, overlay extra_context may not.
+
+  Fixes #46
+
 ## 0.9.1 (2026-09-27)
 
 [Compare the full difference.](https://github.com/callowayproject/project-forge/compare/0.9.0...0.9.1)
